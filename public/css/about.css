@@ -1,0 +1,78 @@
+/* Reset some default styles */
+body, h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set a background color for the entire page */
+body {
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Styling for container-fluid */
+.about {
+    padding: 25px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Center text and add some spacing */
+.text-center {
+    text-align: center;
+}
+
+
+
+/* Add some padding and border for each column */
+.col {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+/* Add spacing for headings */
+h2, h3 {
+    margin-bottom: 10px;
+}
+
+
+
+.footer {
+    padding: 30px 0;
+}
+.footer .row {
+    justify-content: center;
+}
+.footer .col-md-6 {
+    padding: 20px;
+}
+.footer h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+.footer p {
+    margin-bottom: 15px;
+}
+.social-icon {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 18px;
+    color: #ffffff;
+    text-decoration: none;
+}
+.social-icon:hover {
+    color: #ffc107; /* Change color on hover */
+}
+
+ /* Additional inline styles can be added here */
+ .animated {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1s, transform 2s;
+}
+.animate-scroll {
+    opacity: 1;
+    transform: translateY(0);
+}

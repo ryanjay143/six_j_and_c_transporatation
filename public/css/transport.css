@@ -1,0 +1,268 @@
+
+.logo {
+    width: 50px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 10px; /* Add spacing between the logo and title */
+}
+
+.bg-image .img-fluid{
+  height: 100vh;
+}
+
+.text-white .text-primary{
+  margin-top: 120px;
+}
+
+.text-start .mt-5{
+  color: rgb(27, 27, 219);
+   }
+
+h2 {
+  color: hsl(0, 0%, 28%);
+  font-size: 50px;
+  font-weight: bold;
+  font-family: monospace;
+  letter-spacing: 7px;
+  cursor: pointer;
+}
+  
+  h2 span {
+    transition: 0.5s ease-out;
+  }
+  h2:hover span:nth-child(1) {
+    margin-right: 5px;
+  }
+  h2:hover span:nth-child(1):after {
+    content: "'";
+  }
+  h2:hover span:nth-child(2) {
+    margin-left: 30px;
+  }
+  h2:hover span {
+    color: #fff;
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff;
+  }
+  
+  .container .cards {
+    top: 120%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    display: inline-block;
+  }
+  .col .mb-3 button{
+    margin-top: 34px;
+    margin-right: 100px;
+  }
+  
+  .animation-card {
+    height: 100vh;
+    overflow: auto;
+    
+  }
+  
+  .animation-cards {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1s, transform 1s;
+  }
+  
+  .animation-cards.reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+
+  
+  @media only screen and (max-width: 800px) {
+
+    body {
+      font-size: 14px;
+    }
+
+    .header {
+      display: none;
+    } 
+    
+   
+       }
+       .navbar1 ul {
+         list-style-type: none;
+         margin: 0;
+         padding: 0;
+       }
+       
+       .navbar1 li {
+         display: inline-block;
+         margin-right: 10px;
+       }
+       
+       .navbar1 li a {
+         text-decoration: none;
+       }
+       
+
+
+.input-success {
+  border-color: green !important;
+}
+
+/* Add your custom CSS styles here */
+    /* Modal background overlay */
+    .modal-backdrop {
+      background-color: rgba(0, 0, 0, 0.7) !important;
+    }
+
+    /* Modal content styling */
+    .modal-content {
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      background-color: #f9f9f9;
+    }
+
+    .modal-header {
+      border-bottom: none;
+      padding: 1rem 1.5rem;
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .modal-title {
+      font-size: 24px;
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .modal-footer {
+      border-top: none;
+      justify-content: center;
+      gap: 10px;
+      padding: 1rem 1.5rem;
+      border-radius: 0 0 10px 10px;
+      background-color: #f9f9f9;
+    }
+
+    /* Additional styling for form elements */
+    .form-outline {
+      position: relative;
+    }
+
+    .form-outline input {
+      border: none;
+      border-bottom: 1px solid #ced4da;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .form-outline label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0.5rem;
+      color: #495057;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+
+    .form-outline input:focus ~ label,
+    .form-outline input:not(:placeholder-shown) ~ label {
+      top: -1rem;
+      font-size: 14px;
+      color: #007bff;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+  .footer {
+    padding: 30px 0;
+  }
+  .footer .row {
+      justify-content: center;
+  }
+  .footer .col-md-6 {
+      padding: 20px;
+  }
+  .footer h3 {
+      margin-bottom: 20px;
+      font-size: 24px;
+  }
+  .footer p {
+      margin-bottom: 15px;
+  }
+  .social-icon {
+      display: inline-block;
+      margin-right: 10px;
+      font-size: 18px;
+      color: #ffffff;
+      text-decoration: none;
+  }
+  .social-icon:hover {
+      color: #ffc107; /* Change color on hover */
+  }
+    
+
+  /* Add your other CSS styles here */
+
+
+/* Apply the animation */
+.card.animated {
+  animation: slideInUp 1s ease-in-out forwards;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+}
+/* Background Image Styles */
+.my-image {
+  position: relative;
+  height: 50vh;
+  overflow: hidden;
+}
+.my-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.my-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Card Styles */
+.my-card {
+  margin: 20px;
+  padding: 20px;
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+

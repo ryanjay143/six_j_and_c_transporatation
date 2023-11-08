@@ -1,0 +1,63 @@
+@media (max-width: 767.98px) {
+    .card {
+        margin-right: 5rem;
+    }
+}
+
+
+
+  
+/* CSS for the larger image */
+.zoomable-image.zoomed {
+    max-width: 100%;
+    max-height: 80vh;
+    transition: all 0.3s;
+    background-color: rgba(47, 12, 246, 0.548); /* Update to your desired rgba value */
+  }
+  
+  .input-with-preview {
+    display: flex;
+    align-items: center;
+  }
+  
+  .photo-preview {
+    max-width: 50px; /* Adjust the width as needed */
+    height: auto;
+  }
+
+  div.fc-time-grid.fc-unselectable, div.fc-scroller.fc-time-grid-container {
+    display: none;
+  }
+
+  .disabled-date {
+    pointer-events: none; /* Disable pointer events, making it unclickable */
+    opacity: 0.5; /* Reduce the opacity to indicate it's disabled */
+    /* Add any other styling you want for disabled dates */
+}
+
+
+.past-day {
+  background-color: #ccc; /* Gray background color */
+}
+
+#legend {
+  display: flex;
+  justify-content:flex-start;
+  margin-bottom: 20px; /* Adjust the margin as needed */
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-right: 20px; /* Adjust the margin between legend items */
+}
+
+.legend-color {
+  width: 40px;
+  height: 20px;
+  margin-right: 5px; /* Adjust the margin between the color box and label */
+}
+
+.letter-size {
+  font-size: 12px;
+}

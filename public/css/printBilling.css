@@ -1,0 +1,29 @@
+
+.print-form {
+    font-size: 12px;
+    
+}
+
+/* Optionally, you can hide certain elements in the print version */
+/* Example: Hide the Print and PDF buttons */
+.btn-group {
+    display: none;
+}
+
+/* Define styles for printing */
+@media print {
+    body {
+        /* Set margins to 0 to remove any default browser margins */
+        margin: 0;
+    }
+
+
+    /* Hide the total amount on the first page */
+    .print-form table tfoot tr:first-child {
+        display: none;
+    }
+
+    .print-form table {
+        page-break-inside: avoid;
+    }
+}

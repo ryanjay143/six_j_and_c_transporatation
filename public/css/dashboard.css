@@ -1,0 +1,300 @@
+.nav-link {
+  color: #fff;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+}
+
+.collapse .nav-link:hover {
+  background-color: #007bff;
+}
+
+.sb-sidenav {
+  background: linear-gradient(135deg, #007bff, #1c2b33);
+}
+
+.navbar.bg-primary {
+  background: linear-gradient(135deg, #007bff, #1c2b33);
+}
+.nav-link {
+  border-radius: 5px;
+}
+
+@media print {
+  body {
+      overflow: visible !important;
+  }
+  
+  #printableForm {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      transform: none !important;
+  }
+  
+  #printableForm .card-body {
+      overflow: visible !important;
+  }}
+
+   /* Add your custom CSS styles here */
+   .form-label {
+    font-weight: bold;
+  }
+
+  .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+  }
+
+  .form-control:focus {
+    box-shadow: none;
+    border-color: #007bff;
+  }
+
+  .invalid-feedback {
+    display: block;
+    color: #dc3545;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .container {
+    max-width: 800px;
+  }
+  
+  .card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  
+  .fc-toolbar {
+    margin-bottom: 1rem;
+  }
+  
+  .fc-button-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .fc-button-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  
+  .fc-day-header {
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .fc-day-number {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .fc-today {
+    background-color: rgba(0, 123, 255, 0.2);
+  }
+  
+  .fc-day.fc-sun {
+    color: #dc3545;
+  }
+  
+  .fc-day.fc-sat {
+    color: #007bff;
+  }
+
+  .form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
+}
+
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #682773
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}
+
+.size{
+  font-size: 12px;
+}
+
+.tsize{
+  font-size: 12px;
+}
+
+.bg-pink {
+  background-color: rgb(249, 36, 232);
+}
+
+/* #calendar {
+  background-color: #3982c2; 
+} */
+
+#helperTfoot {
+  display: none;
+}
+
+.past-event {
+  pointer-events: none; /* Disable pointer events for past events */
+}
+
+tr.danger-row {
+  text-decoration: line-through;
+  color: red;
+  
+}
+
+.custom-date-input {
+  position: relative;
+}
+
+/* CSS for the larger image */
+.zoomable-image.zoomed {
+  max-width: 100%;
+  max-height: 80vh;
+  transition: all 0.3s;
+  background-color: rgba(47, 12, 246, 0.548); /* Update to your desired rgba value */
+}
+
+.input-with-preview {
+  display: flex;
+  align-items: center;
+}
+
+.photo-preview {
+  max-width: 50px; /* Adjust the width as needed */
+  height: auto;
+}
+
+div.fc-time-grid.fc-unselectable, div.fc-scroller.fc-time-grid-container {
+  display: none;
+}
+.fc-view .fc-month-view .fc-basic-view {
+  height: 10vh;;
+}
+
+#legend {
+  display: flex;
+  justify-content:flex-start;
+  margin-bottom: 20px; /* Adjust the margin as needed */
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-right: 20px; /* Adjust the margin between legend items */
+}
+
+.legend-color {
+  width: 35px;
+  height: 20px;
+  margin-right: 5px; /* Adjust the margin between the color box and label */
+}
+
+/* Add more CSS styling as needed */
+
+
+
+/* .status-indicator-approved {
+  background-color: green;
+  
+}
+
+.status-indicator-departure {
+  background-color: gray;
+  
+}
+
+
+.status-indicator-to-be-pick-up {
+  background-color: red;
+  
+}
+
+.status-indicator-in-route {
+  background-color: orange;
+  
+}
+
+
+.status-indicator-not-assign{
+  background-color: blue;
+  
+}
+.event span {
+  color: transparent;
+} */
+
+.text-bg-success1 {
+  background-color: lightgreen;
+  
+}
+
+.past-day {
+  background-color: #ccc;
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
