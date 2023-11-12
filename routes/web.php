@@ -37,6 +37,9 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/user/transportation', [HomeController::class, 'user_transportation'])->name('user.transportation');
     Route::get('/user/billing-reports/payment', [HomeController::class, 'billing_payment'])->name('user.reports.payment');
     Route::get('/user/check-fully-booked', [HomeController::class, 'checkFullyBooked'])->name('user.check-fully-booked');
+
+    Route::get('/user/reset-password', [HomeController::class, 'reset_password'])->name('user.reset.password');
+    Route::post('/user/change-password', [HomeController::class, 'change_password'])->name('user.change.password');
    
     Route::post('/client/add/booking', [HomeController::class, 'client_booking'])->name('user.add.booking');
     Route::get('/user/user-profile', [HomeController::class, 'user_profile'])->name('user.profile');

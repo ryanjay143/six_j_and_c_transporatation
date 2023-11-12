@@ -86,7 +86,8 @@
                                                                                             <div class="mb-3">
                                                                                                 <input type="text" name="billing" value="{{ $b->id }}" hidden="">
                                                                                                 <label for="formGroupExampleInput" class="form-label">Payment Method:</label>
-                                                                                                <select class="form-select paymentSelect @error('payment') is-invalid @enderror" name="payment" aria-label="Payment Method">
+                                                                                                <select class="form-select paymentSelect @error('payment') is-invalid @enderror" 
+                                                                                                name="payment" aria-label="Payment Method">
                                                                                                     <option selected disabled>Select payment method</option>
                                                                                                     <option value="Cash">Cash</option>
                                                                                                     <option value="Bank Transfer">Bank Transfer</option>
@@ -102,13 +103,15 @@
                                                                                                 <div class="chique-number" style="display: none;">
                                                                                                     <div class="mb-3">
                                                                                                         <label for="formGroupExampleInput" class="form-label">Cheque Number</label>
-                                                                                                        <input type="text" class="form-control chique_input" name="chique" placeholder="Chique Number: xxx-xxx-xxx">
+                                                                                                        <input type="text" class="form-control chique_input" name="chique" 
+                                                                                                        placeholder="Chique Number: xxx-xxx-xxx">
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="reference-number" style="display: none;">
                                                                                                     <div class="mb-3">
                                                                                                         <label for="formGroupExampleInput" class="form-label">Bank Transfer</label>
-                                                                                                        <input type="text" class="form-control reference_input" name="refNum" placeholder="Reference Number: xxx-xxx-xxx">
+                                                                                                        <input type="text" class="form-control reference_input" name="refNum" 
+                                                                                                        placeholder="Reference Number: xxx-xxx-xxx">
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="cash" style="display: none;">
@@ -118,7 +121,8 @@
                                                                                                             // Remove commas from the total_amount value
                                                                                                             $totalAmount = str_replace(',', '', $b->total_amount);
                                                                                                         @endphp
-                                                                                                        <input type="text" readonly class="form-control total_amount" name="amount" value="{{ $totalAmount }}">
+                                                                                                        <input type="text" readonly class="form-control total_amount" name="amount" 
+                                                                                                        value="{{ $totalAmount }}">
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>

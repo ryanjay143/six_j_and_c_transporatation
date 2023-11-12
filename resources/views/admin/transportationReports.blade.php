@@ -58,14 +58,17 @@
                                                                 <td>{{ $t->helper->user->name }} {{ $t->helper->user->lname }}</td>
                                                                 <td>{{ $t->truck->plate_number }}</td>
                                                                 <td>
-                                                                    <button type="button" class="btn btn-outline-primary btn-sm"data-bs-toggle="modal" data-bs-target="#exampleModal2{{ $t->id }}"><i class="bi bi-eye-fill"></i></button>
+                                                                    <button type="button" class="btn btn-outline-primary btn-sm"data-bs-toggle="modal" 
+                                                                    data-bs-target="#exampleModal2{{ $t->id }}"><i class="bi bi-eye-fill"></i></button>
                                                                      
-                                                                    <div class="modal fade" id="exampleModal2{{ $t->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div class="modal fade" id="exampleModal2{{ $t->id }}" tabindex="-1" 
+                                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                         <div class="modal-dialog modal-lg">
                                                                             <div class="modal-content">
                                                                                 <div class="modal-header">
                                                                                     <h5 class="modal-title fs-3">{{ __('Transportation details') }}</h5>
-                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" 
+                                                                                    aria-label="Close"></button>
                                                                                 </div>
                                                                                 <div class="modal-body">
                                                                                     <div class="card-body">

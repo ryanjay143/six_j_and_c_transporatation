@@ -14,8 +14,11 @@
                 <h3>{{ __('Dashboard for Client') }}</h3>
             </div> -->
             <div class="page-content">
+           
                 <section class="row">
+                <h4 class="d-flex justify-content-center align-items-center">Update Profile</h4>
                     <div class="col-12 d-flex justify-content-center align-items-center">
+                        
                         <div class="card border border-primary w-50">
                             <div class="card-body">
                                 <form action="{{ route('user.update.profile') }}" method="post">
@@ -32,7 +35,7 @@
                                         <label for="formGroupExampleInput2" class="form-label text-primary">Phone number</label>
                                         <input type="text" class="form-control" id="formGroupExampleInput2" name="phone" value="{{ old('phone_num', $client->phone_num) }}">
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-sm float-end">Update profile</button>
+                                    <button type="submit" class="btn btn-primary btn-sm float-end">Update</button>
                                 </form>
                             </div>
                         </div>

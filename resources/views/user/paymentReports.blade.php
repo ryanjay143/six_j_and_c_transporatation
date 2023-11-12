@@ -37,6 +37,12 @@
                                                 <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $payment->payment_method }}">
                                             </div>
                                         </div>
+                                        <div class=" row">
+                                            <label for="staticEmail" class="col-sm-6 col-form-label fw-bold ml-3">Invoice Number:</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $payment->billing->invoice_num }}">
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <label for="staticEmail" class="col-sm-6 col-form-label fw-bold ml-3">Reference number:</label>
                                             <div class="col-sm-4">

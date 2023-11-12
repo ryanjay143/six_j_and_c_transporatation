@@ -96,7 +96,7 @@
                                     </a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="component-badge.html">
+                                    <a href="{{ route('user.reset.password') }}">
                                         <i class="fas fa-lock"></i> Change Password
                                     </a>
                                 </li>

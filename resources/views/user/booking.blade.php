@@ -22,7 +22,8 @@
             <!-- <button type="button" class="btn btn-primary mb-3"  data-bs-toggle="modal" data-bs-target="#exampleModal">Add Booking</button> -->
 
             
-            <div class="modal fade" id="clientBooking" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="clientBooking" tabindex="-1" aria-labelledby="exampleModalLabel" 
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -36,11 +37,13 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" readonly value="{{ Auth::user()->name }}">
+                                <input type="text" class="form-control" id="floatingInput" readonly 
+                                value="{{ Auth::user()->name }}">
                                 <label for="floatingInput">Company name</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-select" name="origin" id="origin" aria-label="Floating label select example" required>
+                                <select class="form-select" name="origin" id="origin" 
+                                aria-label="Floating label select example" required>
                                     <option selected disabled>Select Origin</option>
                                     <option value="Cagayan de Oro">Cagayan de Oro</option>
                                     <option value="Iligan City">Iligan City</option>

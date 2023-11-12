@@ -24,7 +24,7 @@
                                 <div class="row g-3 mb-3">
                                     <div class="col-sm-3">
                                         <form id="filterForm" action="{{ route('client.filter') }}" method="GET">
-                                            <label for="">Company name</label>
+                                            <label for="">Filter Company name</label>
                                             <select class="form-select @error('client_id') is-invalid @enderror" id="clientSelect" name="client_id" aria-label="Default select example" required>
                                                 <option value="">All</option>
                                                 @foreach ($users as $client)
@@ -35,7 +35,7 @@
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <div id="start_date_input" class="col-sm-3">
+                                        <!-- <div id="start_date_input" class="col-sm-3">
                                             <label for="">From:</label>
                                             <input type="date" class="form-control @error('start_date') is-invalid @enderror" name="start_date" placeholder="Start Date" aria-label="Start Date" value="{{ old('start_date', $start_date) }}" required>
                                             @error('start_date')
@@ -48,11 +48,11 @@
                                             @error('end_date')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
-                                        </div>
+                                        </div> -->
 
-                                        <div class="col-sm-3 align-self-end">
+                                        <!-- <div class="col-sm-3 align-self-end">
                                             <button type="submit" class="btn btn-outline-primary w-100">Filter Date</button>
-                                        </div>
+                                        </div> -->
                                     </form>
                                 </div>
 
@@ -121,22 +121,28 @@
                                                                     @csrf
 
                                                                     <input hidden="" type="text" name="client_id" id="clientNameInput" value="{{ old('client_id') }}">
-                                                                    <input type="date" hidden="" class="form-control" name="start_date" placeholder="Start Date" aria-label="Start Date" value="{{ $start_date ? date('Y-m-d', strtotime($start_date)) : '' }}">
-                                                                    <input type="date" hidden="" class="form-control" name="end_date" placeholder="End Date" aria-label="End Date" value="{{ $end_date ? date('Y-m-d', strtotime($end_date)) : '' }}">
+                                                                    <input type="date" hidden="" class="form-control" name="start_date" 
+                                                                        placeholder="Start Date" aria-label="Start Date" 
+                                                                        value="{{ $start_date ? date('Y-m-d', strtotime($start_date)) : '' }}">
+                                                                    <input type="date" hidden="" class="form-control" name="end_date" 
+                                                                        placeholder="End Date" aria-label="End Date" 
+                                                                        value="{{ $end_date ? date('Y-m-d', strtotime($end_date)) : '' }}">
                                                                     <input hidden="" type="text" name="totalAmount" class="form-control form-control-sm" id="totalAmountCopy">
 
                                                                     @foreach ($transpo as $t)
                                                                         <input hidden="" name="transportation_id[]" type="text" value="{{ $t->id }}">
                                                                         <input type="text" hidden="" name="bStatus[]" value="1">
-                                                                        <input hidden="" name="price[]" type="text" class="form-control form-control-sm price-copy" aria-label="First name" pattern="[0-9]*"
+                                                                        <input hidden="" name="price[]" type="text" class="form-control form-control-sm price-copy" 
+                                                                            aria-label="First name" pattern="[0-9]*"
                                                                             id="priceCopy_{{ $loop->iteration }}" readonly>
-                                                                        <input hidden="" name="tons[]" type="text" class="form-control form-control-sm tons-copy" value="{{ $t->booking->tons }}" aria-label="Tons" pattern="[0-9]*"
+                                                                        <input hidden="" name="tons[]" type="text" class="form-control form-control-sm tons-copy" 
+                                                                            value="{{ $t->booking->tons }}" aria-label="Tons" pattern="[0-9]*"
                                                                             id="tonsCopy_{{ $loop->iteration }}" readonly>
                                                                             <input type="text" hidden="" name="status" value="1">
                                                                     @endforeach
                                                                    
                                                                     <div class="col-md-12 text-center">
-                                                                        <button type="submit" class="btn btn-primary btn-sm w-100" id="saveBillingBtn" disabled>Save billing</button>
+                                                                        <button type="submit" class="btn btn-primary btn-sm w-100" id="saveBillingBtn" disabled>Generate billing</button>
                                                                     </div>
                                                                 </form>
                                                             </td>

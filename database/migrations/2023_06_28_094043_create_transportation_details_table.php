@@ -19,7 +19,8 @@ return new class extends Migration
             $table->foreignId('driver_id')->nullable();
             $table->foreignId('helper_id')->nullable();
             $table->foreignId('truck_id')->nullable();
-            $table->string('status')->nullable()->default(1)->comment("1 = To be pick-up 2 = To be picked-up 3 = Departure 4 = In Route 5 = Delivered");            
+            $table->string('status')->nullable()->default(1)->comment("1 = To be pick-up 
+            2 = To be picked-up 3 = Departure 4 = In Route 5 = Delivered");            
             $table->timestamps();
         });
     }

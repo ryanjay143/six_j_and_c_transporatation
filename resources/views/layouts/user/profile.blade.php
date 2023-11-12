@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ __('User Profile') }}</title>
+    <title>{{ __('Profile Settings') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/logo/six_j_and_c_logo.png') }}">
@@ -101,7 +101,7 @@
                                     </a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="component-badge.html">
+                                    <a href="{{ route('user.reset.password') }}">
                                         <i class="fas fa-lock"></i> Change Password
                                     </a>
                                 </li>

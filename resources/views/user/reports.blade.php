@@ -32,6 +32,7 @@
                                                     <tr>
                                                         <th scope="col">#</th>
                                                         <th scope="col">Billing Peroid</th>
+                                                        <th scope="col">Invoice Number</th>
                                                         <th scope="col">Total Amount</th>
                                                         <th scope="col">Payment method</th>
                                                         <th scope="col">Action</th>
@@ -42,6 +43,7 @@
                                                         <tr>
                                                             <th scope="row">{{ $loop->iteration }}</th>
                                                             <td>{{ date('F j', strtotime($b->billing->billing_start_date)) }}- {{ date('F j, Y', strtotime($b->billing->billing_end_date)) }} </td>
+                                                            <td>{{ $b->billing->invoice_num }}</td>
                                                             <td>&#8369; {{ number_format($b->amount, 2) }}</td>
                                                             <td>
                                                                 @if ($b->payment_method == 'Chique')

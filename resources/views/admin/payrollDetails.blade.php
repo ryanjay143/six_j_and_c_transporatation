@@ -18,19 +18,19 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                        <form class="row g-3 mb-3" id="dateFilterForm">
-                                    <div class="col-md-4">
-                                        <label for="staticEmail2" class="fw-bold">From:</label>
-                                        <input type="date" class="form-control" name="from">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="inputPassword2" class="fw-bold">To:</label>
-                                        <input type="date" class="form-control" name="to">
-                                    </div>
-                                    <div class="col-sm-3 align-self-end">
-                                        <button type="submit" class="btn btn-outline-primary">Filter date</button>
-                                    </div>
-                                </form>
+                                            <form class="row g-3 mb-3" id="dateFilterForm">
+                                                <div class="col-md-4">
+                                                    <label for="staticEmail2" class="fw-bold">From:</label>
+                                                    <input type="date" class="form-control" name="from">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="inputPassword2" class="fw-bold">To:</label>
+                                                    <input type="date" class="form-control" name="to">
+                                                </div>
+                                                <div class="col-sm-3 align-self-end">
+                                                    <button type="submit" class="btn btn-outline-primary">Filter date</button>
+                                                </div>
+                                            </form>
                                             <table id="payrollReports" class="table table-bordered table-hover">
                                                 <thead class="table-primary">
                                                     <tr>
@@ -54,12 +54,14 @@
                                                             <td>&#8369; {{ number_format($p->total_deduction, 2) }}</td>
                                                             <td>&#8369; {{ $p->total_rate }}</td>
                                                             <td>
-                                                                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $p->id }}">
+                                                                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" 
+                                                                    data-bs-target="#exampleModal{{ $p->id }}">
                                                                     <i class="fas fa-eye"></i>
                                                                 </button>
 
                                                                 <!-- Modal -->
-                                                                <div class="modal fade" id="exampleModal{{ $p->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal fade" id="exampleModal{{ $p->id }}" tabindex="-1" 
+                                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                     <div class="modal-dialog modal-lg">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
@@ -69,15 +71,19 @@
                                                                             <div class="modal-body">
                                                                                 <div class="container">
                                                                                     <div class="row">
-                                                                                        <label for="staticEmail" class="col-sm-4 col-form-label fw-bold">Employee name:</label>
+                                                                                        <label for="staticEmail" class="col-sm-4 col-form-label fw-bold">
+                                                                                            Employee name:
+                                                                                        </label>
                                                                                         <div class="col-sm-6">
-                                                                                            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $employee->user->name }} {{ $employee->user->lname }}">
+                                                                                            <input type="text" readonly class="form-control-plaintext" 
+                                                                                            id="staticEmail" value="{{ $employee->user->name }} {{ $employee->user->lname }}">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="row">
                                                                                         <label for="staticEmail" class="col-sm-4 col-form-label fw-bold">Total transportation:</label>
                                                                                         <div class="col-sm-6">
-                                                                                            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $employee->user->name }} {{ $employee->user->lname }}">
+                                                                                            <input type="text" readonly class="form-control-plaintext" id="staticEmail" 
+                                                                                            value="{{ $employee->user->name }} {{ $employee->user->lname }}">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="table-responsive">

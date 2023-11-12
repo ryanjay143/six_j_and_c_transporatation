@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\TransportationDetails;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -334,6 +335,34 @@ class HomeController extends Controller
         return view('user.viewBilling',compact('billing','billingDetails'));
     }
 
-   
+    public function reset_password()
+    {
+        return view('user.resetPassword');
+    }
+
+    public function change_password(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required',
+            'new_password_confirmation' => 'required|same:new_password'
+        ], [
+            'new_password_confirmation.same' => 'The confirm password and new password must match.'
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->with('error', 'The old password is incorrect.');
+        }
+
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+
+        Alert::success('Reset Password Success');
+
+        return redirect()->back();
+    }
     
 }

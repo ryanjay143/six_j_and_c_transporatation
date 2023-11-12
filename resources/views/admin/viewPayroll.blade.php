@@ -52,49 +52,9 @@
                                 <div class="container">
                                     <form class="row g-3" method="GET" action="{{ route('filterTransportationDate') }}">
                                         <input type="hidden" name="employee_id" readonly class="form-control-plaintext" id="staticEmail" value="{{ $employee->id }}">
-                                        <div class="col-sm-3">
-                                            <label for="start_date" class="form-label">From:</label>
-                                            <?php
-                                            // Get the current month and year
-                                            $currentMonth = date('m');
-                                            $currentYear = date('Y');
-                                            
-                                            // Set the default "From" date to the 1st day of the current month
-                                            $defaultStartDate = date('Y-m-d', strtotime("$currentYear-$currentMonth-01"));
-                                            ?>
-                                           <input type="date" name="start_date" class="form-control border border-primary mb-3 @error('start_date') is-invalid @enderror" id="staticEmail2" 
-                                            value="{{ isset($start_date) ? $start_date : $defaultStartDate }}" 
-                                            min="<?= date('Y-m-d', strtotime('-15 days')) ?>" 
-                                            max="<?= date('Y-m-d', strtotime('-1 day')) ?>"
-                                            onchange="copyStartDate(this)"
-                                            required>
-
-                                            @error('start_date')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label for="end_date" class="form-label">To:</label>
-                                            <?php
-                                            // Set the default "To" date to the 15th day of the current month
-                                            $defaultEndDate = date('Y-m-d', strtotime("$currentYear-$currentMonth-15"));
-                                            ?>
-                                           <input type="date" name="end_date" class="form-control border border-primary mb-3 @error('end_date') is-invalid @enderror" id="inputPassword2" 
-                                            value="{{ isset($end_date) ? $end_date : $defaultEndDate }}" 
-                                            max="<?= date('Y-m-d', strtotime('+15 days')) ?>" 
-                                            onchange="copyEndDate(this)"
-                                            required>
-
-                                            @error('end_date')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="w-50 align-self-end">
-                                            <button type="submit" class="btn btn-outline-primary mb-3">Filter Date</button>
-                                        </div>
+                                        
                                     </form>
-                                    <div class="card mb-3 bg-light">
+                                    <div class="card mb-3 mt-3 bg-light">
                                         <div class="card-body">
                                         <!-- <h3 class="fw-bold text-start">Transportation Reports</h3> -->
                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -255,7 +215,9 @@
                                                                                 <input type="text" hidden="" name="balance" value="{{ $cashBalance }}">
 
                                                                                 @if ($cashAdvanceAmount > 0)
-                                                                                    <input hidden="" name="ca_deduction" value="{{ $roundedCashAdvanceAmount }}" type="text" style="width: 100px;" class="form-control form-control-sm" placeholder="0" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                                                                    <input hidden="" name="ca_deduction" value="{{ $roundedCashAdvanceAmount }}" type="text" 
+                                                                                    style="width: 100px;" class="form-control form-control-sm" placeholder="0" 
+                                                                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                                                                 @endif
 
 
@@ -270,34 +232,41 @@
                                                                                 @endphp
 
                                                                                 @if ($damageAmount > 0)
-                                                                                    <input hidden="" name="df_deduction" value="{{ $roundedDamageAmount }}" type="text" style="width: 100px;" class="form-control form-control-sm" placeholder="0" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                                                                    <input hidden="" name="df_deduction" value="{{ $roundedDamageAmount }}" type="text" 
+                                                                                    style="width: 100px;" class="form-control form-control-sm" placeholder="0" 
+                                                                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                                                                 @endif
                                                                                 <input type="text" hidden="" name="damage_id" value="{{ isset($damages) ? $damages->id : '' }}">
                                                                                 <input type="text" hidden="" name="damage_amount" value="{{ $damageAmount }}">
                                                                                 <input type="text" hidden="" name="balance_deduction" value="{{ $balanceDeduction }}">
                                                                             
                                                                                 @php
-                                                                                    $totalDeduction = (isset($cashAdvanceAmount) ? $cashAdvanceAmount : 0) + (isset($damageAmount) ? $damageAmount : 0);
+                                                                                    $totalDeduction = (isset($cashAdvanceAmount) ? $cashAdvanceAmount : 0) + (isset($damageAmount) 
+                                                                                    ? $damageAmount : 0);
                                                                                     $roundedTotalDeduction = round($totalDeduction); // Round off the total deduction
                                                                                 @endphp
 
                                                                                 @if ($roundedTotalDeduction > 0)
-                                                                                    <input value="{{ $roundedTotalDeduction }}" hidden="" name="totalDeduction" type="text" style="width: 100px;" class="form-control form-control-plaintext fw-bold" placeholder="0" id="numericInput" oninput="this.value = this.value.replace(/[^0-9]/g, ''); calculateNetSalary();">
+                                                                                    <input value="{{ $roundedTotalDeduction }}" hidden="" name="totalDeduction" type="text" 
+                                                                                    style="width: 100px;" class="form-control form-control-plaintext fw-bold" placeholder="0" id="numericInput" oninput="this.value = this.value.replace(/[^0-9]/g, ''); calculateNetSalary();">
                                                                                 @endif
 
                                                                                 
                                                                                 <div class="col-auto">
                                                                                     <label for="inputCopyStartDate" class="visually-hidden">Copy Start Date</label>
-                                                                                    <input hidden="" type="date" name="start_date" class="form-control form-control-sm" id="inputCopyStartDate" value="{{ $start_date ? date('Y-m-d', strtotime($start_date)) : '' }}">
+                                                                                    <input hidden="" type="date" name="start_date" class="form-control form-control-sm" 
+                                                                                    id="inputCopyStartDate" value="{{ $start_date ? date('Y-m-d', strtotime($start_date)) : '' }}">
                                                                                 </div>
                                                                                 <div class="col-auto">
                                                                                     <label for="inputCopyEndDate" class="visually-hidden">Copy End Date</label>
-                                                                                    <input hidden="" type="date" name="end_date" class="form-control form-control-sm" id="inputCopyEndDate" value="{{ $end_date ? date('Y-m-d', strtotime($end_date)) : '' }}">
+                                                                                    <input hidden="" type="date" name="end_date" class="form-control form-control-sm" 
+                                                                                    id="inputCopyEndDate" value="{{ $end_date ? date('Y-m-d', strtotime($end_date)) : '' }}">
                                                                                 </div>
 
                                                                                 @foreach ($driver as $t)
                                                                                     <input type="text" hidden="" name="transportation_id[]" value="{{ $t->id }}">
-                                                                                    <input name="rate[]" hidden="" type="text" style="width: 100px;" value="0" class="form-control form-control-sm rateArrayInput" id="rateArrayInput_{{ $loop->iteration }}">
+                                                                                    <input name="rate[]" hidden="" type="text" style="width: 100px;" value="0" 
+                                                                                    class="form-control form-control-sm rateArrayInput" id="rateArrayInput_{{ $loop->iteration }}">
                                                                                     <input type="text" hidden="" value="1" name="pStatus">
                                                                                 @endforeach
 
@@ -307,7 +276,8 @@
                                                                                         $addRateButtonDisabledHelper = $rateValueHelper == 0;
                                                                                     @endphp
                                                                                     <input type="text" hidden="" name="transportation_id[]" value="{{ $h->id }}">
-                                                                                    <input name="rate[]" hidden="" type="text" style="width: 100px;" value="{{ $rateValueHelper }}" class="form-control form-control-sm" id="numericInputCopy{{ $loop->iteration }}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); checkRateValueCopy({{ $loop->iteration }});">
+                                                                                    <input name="rate[]" hidden="" type="text" style="width: 100px;" value="{{ $rateValueHelper }}" 
+                                                                                        class="form-control form-control-sm" id="numericInputCopy{{ $loop->iteration }}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); checkRateValueCopy({{ $loop->iteration }});">
                                                                                     <input type="text" hidden="" value="1" name="pStatus">
                                                                                 @endforeach
 

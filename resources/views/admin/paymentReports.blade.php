@@ -60,7 +60,7 @@
                                                                 <th scope="row">{{ $loop->iteration }}</th>
                                                                 <td>{{ $p->created_at->format('M. d, Y') }}</td>
                                                                 <td>{{ substr($p->or_num, 0, 4) }}-{{ substr($p->or_num, 4, 2) }}-{{ substr($p->or_num, 6, 2) }}-{{ substr($p->or_num, 8) }}</td>
-                                                                <td>{{ $p->biiling->invoice_num }}</td>
+                                                                <td>{{ $p->billing->invoice_num }}</td>
                                                                 <td>{{ $p->billing->user->name }}</td>
                                                                 <td>{{ $p->payment_method }}</td>
                                                                 <td>
@@ -83,7 +83,7 @@
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <th class="fw-bold" colspan="7">Total Amount:</th>
+                                                            <th class="fw-bold text-end" colspan="8">Total Amount:</th>
                                                             <th class="fw-bold" id="totalAmount">0.00</th>
                                                         </tr>
                                                     </tfoot>

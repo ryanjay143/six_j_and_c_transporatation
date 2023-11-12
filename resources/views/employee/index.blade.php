@@ -123,50 +123,71 @@
                                                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                                         </div>
                                                                                         <div class="modal-body">
-                                                                                            <div class="row">
-                                                                                                <label for="staticEmail" class="col-sm-4 col-form-label">Transportation date:</label>
-                                                                                                <div class="col-sm-4">
-                                                                                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ \Carbon\Carbon::parse($t->booking->date)->format('F j, Y') }}">
+                                                                                            <div class="container">
+                                                                                                <div class="row">
+                                                                                                    <div class="col-sm-12 col-md-4">
+                                                                                                        <label for="staticEmail" class="col-form-label">Transportation date:</label>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-12 col-md-8">
+                                                                                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ \Carbon\Carbon::parse($t->booking->date)->format('F j, Y') }}">
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="row">
+                                                                                                    <div class="col-sm-12 col-md-4">
+                                                                                                        <label for="staticEmail" class="col-form-label">Helper:</label>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-12 col-md-8">
+                                                                                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $t->helper->user->name }} {{ $t->helper->user->lname }}">
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="row">
+                                                                                                    <div class="col-sm-12 col-md-4">
+                                                                                                        <label for="staticEmail" class="col-form-label">Origin:</label>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-12 col-md-8">
+                                                                                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $t->booking->origin }}">
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="row">
+                                                                                                    <div class="col-sm-12 col-md-4">
+                                                                                                        <label for="staticEmail" class="col-form-label">Pick-up time:</label>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-12 col-md-8">
+                                                                                                        @php
+                                                                                                        // Convert the pick-up time to 12-hour format
+                                                                                                        $pickUpTime = date("h:i A", strtotime($t->booking->pick_up_time));
+                                                                                                        @endphp
+                                                                                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $pickUpTime }}">
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="row">
+                                                                                                    <div class="col-sm-12 col-md-4">
+                                                                                                        <label for="staticEmail" class="col-form-label">Destination:</label>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-12 col-md-8">
+                                                                                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $t->booking->destination }}">
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="mb-3 row">
+                                                                                                    <div class="col-sm-12 col-md-4">
+                                                                                                        <label for="staticEmail" class="col-form-label">Delivery date & time:</label>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-12 col-md-8">
+                                                                                                        @php
+                                                                                                        // Convert the Transportation time time to 12-hour format
+                                                                                                        $transportationTime = date("F j, Y h:i A", strtotime($t->booking->transportation_time));
+                                                                                                        @endphp
+                                                                                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $transportationTime }}">
+                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="row">
-                                                                                                <label for="staticEmail" class="col-sm-4 col-form-label">Helper:</label>
-                                                                                                <div class="col-sm-4">
-                                                                                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $t->helper->user->name }} {{ $t->helper->user->lname }}">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row">
-                                                                                                <label for="staticEmail" class="col-sm-4 col-form-label">Origin:</label>
-                                                                                                <div class="col-sm-4">
-                                                                                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $t->booking->origin }}">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row">
-                                                                                                <label for="staticEmail" class="col-sm-4 col-form-label">Pick-up time:</label>
-                                                                                                <div class="col-sm-4">
-                                                                                                    @php
-                                                                                                    // Convert the pick-up time to 12-hour format
-                                                                                                    $pickUpTime = date("h:i A", strtotime($t->booking->pick_up_time));
-                                                                                                    @endphp
-                                                                                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $pickUpTime }}">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row">
-                                                                                                <label for="staticEmail" class="col-sm-4 col-form-label">Destination:</label>
-                                                                                                <div class="col-sm-4">
-                                                                                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $t->booking->destination }}">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="mb-3 row">
-                                                                                                <label for="staticEmail" class="col-sm-4 col-form-label">Delivery date & time:</label>
-                                                                                                <div class="col-sm-4">
-                                                                                                    @php
-                                                                                                    // Convert the Transportation time time to 12-hour format
-                                                                                                    $transportationTime = date("F j, Y h:i A", strtotime($t->booking->transportation_time));
-                                                                                                    @endphp
-                                                                                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $transportationTime }}">
-                                                                                                </div>
-                                                                                            </div>
+
+
                                                                                             <div class="table-responsive">
                                                                                                 <table class="table table-bordered table-hover">
                                                                                                     <thead class="table-primary">
