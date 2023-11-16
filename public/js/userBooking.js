@@ -1,37 +1,5 @@
 $(document).ready(function () {
 
-    var today = moment().format('YYYY-MM-DD');
-    var currentDate = moment();
-
-    // Fetch today's bookings from your data source (modify this part according to your data retrieval method)
-    $.ajax({
-        url: gettodaysBookingdate, // Replace with your API endpoint
-        type: 'GET',
-        data: { date: today },
-        dataType: 'json',
-        success: function (response) {
-            // Extract the pickup times from the response (modify this according to your API structure)
-            var todayBookings = response.bookings;
-
-            // Loop through the select options
-            $('#pickUpTime option').each(function () {
-                var optionValue = $(this).val();
-
-                // Check if the pickup time is for today
-                if (today === moment().format('YYYY-MM-DD')) {
-                    // Check if the pickup time is in the past
-                    var optionTime = moment(optionValue, 'HH:mm');
-                    if (optionTime.isSameOrBefore(currentDate, 'minute')) {
-                        // Disable the option if the pickup time has passed for today
-                        $(this).prop('disabled', true);
-                    }
-                }
-            });
-        },
-        error: function (xhr, status, error) {
-            console.error(error);
-        }
-    });
     
     $.ajaxSetup({
         headers: {
@@ -112,7 +80,7 @@ $(document).ready(function () {
             var formattedDate = start.format('YYYY-MM-DD');
 
             var date = start.format('MMMM D, YYYY');
-            $('#transportationDate').val(date);
+            $('#pickUpDate').val(date);
 
             $.ajax({
                 url: checkFullyBookedURL,
@@ -171,9 +139,11 @@ $(document).ready(function () {
             // Unbind the click event for #saveBtn to prevent multiple bindings
             $('#saveBtn').off('click').on('click', function () {
                 var origin = $('#origin').val();
+                console.log(origin)
                 var destination = $('#destination').val();
-                var pickUpTime = $('#pickUpTime').val();
-                var transportationTime = $('#transportationTime').val();
+                console.log(destination)
+                var transportationDate = $('#transportationDate').val();
+                console.log(transportationDate)
                 var date = moment(start).format('YYYY-MM-DD');
                 console.log(date)
 
@@ -182,18 +152,17 @@ $(document).ready(function () {
                     type: "POST",
                     datatype: 'json',
                     data: {
-                        origin, destination, date, pickUpTime, transportationTime
+                        origin, destination, date, transportationDate
                     },
                     success: function (response) {
                         $('#clientBooking').modal('hide')
                         $('#calendar').fullCalendar('renderEvent', {
                             'id': response.id,
                             'title': response.status === 0 ? 'Booked' : 'Pre-booking',
-                            'date': response.date,
+                            'date': response.pickUp_date,
                             'origin': response.origin,
                             'destination': response.destination,
-                            'pickUpTime': response.pickUpTime,
-                            'transportationTime': response.transportationTime
+                            'transportationDate': response.transportationDate
                         });
 
                         location.reload();
@@ -210,8 +179,7 @@ $(document).ready(function () {
                         if (error.responseJSON.errors) {
                             $('#originError').html(error.responseJSON.errors.origin);
                             $('#destinationError').html(error.responseJSON.errors.destination);
-                            $('#pickUpTimeError').html(error.responseJSON.errors.pickUpTime);
-                            $('#transportationTimeError').html(error.responseJSON.errors.transportationTime);
+                            $('#transportationDateError').html(error.responseJSON.errors.transportationDate);
                         }
                     }
 
@@ -232,23 +200,18 @@ $(document).ready(function () {
                         $('#modal_booking_date').text('Transportation date: ' + moment(event.start).format('MMMM D, YYYY'));
                         $('#booking_origin').text('Origin: ' + event.origin);
                         
-                        // Format the pick-up time as 12-hour time (AM/PM)
-                        const formattedPickUpTime = moment(event.pickUpTime, 'HH:mm').format('hh:mm A');
-                        $('#pickUp_time').text('Pick-up time: ' + formattedPickUpTime);
-                        
+                       
                         $('#booking_destination').text('Destination: ' + event.destination);
-                        const formattedTransportationTime = moment(event.transportationTime, 'HH:mm').format('hh:mm A');
-                        $('#transportation_time').text('Transportation time: ' + formattedTransportationTime);
+                        const formattedTransportationDate = moment(event.transportationDate).format('MMMM D, YYYY');
+                        $('#transportationDate').text('Transportation date: ' + formattedTransportationDate);
                     } else {
                         $('#detailsModal').modal('show');
                         $('#booking_title').text(event.name);
                         $('#booking_date').text(moment(event.date).format('MMMM D, YYYY'));
                         $('#modal_booking_origin').text(event.bookingOrigin);
-                        const formattedPickUpTime = moment(event.bookingPickUpTime, 'HH:mm').format('hh:mm A');
-                        $('#modal_pickUp_time').text(formattedPickUpTime);
                         $('#modal_booking_destination').text(event.destination);
-                        const formattedTransportationTime = moment(event.transportationTime, 'HH:mm').format('hh:mm A');
-                        $('#modal_transportation_time').text(formattedTransportationTime);
+                        const formattedTransportationDate = moment(event.transportationDate).format('MMMM D, YYYY');
+                        $('#modal_transportationDate').text(formattedTransportationDate);
                         $('#modal_driver').text(event.driverName);
                         $('#modal_helper').text(event.helperName);
                         $('#modal_truck').text(event.truck);
@@ -267,11 +230,13 @@ $(document).ready(function () {
     var addedEventIds = [];
 
     function renderEvent(event) {
-        if (!addedEventIds.includes(event.id)) {
+        const existingEvent = calendar.fullCalendar('clientEvents', event.id);
+    
+        if (existingEvent.length === 0) {
             calendar.fullCalendar('renderEvent', event);
-            addedEventIds.push(event.id);
         }
     }
+    
 
     function fetchTransportationData(startDate, endDate) {
         $.ajax({
@@ -288,14 +253,14 @@ $(document).ready(function () {
                         var helper = transportation.helper.user.name + ' ' + transportation.helper.user.lname;
                         var approved = transportation.booking && transportation.booking.status === 1 ? 'Booked' : 'N/A';
                         var bookedStatus = transportation.booking && transportation.booking.status === 1 ? 'Booked' : 'N/A';
-                        var formattedDate = moment(transportation.booking.date).format('YYYY-MM-DD');
+                        var formattedDate = moment(transportation.booking.pickUp_date).format('YYYY-MM-DD');
                         var color = approved === 'Booked' ? 'green' : '';
     
                         var status = transportation.status;
                         var statusText = '';
     
                         if (status == 1) {
-                            statusText = 'To be picked up';
+                            statusText = 'To be pick-up';
                         } else if (status == 2) {
                             statusText = 'Picked up';
                         } else if (status == 3) {
@@ -308,23 +273,24 @@ $(document).ready(function () {
                             statusText = 'Unknown';
                         }
     
+                        var eventDate = moment(transportation.booking.pickUp_date).format('YYYY-MM-DD');
                         var event = {
                             id: transportation.id,
                             title: approved,
                             name: transportation.booking.user.name,
                             bookingOrigin: transportation.booking.origin,
                             destination: transportation.booking.destination,
-                            date: formattedDate,
+                            date: eventDate, // Use the modified date without time
                             status: transportation.status,
                             color: color,
-                            bookingPickUpTime: transportation.booking.pick_up_time,
-                            transportationTime: transportation.booking.transportation_time,
+                            transportationDate: transportation.booking.transportation_date,
                             driverName: driver,
                             helperName: helper,
                             bookingStatus: bookedStatus,
                             transportationStatus: statusText,
                             truck: transportation.truck.truck_type + ' - ' + transportation.truck.plate_number
                         };
+
     
                         var existingEvent = calendar.fullCalendar('clientEvents', transportation.id);
                         if (existingEvent.length === 0) {
@@ -343,4 +309,29 @@ $(document).ready(function () {
 
     
 });
+
+function updateOriginReadOnly() {
+    var originInput = document.getElementById("origin");
+    var destinationInput = document.getElementById("destination");
+    var transportationDateInput = document.getElementById("transportationDate");
+
+    originInput.readOnly = false; // Enable origin input
+    destinationInput.readOnly = true; // Make destination input readonly
+    transportationDateInput.readOnly = true; // Make transportationDate input readonly
+}
+
+document.getElementById("destination").addEventListener("change", function() {
+    var originInput = document.getElementById("origin");
+    var destinationInput = document.getElementById("destination");
+    var transportationDateInput = document.getElementById("transportationDate");
+
+    originInput.readOnly = false; // Enable origin input
+    destinationInput.readOnly = false; // Enable destination input
+    transportationDateInput.readOnly = false; // Enable transportationDate input
+});
+
+// Call the function initially to set the initial state
+updateOriginReadOnly();
+
+
 

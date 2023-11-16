@@ -57,12 +57,12 @@ class AdminController extends Controller
 
         $transpo = TransportationDetails::with('booking.user', 'truck')
             ->whereHas('booking', function ($query) use ($today) {
-                $query->whereDate('date', $today);
+                $query->whereDate('pickUp_date', $today);
             })->get();
 
         $countTranspo = TransportationDetails::with('booking.user', 'truck')
         ->whereHas('booking', function ($query) use ($today) {
-            $query->whereDate('date', $today);
+            $query->whereDate('pickUp_date', $today);
         })->count();
 
         $countEmployeesTodayBirthday = Employee::with('user')
@@ -392,20 +392,20 @@ class AdminController extends Controller
         $todayDate = Carbon::today()->format('Y-m-d');
         $transportations = TransportationDetails::whereIn('status', [1, 2, 3, 4, 5, 6, 7])
             ->whereHas('booking', function ($query) use ($todayDate) {
-                $query->where('date', $todayDate);
+                $query->where('pickUp_date', $todayDate);
             })
             ->with('booking')
             ->get();
 
         $todaysTranspoCount = TransportationDetails::whereIn('status', [1, 2, 3, 4, 5, 6, 7])
         ->whereHas('booking', function ($query) use ($todayDate) {
-            $query->where('date', $todayDate);
+            $query->where('pickUp_date', $todayDate);
         })
         ->with('booking')
         ->count();
 
         $upcoming = TransportationDetails::whereHas('booking', function ($query) use ($todayDate) {
-            $query->where('date', '>', $todayDate)
+            $query->where('pickUp_date', '>', $todayDate)
                   ->where('status', 1);
         })
         ->with('booking')
@@ -413,7 +413,7 @@ class AdminController extends Controller
         
 
         $countUpcoming = TransportationDetails::whereHas('booking', function ($query) use ($todayDate) {
-            $query->where('date', '>', $todayDate)
+            $query->where('pickUp_date', '>', $todayDate)
                   ->where('status', 1);
         })
         ->with('booking')
@@ -637,7 +637,7 @@ class AdminController extends Controller
        
         $today = now()->toDateString();
 
-        $todayBookings = Booking::whereDate('date', $today)->get();
+        $todayBookings = Booking::whereDate('pickUp_date', $today)->get();
 
         return response()->json(['bookings' => $todayBookings]);
     }
@@ -1274,14 +1274,13 @@ class AdminController extends Controller
             $events[] = [
                 'id' => $transportation->id,
                 'title' => $transportation->booking->user->name,
-                'start' => $transportation->booking->date,
+                'start' => $transportation->booking->pickUp_date,
                 'end' => $transportation->status == 1 ? 'Approved' : 'Pending',
                 'status' => $transportation->status,
                 'color' => $color,
                 'origin' => $transportation->booking->origin,
                 'destination' => $transportation->booking->destination,
-                'pickupTime' => $transportation->booking->pick_up_time,
-                'transportationTime' => $transportation->booking->transportation_time,
+                'transportationTime' => $transportation->booking->transportation_date,
                 'driver' => $driverName,
                 'helper' => $helperName,
                 'truck' => $transportation->truck->truck_type . ' ' . $transportation->truck->plate_number,
@@ -1294,9 +1293,8 @@ class AdminController extends Controller
             $events[] = [
                 'id' => $booking->id,
                 'title' => $booking->user->name . ' (' . ($booking->status == 1 ? 'Approved' : 'Pre-booking') . ')',
-                'start' => $booking->date,
-                'pickUpTime' => $booking->pick_up_time,
-                'transportationTime' => $booking->transportation_time,
+                'start' => $booking->pickUp_date,
+                'transportationDate' => $booking->transportation_date,
                 'status' => 0 ,
                 'color' => 'blue',
                 'origin' => $booking->origin,
@@ -1369,7 +1367,7 @@ class AdminController extends Controller
         $totalTrucks = Truck::count();
 
         // Retrieve the list of bookings for the given date
-        $bookings = Booking::where('date', $date)->get();
+        $bookings = Booking::where('pickUp_date', $date)->get();
 
         // Calculate the number of assigned trucks for the given date
         $assignedTrucks = TransportationDetails::whereIn('booking_id', $bookings->pluck('id'))
@@ -1389,7 +1387,7 @@ class AdminController extends Controller
         $date = $request->input('date');
 
         // Retrieve the list of company IDs assigned for the given date
-        $assignedCompanyIds = Booking::where('date', $date)->pluck('user_id')->toArray();
+        $assignedCompanyIds = Booking::where('pickUp_date', $date)->pluck('user_id')->toArray();
 
         // Retrieve the details of assigned companies
         $assignedCompanies = User::whereIn('id', $assignedCompanyIds)->get();
@@ -1405,12 +1403,12 @@ class AdminController extends Controller
        
         // Retrieve the list of truck IDs assigned for the given date from bookings
         $assignedTruckDate = TransportationDetails::whereHas('booking', function ($query) use ($date) {
-            $query->whereDate('date', $date);
+            $query->whereDate('pickUp_date', $date);
         })->pluck('truck_id')->toArray();
 
 
         $assignedTruckdateandtime = TransportationDetails::whereHas('booking', function ($query) use ($date) {
-            $query->where('transportation_time', '>=', $date);
+            $query->where('transportation_date', '>=', $date);
         })->pluck('truck_id')->toArray();
         
         // Retrieve the details of assigned companies
@@ -1429,12 +1427,12 @@ class AdminController extends Controller
        
         // Retrieve the list of truck IDs assigned for the given date from bookings
         $assignedTruckDate = TransportationDetails::whereHas('booking', function ($query) use ($date) {
-            $query->whereDate('date', $date);
+            $query->whereDate('pickUp_date', $date);
         })->pluck('truck_id')->toArray();
 
 
         $assignedTruckdateandtime = TransportationDetails::whereHas('booking', function ($query) use ($date) {
-            $query->where('transportation_time', '>=', $date);
+            $query->where('transportation_date', '>=', $date);
         })->pluck('truck_id')->toArray();
         
         // Retrieve the details of assigned companies
@@ -1453,11 +1451,11 @@ class AdminController extends Controller
 
         // Retrieve the list of truck IDs assigned for the given date from bookings
         $assignedDriverIds = TransportationDetails::whereHas('booking', function ($query) use ($date) {
-            $query->whereDate('date', $date);
+            $query->whereDate('pickUp_date', $date);
         })->pluck('driver_id')->toArray();
 
         $assignedDriverIds2 = TransportationDetails::whereHas('booking', function ($query) use ($date) {
-            $query->where('transportation_time', '>=', $date);
+            $query->where('transportation_date', '>=', $date);
         })->pluck('driver_id')->toArray();
 
         // Retrieve the details of assigned companies
@@ -1476,11 +1474,11 @@ class AdminController extends Controller
 
         // Retrieve the list of truck IDs assigned for the given date from bookings
         $assignedHelperIds = TransportationDetails::whereHas('booking', function ($query) use ($date) {
-            $query->whereDate('date', $date);
+            $query->whereDate('pickUp_date', $date);
         })->pluck('helper_id')->toArray();
 
         $assignedHelpers = TransportationDetails::whereHas('booking', function ($query) use ($date) {
-            $query->where('transportation_time', '>=', $date);
+            $query->where('transportation_date', '>=', $date);
         })->pluck('helper_id')->toArray();
         
 
@@ -1500,7 +1498,7 @@ class AdminController extends Controller
 
         // Retrieve the list of truck IDs assigned for the given date from bookings
         $assignedDriverForClientIds = TransportationDetails::whereHas('booking', function ($query) use ($date) {
-            $query->whereDate('date', $date);
+            $query->whereDate('pickUp_date', $date);
         })->pluck('driver_id')->toArray();
 
         // Retrieve the details of assigned companies
@@ -1520,18 +1518,15 @@ class AdminController extends Controller
             'driver' => 'required',
             'helper' => 'required',
             'truck' => 'required',
-            'pickUpTime' => 'required',
-            'trasportationTime' => 'required',
+            'transportationDate' => 'required',
         ]);
 
         $booking = Booking::create([
             'user_id' => $request->company_name,
-            'date' => $request->date,
+            'pickUp_date' => $request->date,
             'origin' => $request->origin,
-            'exp_tons' => $request->exp_tons,
             'destination' => $request->destination,
-            'pick_up_time' => $request->pickUpTime,
-            'transportation_time' => $request->trasportationTime,
+            'transportation_date' => $request->transportationDate,
             'status' => 1
         ]);
 
@@ -1580,10 +1575,9 @@ class AdminController extends Controller
                 $event['bookings'][] = [
                     'id' => $booking->id,
                     'title' =>$booking->user->name,
-                    'date' => $booking->date,
+                    'pickUp_date' => $booking->date,
                     'origin' => $booking->origin,
                     'destination' => $booking->destination,
-                    // Add more booking details as needed
                 ];
             }
 

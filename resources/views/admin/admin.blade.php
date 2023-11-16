@@ -179,35 +179,20 @@
                                                                                     </thead>
                                                                                     <tbody class="text-start">
                                                                                         <tr>
-                                                                                            <td class="fw-bold">Transportation Date:</td>
-                                                                                            <td>{{ \Carbon\Carbon::parse($t->booking->date)->format('M-d-Y') }}</td>
+                                                                                            <td class="fw-bold">Pick-up date:</td>
+                                                                                            <td>{{ \Carbon\Carbon::parse($t->booking->pickUp_date)->format('M-d-Y') }}</td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td class="fw-bold">Date of Booking:</td>
-                                                                                            <td>{{ $t->booking->created_at->format('M-d-Y') }}</td>
+                                                                                            <td class="fw-bold">Transportation Date:</td>
+                                                                                            <td>{{ \Carbon\Carbon::parse($t->booking->transportation_date)->format('M-d-Y') }}</td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td class="fw-bold">Origin:</td>
                                                                                             <td>{{ $t->booking->origin }}</td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <?php
-                                                                                                $pickUpTime = date('h:i A', strtotime($t->booking->pick_up_time));
-                                                                                            ?>
-                                                                                            <td class="fw-bold">Pick-up time:</td>
-                                                                                            <td>{{ $pickUpTime }}</td>
-                                                                                        </tr>
-                                                                                        <tr>
                                                                                             <td class="fw-bold">Destination:</td>
                                                                                             <td>{{ $t->booking->destination }}</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <?php
-                                                                                                $transportationDateTime = date('F j, Y h:i A', strtotime($t->booking->transportation_time));
-                                                                                            ?>
-
-                                                                                            <td class="fw-bold">Delivery date & time:</td>
-                                                                                            <td>{{ $transportationDateTime }}</td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>

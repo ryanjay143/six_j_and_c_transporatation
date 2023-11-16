@@ -38,7 +38,7 @@ class HomeController extends Controller
         $today = Carbon::today();
         $booking = Booking::where('user_id', $user->id)->pluck('id');
         $bookings = Booking::where('user_id', $user->id)
-            ->whereDate('date', $today) 
+            ->whereDate('pickUp_date', $today) 
             ->get();
 
         $countPendingBookings = Booking::where('user_id',$user->id)
@@ -80,16 +80,14 @@ class HomeController extends Controller
        $request->validate([
         'origin' => 'required',
         'destination' => 'required',
-        'pickUpTime' => 'required',
-        'transportationTime' => 'required',
+        'transportationDate' => 'required',
        ]);
 
        $booking = Booking::create([
             'user_id' => Auth::user()->id,
-            'date' => $request->date,
+            'pickUp_date' => $request->date,
             'origin' => $request->origin,
-            'pick_up_time' => $request->pickUpTime,
-            'transportation_time' => $request->transportationTime,
+            'transportation_date' => $request->transportationDate,
             'destination' => $request->destination,
        ]);
 
@@ -137,10 +135,9 @@ class HomeController extends Controller
                 'title' => $t->booking->status == 0 ? 'Approved' : 'Booked',
                 'delivered' => $t->status == 5 || $t->status == 6 ? 'Delivered' : '', 
                 'origin' => $t->booking->origin,
-                'pickUpTime' => $t->booking->pick_up_time,
-                'transportationTime' => $t->booking->transportation_time,
+                'transportationDate' => $t->booking->transportation_date,
                 'destination' => $t->booking->destination,
-                'date' => $t->booking->date,
+                'date' => $t->booking->pickUp_date,
             ];
         }
        
@@ -159,10 +156,9 @@ class HomeController extends Controller
                 'id' => $b->id,
                 'title' => $b->status == 0 ? 'Pre-booking' : 'Booked' ,
                 'origin' => $b->origin,
-                'pickUpTime' => $b->pick_up_time,
-                'transportationTime' => $b->transportation_time,
+                'transportationDate' => $b->transportation_date,
                 'destination' => $b->destination,
-                'date' => $b->date,
+                'date' => $b->pickUp_date,
                 'status' => $b->status,
             ];
         }
@@ -237,7 +233,7 @@ class HomeController extends Controller
         $totalTrucks = Truck::count();
 
         // Retrieve the list of bookings for the given date
-        $bookings = Booking::where('date', $date)->get();
+        $bookings = Booking::where('pickUp_date', $date)->get();
 
         // Calculate the number of assigned trucks for the given date
         $assignedTrucks = TransportationDetails::whereIn('booking_id', $bookings->pluck('id'))

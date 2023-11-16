@@ -27,7 +27,7 @@
                                                                 <tr>
                                                                     <th scope="col">#</th>
                                                                     <th scope="col">Client Name</th>
-                                                                    <th scope="col">Booking Date</th>
+                                                                    <th scope="col">Pick-up Date</th>
                                                                     <th scope="col">Transportation Date</th>
                                                                     <th scope="col">Transportation Status</th>
                                                                     <th scope="col">Action</th>
@@ -38,8 +38,8 @@
                                                                     <tr>
                                                                         <th scope="row">{{ $loop->iteration}}</th>
                                                                         <td>{{ $transportation->booking->user->name }}</td>
-                                                                        <td>{{ ucfirst($transportation->booking->created_at->format('F j, Y')) }}</td>
-                                                                        <td>{{ ucfirst(date('F j, Y', strtotime($transportation->booking->date))) }}</td>
+                                                                        <td>{{ ucfirst(date('F j, Y', strtotime($transportation->booking->pickUp_date))) }}</td>
+                                                                        <td>{{ ucfirst(date('F j, Y', strtotime($transportation->booking->transportation_date))) }}</td>
                                                                         <td>                     
                                                                             @if ($transportation->status == 1)
                                                                                 <span class="badge bg-success">To be pick-up</span>
@@ -109,12 +109,12 @@
                                                                                                             </thead>
                                                                                                             <tbody class="text-start">
                                                                                                                 <tr>
-                                                                                                                    <td>Transportation Date:</td>
-                                                                                                                    <td>{{ ucfirst(date('F j, Y', strtotime($transportation->booking->date))) }}</td>
+                                                                                                                    <td>Pick-up Date:</td>
+                                                                                                                    <td>{{ ucfirst(date('F j, Y', strtotime($transportation->booking->pickUp_date))) }}</td>
                                                                                                                 </tr>
                                                                                                                 <tr>
-                                                                                                                    <td>Date of Booking:</td>
-                                                                                                                    <td>{{ ucfirst($transportation->booking->created_at->format('F j, Y')) }}</td>
+                                                                                                                    <td>Transportation Date:</td>
+                                                                                                                    <td>{{ ucfirst(date('F j, Y', strtotime($transportation->booking->transportation_date))) }}</td>
                                                                                                                 </tr>
                                                                                                                 <tr>
                                                                                                                     <td>Origin:</td>
@@ -197,7 +197,7 @@
                                                                 <tr>
                                                                     <th scope="col">#</th>
                                                                     <th scope="col">Client Name</th>
-                                                                    <th scope="col">Booking Date</th>
+                                                                    <th scope="col">Pick-up Date</th>
                                                                     <th scope="col">Transportation Date</th>
                                                                     <th scope="col">Booking Status</th>
                                                                     <th scope="col">Action</th>
@@ -208,8 +208,8 @@
                                                                     <tr>
                                                                         <th scope="row">{{ $loop->iteration}}</th>
                                                                         <td>{{ $transportation->booking->user->name }}</td>
-                                                                        <td>{{ ucfirst($transportation->booking->created_at->format('F j, Y')) }}</td>
-                                                                        <td>{{ ucfirst(date('F j, Y', strtotime($transportation->booking->date))) }}</td>
+                                                                        <td>{{ ucfirst(date('F j, Y', strtotime($transportation->booking->pickUp_date))) }}</td>
+                                                                        <td>{{ ucfirst(date('F j, Y', strtotime($transportation->booking->transportation_date))) }}</td>
                                                                         <td>
                                                                             @if ($transportation->status == '1')
                                                                                 <span class="badge bg-success">Approved</span>
@@ -269,12 +269,12 @@
                                                                                                             </thead>
                                                                                                             <tbody class="text-start">
                                                                                                                 <tr>
-                                                                                                                    <td>Transportation Date:</td>
-                                                                                                                    <td>{{ ucfirst(date('F j, Y', strtotime($transportation->booking->date))) }}</td>
+                                                                                                                    <td>Pick-up Date:</td>
+                                                                                                                    <td>{{ ucfirst(date('F j, Y', strtotime($transportation->booking->pickUp_date))) }}</td>
                                                                                                                 </tr>
                                                                                                                 <tr>
-                                                                                                                    <td>Date of Booking:</td>
-                                                                                                                    <td>{{ ucfirst($transportation->booking->created_at->format('F j, Y')) }}</td>
+                                                                                                                    <td>Transportation date:</td>
+                                                                                                                    <td>{{ ucfirst(date('F j, Y', strtotime($transportation->booking->transportation_date))) }}</td>
                                                                                                                 </tr>
                                                                                                                 <tr>
                                                                                                                     <td>Origin:</td>

@@ -158,13 +158,12 @@
     </script>
 
     <script>
-        
         var checkFullyBookedURL = "{{ route('user.check-fully-booked') }}";
     </script>
 
-        <script>
-            var gettodaysBookingdate = "{{ route('user.todaysBooking.date') }}";
-        </script>
+    <script>
+        var gettodaysBookingdate = "{{ route('user.todaysBooking.date') }}";
+    </script>
 
 
     <script src="{{ asset('js/userBooking.js') }}"></script>

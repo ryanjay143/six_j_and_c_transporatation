@@ -32,8 +32,8 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="transportationDate" readonly>
-                                <label for="floatingInput">Transportation date</label>
+                                <input class="form-control" id="pickUpDate" readonly>
+                                <label for="floatingInput">Pick-up date</label>
                             </div>
 
                             <div class="form-floating mb-3">
@@ -42,8 +42,8 @@
                                 <label for="floatingInput">Company name</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-select" name="origin" id="origin" 
-                                aria-label="Floating label select example" required>
+                            <select class="form-select" name="origin" id="origin" 
+        aria-label="Floating label select example" required onchange="updateOriginReadOnly()">
                                     <option selected disabled>Select Origin</option>
                                     <option value="Cagayan de Oro">Cagayan de Oro</option>
                                     <option value="Iligan City">Iligan City</option>
@@ -57,26 +57,9 @@
                                 <span id="originError" class="text-danger"></span>
                                 <label for="floatingSelect">Origin</label>
                             </div>
-                            <div class="mb-3">
-                                <select class="form-select form-select-lg" aria-label="Default select example" id="pickUpTime">
-                                    <option disabled selected>Pick-up time (expectation)</option>
-                                    <option value="08:00">8:00 AM</option>
-                                        <option value="09:00">9:00 AM</option>
-                                        <option value="10:00">10:00 AM</option>
-                                        <option value="11:00">11:00 AM</option>
-                                        <option value="12:00">12:00 PM</option>
-                                        <option value="13:00">1:00 PM</option>
-                                        <option value="14:00">2:00 PM</option>
-                                        <option value="15:00">3:00 PM</option>
-                                        <option value="16:00">4:00 PM</option>
-                                        <option value="17:00">5:00 PM</option>
-                                        <option value="18:00">6:00 PM</option>
-                                </select>
-                                <span id="pickUpTimeError" class="text-danger mb-3"></span>
-                            </div>
 
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="destination" name="destination" aria-label="Floating label select example" required>
+                            <select class="form-select" id="destination" name="destination" aria-label="Floating label select example" required readonly>
                                     <option selected disabled>Select Destination</option>
                                     <option value="Cagayan de Oro">Cagayan de Oro</option>
                                     <option value="Iligan City">Iligan City</option>
@@ -91,9 +74,9 @@
                                 <label for="floatingSelect">Destination</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="datetime-local" class="form-control" id="transportationTime">
-                                <span id="transportationTimeError" class="text-danger mb-3"></span>
-                                <label for="transportationTime">Transportation time</label>
+                            <input type="date" class="form-control" id="transportationDate" readonly>
+                                <span id="transportationDateError" class="text-danger mb-3"></span>
+                                <label for="transportationDate">Transportation date</label>
                             </div>
 
                             <div class="d-grid gap-2">
@@ -124,13 +107,10 @@
                                         <p id="booking_origin"></p>
                                     </div>
                                     <div class="col mb-3">
-                                        <p id="pickUp_time"></p>
-                                    </div>
-                                    <div class="col mb-3">
                                         <p id="booking_destination"></p>
                                     </div>
                                     <div class="col mb-3">
-                                        <p id="transportation_time"></p>
+                                        <p id="transportation_date"></p>
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +154,7 @@
                             <table class="table table-bordered border-dark table-hover">
                                 <tbody>
                                     <tr>
-                                        <th scope="row">Transportation Date:</th>
+                                        <th scope="row">Pick-up date:</th>
                                         <td><span id="booking_date"></span></td>
                                     </tr>
                                     <tr>
@@ -186,16 +166,12 @@
                                         <td><span id="modal_booking_origin"></span></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Pick-up time:</th>
-                                        <td><span id="modal_pickUp_time"></span></td>
-                                    </tr>
-                                    <tr>
                                         <th scope="row">Destination:</th>
                                         <td><span id="modal_booking_destination"></span></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Transportation time:</th>
-                                        <td><span id="modal_transportation_time"></span></td>
+                                        <th scope="row">Transportation date:</th>
+                                        <td><span id="modal_transportationDate"></span></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Driver:</th>

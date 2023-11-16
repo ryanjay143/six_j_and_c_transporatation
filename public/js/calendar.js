@@ -1,53 +1,53 @@
 $(document).ready(function() {
 
     var today = moment().format('YYYY-MM-DD');
-    var currentDate = moment();
+    // var currentDate = moment();
 
-    // Helper function to render an event on the calendar
-    function renderEvent(event) {
-        if (!addedEventIds.includes(event.id)) {
-            calendar.fullCalendar('renderEvent', event);
-            addedEventIds.push(event.id);
-        }
-    }
+    // // Helper function to render an event on the calendar
+    // function renderEvent(event) {
+    //     if (!addedEventIds.includes(event.id)) {
+    //         calendar.fullCalendar('renderEvent', event);
+    //         addedEventIds.push(event.id);
+    //     }
+    // }
 
-    var calendar = $('#calendar');
-    var addedEventIds = []; // Array to track added event IDs
+    // var calendar = $('#calendar');
+    // var addedEventIds = []; // Array to track added event IDs
 
-    // Function to disable past pickup times
-    function disablePastPickupTimes() {
-        if (today === moment().format('YYYY-MM-DD')) {
-            $('#pickUpTime option').each(function() {
-                var optionValue = $(this).val();
-                var optionTime = moment(optionValue, 'HH:mm');
+    // // Function to disable past pickup times
+    // function disablePastPickupTimes() {
+    //     if (today === moment().format('YYYY-MM-DD')) {
+    //         $('#pickUpTime option').each(function() {
+    //             var optionValue = $(this).val();
+    //             var optionTime = moment(optionValue, 'HH:mm');
                 
-                if (optionTime.isSameOrBefore(currentDate, 'minute')) {
-                    $(this).prop('disabled', true);
-                }
-            });
-        }
-    }
+    //             if (optionTime.isSameOrBefore(currentDate, 'minute')) {
+    //                 $(this).prop('disabled', true);
+    //             }
+    //         });
+    //     }
+    // }
 
     // Fetch today's bookings and disable past pickup times
-    $.ajax({
-        url: gettodaysBookingdate,
-        type: 'GET',
-        data: { date: today },
-        dataType: 'json',
-        success: function(response) {
-            var todayBookings = response.bookings;
-            disablePastPickupTimes();
+    // $.ajax({
+    //     url: gettodaysBookingdate,
+    //     type: 'GET',
+    //     data: { date: today },
+    //     dataType: 'json',
+    //     success: function(response) {
+    //         var todayBookings = response.bookings;
+    //         disablePastPickupTimes();
 
-            // Check if all pickup times are disabled
-            if ($('#pickUpTime option:enabled').length === 0) {
-                // Display an alert if all pickup times are disabled
-                alert('All pickup times are disabled for today.');
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-        }
-    });
+    //         // Check if all pickup times are disabled
+    //         if ($('#pickUpTime option:enabled').length === 0) {
+    //             // Display an alert if all pickup times are disabled
+    //             alert('All pickup times are disabled for today.');
+    //         }
+    //     },
+    //     error: function(xhr, status, error) {
+    //         console.error(error);
+    //     }
+    // });
 
     
     
@@ -383,23 +383,21 @@ $(document).ready(function() {
                 // }
 
                 var company_name = $('#company_name').val();
-                console.log(company_name)
+                console.log({ UserId: company_name });
                 var origin = $('#origin').val();
-                console.log(origin)
+                console.log({ origin: origin})
                 var driver = $('#driver_id').val();
-                console.log(driver)
+                console.log({ driverId: driver})
                 var helper = $('#helper_id').val();
-                console.log(helper)
+                console.log({ helperId: helper})
                 var truck = $('#truck_id').val();
-                console.log(truck)
+                console.log({ truckId: truck})
                 var destination = $('#destination').val();
-                console.log(destination)
+                console.log({ destination: destination})
                 var date = moment(start).format('YYYY-MM-DD');
-                console.log(date)
-                var pickUpTime = $('#pickUpTime').val();
-                console.log(pickUpTime)
-                var trasportationTime = $('#trasportationTime').val();
-                console.log(trasportationTime)
+                console.log({ pickUpDate: date})
+                var transportationDate = $('#trasportationDate').val();
+                console.log({ transportationDate: transportationDate })
 
                 $.ajax({
                     url: bookingForClientURL,
@@ -409,8 +407,7 @@ $(document).ready(function() {
                         company_name,
                         origin,
                         destination,
-                        pickUpTime,
-                        trasportationTime,
+                        transportationDate,
                         date,
                         driver,
                         helper,
@@ -592,9 +589,13 @@ $(document).ready(function() {
 
                 $('#saveBtn1').off('click').on('click', function () { 
                     var booking_id = $('#booking_id').val();
+                    console.log(booking_id)
                     var driver = $('#driver').val();
+                    console.log(driver)
                     var helper = $('#helper').val();
+                    console.log(helper)
                     var truck = $('#truck').val();
+                    console.log(truck)
 
                     $.ajax({
                         url: getAssignedTruck,
@@ -774,10 +775,8 @@ $(document).ready(function() {
                 document.getElementById("modal_booking_title").value = event.title;
                 document.getElementById("modal_booking_origin").value = event.origin;
                 document.getElementById("modal_booking_destination").value = event.destination;
-                const formattedPickUpTime = moment(event.pickUpTime, 'HH:mm').format('hh:mm A');
-                document.getElementById("modal_booking_pickUpTime").value = formattedPickUpTime;
-                const formattedTransportationTime = moment(event.transportationTime, 'HH:mm').format('hh:mm A');
-                document.getElementById("modal_booking_transportation_time").value = formattedTransportationTime;
+                const formattedTransportationDate = moment(event.transportationDate).format('MMMM D, YYYY');
+                document.getElementById("modal_booking_transportation_date").value = formattedTransportationDate;
                 var statusInput = document.getElementById("modal_booking_status");
 
                 // Set the initial value based on the status variable
@@ -793,10 +792,8 @@ $(document).ready(function() {
                 $('#modal_company_name').text(event.title);
                 $('#modal_company_id').text(event.id);
                 $('#modal_origin').text(event.origin);
-                const formattedPickUpTime = moment(event.pickupTime, 'HH:mm').format('hh:mm A');
-                $('#modal_pickUpTime').text(formattedPickUpTime);
-                const formattedDateTime = moment(`${event.date} ${event.transportationTime}`, 'YYYY-MM-DD HH:mm').format('MMMM D, YYYY hh:mm A');
-                $('#modal_transportationTime').text(formattedDateTime);
+                const formattedtransportationDate= moment(`${event.date} ${event.transportationTime}`, 'YYYY-MM-DD').format('MMMM D, YYYY');
+                $('#modal_transportationDate').text(formattedtransportationDate);
                 
                 
                 $('#modal_destination').text(event.destination);
