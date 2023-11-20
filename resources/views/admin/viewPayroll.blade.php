@@ -80,6 +80,12 @@
                                                 <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                                                     <div class="card-body">
                                                         <div class="table-responsive">
+                                                        <div id="start_date_input" class="col-sm-3">
+                                                            <input hidden="" type="date" class="form-control" name="start_date" placeholder="Start Date" aria-label="Start Date">
+                                                        </div>
+                                                        <div id="end_date_input" class="col-sm-3">
+                                                            <input hidden="" type="date" class="form-control" name="end_date" placeholder="End Date" aria-label="End Date">
+                                                        </div>
                                                             <table id="payroll" class="table table-bordered table-hover">
                                                                 <thead class="table-primary">
                                                                     <tr>
@@ -97,30 +103,33 @@
                                                                     @endphp
 
                                                                     @foreach ($sortedDriver as $t)
-                                                                        <tr>
-                                                                            <input type="hidden" name="transpoId[]" value="{{ $t->id }}">
-                                                                            <th scope="row">{{ $loop->iteration }}</th>
-                                                                            <td>{{ $t->booking->user->name }}</td>
-                                                                            <td>{{ \Carbon\Carbon::parse($t->booking->date)->format('F j, Y') }}</td>
-                                                                            <td>{{ $t->booking->origin }} - {{ $t->booking->destination }}</td>
-                                                                            <td>
-                                                                                <input type="text" style="width: 100px;" value="0" class="form-control form-control-sm rateInput"  id="rateInput_{{ $loop->iteration }}" oninput="updateTotal(); this.value = this.value.replace(/\D/g, '')">
-                                                                            </td>
-                                                                        </tr>
+                                                                        @if ($t->status >= 5 && $t->status <= 7)
+                                                                            <tr>
+                                                                                <input type="hidden" name="transpoId[]" value="{{ $t->id }}">
+                                                                                <th scope="row">{{ $loop->iteration }}</th>
+                                                                                <td>{{ $t->booking->user->name }}</td>
+                                                                                <td>{{ \Carbon\Carbon::parse($t->booking->pickUp_date)->format('F j, Y') }}</td>
+                                                                                <td>{{ $t->booking->origin }} - {{ $t->booking->destination }}</td>
+                                                                                <td>
+                                                                                    <input type="text" style="width: 100px;" value="0" class="form-control form-control-sm rateInput" id="rateInput_{{ $loop->iteration }}" oninput="updateTotal(); this.value = this.value.replace(/\D/g, '')">
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endif
                                                                     @endforeach
                                                                     @foreach ($sortedHelper as $h)
-                                                                        <tr>
-                                                                            <input type="hidden" name="transpoId[]" value="{{ $h->id }}">
-                                                                            <th scope="row">{{ $loop->iteration }}</th>
-                                                                            <td>{{ $h->booking->user->name }}</td>
-                                                                            <td>{{ \Carbon\Carbon::parse($h->booking->date)->format('F j, Y') }}</td>
-                                                                            <td>{{ $h->booking->origin }} - {{ $h->booking->destination }}</td>
-                                                                            <td>
-                                                                                <input type="text" style="width: 100px;" value="0" class="form-control form-control-sm rateInput" oninput="updateTotal(); this.value = this.value.replace(/\D/g, '')">
-                                                                            </td>
-                                                                        </tr>
+                                                                        @if ($h->status >= 5 && $h->status <= 7)
+                                                                            <tr>
+                                                                                <input type="hidden" name="transpoId[]" value="{{ $h->id }}">
+                                                                                <th scope="row">{{ $loop->iteration }}</th>
+                                                                                <td>{{ $h->booking->user->name }}</td>
+                                                                                <td>{{ \Carbon\Carbon::parse($h->booking->pickUp_date)->format('F j, Y') }}</td>
+                                                                                <td>{{ $h->booking->origin }} - {{ $h->booking->destination }}</td>
+                                                                                <td>
+                                                                                    <input type="text" style="width: 100px;" value="0" class="form-control form-control-sm rateInput" oninput="updateTotal(); this.value = this.value.replace(/\D/g, '')">
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endif
                                                                     @endforeach
-
                                                                 </tbody>
                                                                 <tfoot class="table-hover">
                                                                     <tr>
@@ -252,15 +261,13 @@
                                                                                 @endif
 
                                                                                 
-                                                                                <div class="col-auto">
+                                                                                <div id="start_date_input_copy" class="col-auto">
                                                                                     <label for="inputCopyStartDate" class="visually-hidden">Copy Start Date</label>
-                                                                                    <input hidden="" type="date" name="start_date" class="form-control form-control-sm" 
-                                                                                    id="inputCopyStartDate" value="{{ $start_date ? date('Y-m-d', strtotime($start_date)) : '' }}">
+                                                                                    <input hidden="" type="date" name="start_date" class="form-control form-control-sm" value="">
                                                                                 </div>
-                                                                                <div class="col-auto">
+                                                                                <div id="end_date_input_copy" class="col-auto">
                                                                                     <label for="inputCopyEndDate" class="visually-hidden">Copy End Date</label>
-                                                                                    <input hidden="" type="date" name="end_date" class="form-control form-control-sm" 
-                                                                                    id="inputCopyEndDate" value="{{ $end_date ? date('Y-m-d', strtotime($end_date)) : '' }}">
+                                                                                    <input hidden="" type="date" name="end_date" class="form-control form-control-sm" value="">
                                                                                 </div>
 
                                                                                 @foreach ($driver as $t)

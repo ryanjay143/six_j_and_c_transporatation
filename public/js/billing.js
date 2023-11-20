@@ -163,6 +163,31 @@ originalInputTonsFields.forEach((field) => {
 });
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    var currentDate = new Date();
+    var currentDay = currentDate.getDate();
+
+    var startDateInput = document.querySelector('#start_date_input input');
+    var endDateInput = document.querySelector('#end_date_input input');
+
+    // Set default values based on the day of the month
+    if (currentDay <= 15) {
+        // If the day is 1-15, set default values for the entire month
+        startDateInput.value = currentDate.getFullYear() + '-' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-01';
+        endDateInput.value = currentDate.getFullYear() + '-' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-15';
+    } else {
+        // If the day is 16-30 or 31, set default values for the entire month
+        startDateInput.value = currentDate.getFullYear() + '-' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-16';
+
+        // Set the end_date to the last day of the current month
+        var lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+        endDateInput.value = currentDate.getFullYear() + '-' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + lastDay;
+    }
+    // Show the hidden div elements
+    document.getElementById('start_date_input').style.display = 'block';
+    document.getElementById('end_date_input').style.display = 'block';
+});
+
 
 
 

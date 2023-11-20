@@ -38,7 +38,7 @@ class EmployeeController extends Controller
             // Fetch transportation details for the driver where the booking date is today
             $transpo = $employee->transportationDetails()
                 ->whereHas('booking', function ($query) use ($today) {
-                    $query->whereDate('date', $today);
+                    $query->whereDate('pickUp_date', $today);
                 })
                 ->with('booking.user', 'helper.user','updatedTime')
                 ->get();
@@ -46,7 +46,7 @@ class EmployeeController extends Controller
                  // Fetch transportation details for the driver where the booking date is today
             $transportationDate = $employee->transportationDetails()
             ->whereHas('booking', function ($query) use ($today) {
-                $query->whereDate('transportation_time', $today);
+                $query->whereDate('transportation_date', $today);
             })
             ->with('booking.user', 'helper.user','updatedTime')
             ->get();
@@ -57,7 +57,7 @@ class EmployeeController extends Controller
 
             $upcomingTranspo = $employee->transportationDetails()->where('status', '1')
                 ->whereHas('booking', function ($query) use ($today) {
-                    $query->whereDate('date', '>', $today);
+                    $query->whereDate('pickUp_date', '>', $today);
                 })
                 ->with('booking.user', 'helper.user')
                 ->count();
@@ -65,7 +65,7 @@ class EmployeeController extends Controller
             $approvedTranspo = $employee->transportationDetails()
                 ->whereHas('booking', function ($query) use ($today) {
                     // Filter by booking_date for today
-                    $query->whereDate('date', $today);
+                    $query->whereDate('pickUp_date', $today);
                 })
                 ->with('booking.user', 'helper.user')
                 ->count();
@@ -136,7 +136,7 @@ class EmployeeController extends Controller
             // Fetch transportation details for the driver where status = 1 (approved) and booking date is greater than today
             $transpo = $employee->transportationDetails()->where('status', '1')
                 ->whereHas('booking', function ($query) use ($today) {
-                    $query->whereDate('date', '>', $today);
+                    $query->whereDate('pickUp_date', '>', $today);
                 })
                 ->with('booking.user', 'helper.user')
                 ->get();
@@ -153,7 +153,7 @@ class EmployeeController extends Controller
             // Count the number of approved transportation
             $approvedTranspo = $employee->transportationDetails()->where('status', '1')
                 ->whereHas('booking', function ($query) use ($today) {
-                    $query->whereDate('date', '>', $today);
+                    $query->whereDate('pickUp_date', '>', $today);
                 })
                 ->count();
         } else {

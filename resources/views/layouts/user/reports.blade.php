@@ -71,7 +71,7 @@
                         <li class="sidebar-item">
                             <a href="{{ route('user.billings.payment') }}" class='sidebar-link'>
                                 <i class="fas fa-file-invoice-dollar"></i>
-                                <span>Billings</span>
+                                <span>Invoice</span>
                             </a>
                         </li>
 

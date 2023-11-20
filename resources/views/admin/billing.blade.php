@@ -31,24 +31,14 @@
                                                     <option value="{{ $client->id }}" @if(request('client_id') == $client->id) selected @endif>{{ $client->name }}</option>
                                                 @endforeach
                                             </select>
-                                            @error('client_id')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                                            
                                         </div>
-                                        <!-- <div id="start_date_input" class="col-sm-3">
-                                            <label for="">From:</label>
-                                            <input type="date" class="form-control @error('start_date') is-invalid @enderror" name="start_date" placeholder="Start Date" aria-label="Start Date" value="{{ old('start_date', $start_date) }}" required>
-                                            @error('start_date')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                                        <div id="start_date_input" class="col-sm-3">
+                                            <input hidden="" type="date" class="form-control" name="start_date" placeholder="Start Date" aria-label="Start Date" value="" >
                                         </div>
                                         <div id="end_date_input" class="col-sm-3">
-                                        <label for="">To:</label>
-                                            <input type="date" class="form-control @error('end_date') is-invalid @enderror" name="end_date" placeholder="End Date" aria-label="End Date" value="{{ old('end_date', $end_date) }}" required>
-                                            @error('end_date')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div> -->
+                                            <input hidden="" type="date" class="form-control" name="end_date" placeholder="End Date" aria-label="End Date" value="" >
+                                        </div>
 
                                         <!-- <div class="col-sm-3 align-self-end">
                                             <button type="submit" class="btn btn-outline-primary w-100">Filter Date</button>
@@ -66,8 +56,6 @@
                                                             <th scope="col">#</th>
                                                             <th scope="col">Transportation Date</th>
                                                             <th scope="col">Company Name</th>
-                                                            <!-- <th scope="col">Plate Number</th>
-                                                            <th scope="col">Truck Type</th> -->
                                                             <th scope="col">Origin</th>
                                                             <th scope="col">Destination</th>
                                                             <th scope="col">Unit Weight</th>
@@ -77,41 +65,39 @@
                                                     </thead>
                                                     <tbody>
                                                         @php
-                                                            $sortedTranspo = $transpo->sortBy('booking.date'); 
+                                                            $sortedTranspo = $transpo->sortBy('booking.pickUp_date'); 
                                                             $totalAmount = 0;
                                                         @endphp
                                                         @foreach ($sortedTranspo as $t)
-                                                            <tr>
-                                                                <th scope="row">{{ $loop->iteration }}</th>
-                                                                <td>{{ date('F j, Y', strtotime($t->booking->date)) }}</td>
-                                                                <td>{{ $t->booking->user->name }}</td>
-                                                                <!-- <td class="text-uppercase">{{ $t->truck->plate_number }}</td>
-                                                                <td class="text-uppercase">{{ $t->truck->truck_type }}</td> -->
-                                                                <td>{{ $t->booking->origin }}</td>
-                                                                <td>{{ $t->booking->destination }}</td>
-                                                                <td>
-                                                                    <div style="display: flex; align-items: center;">
-                                                                        <input type="number" readonly class="form-control form-control-sm exp-tons border border-0" style="width: 70px;" value="{{ $t->booking->tons }}" aria-label="Tons" 
-                                                                            pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, ''); calculateAmount('{{ $loop->iteration }}'); updateTonsCopy(this.value, '{{ $loop->iteration }}'); checkAllRowsValidity();"
-                                                                            data-iteration="{{ $loop->iteration }}">
-                                                                        <span style="margin-left: -40px;">Tons</span>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control form-control-sm price" value="0" style="width: 100px;" aria-label="First name" pattern="[0-9]*" 
-                                                                    oninput="this.value = this.value.replace(/[^0-9]/g, ''); calculateAmount('{{ $loop->iteration }}'); updatePriceCopy('{{ $loop->iteration }}');"
-                                                                    data-iteration="{{ $loop->iteration }}" id="price_{{ $loop->iteration }}" checkAllRowsValidity();>
-                                                                </td>
-                                                                <td class="amount" id="amount_{{ $loop->iteration }}"></td>
-                                                                <!-- <td>
-                                                                    <button type="button" class="btn btn-primary btn-sm" id="saveBtn_{{ $loop->iteration }}" onclick="saveRow('{{ $loop->iteration }}');">Save</button>
-                                                                </td> -->
-                                                            </tr>
+                                                            @if ($t->booking->tons !== null)
+                                                                <tr>
+                                                                    <th scope="row">{{ $loop->iteration }}</th>
+                                                                    <td>{{ date('F j, Y', strtotime($t->booking->pickUp_date)) }}</td>
+                                                                    <td>{{ $t->booking->user->name }}</td>
+                                                                    <td>{{ $t->booking->origin }}</td>
+                                                                    <td>{{ $t->booking->destination }}</td>
+                                                                    <td>
+                                                                        <div style="display: flex; align-items: center;">
+                                                                            <input type="number" readonly class="form-control form-control-sm exp-tons border border-0" style="width: 70px;" value="{{ $t->booking->tons }}" aria-label="Tons" 
+                                                                                pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, ''); calculateAmount('{{ $loop->iteration }}'); updateTonsCopy(this.value, '{{ $loop->iteration }}'); checkAllRowsValidity();"
+                                                                                data-iteration="{{ $loop->iteration }}">
+                                                                            <span style="margin-left: -40px;">Tons</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control form-control-sm price" value="0" style="width: 100px;" aria-label="First name" pattern="[0-9]*" 
+                                                                        oninput="this.value = this.value.replace(/[^0-9]/g, ''); calculateAmount('{{ $loop->iteration }}'); updatePriceCopy('{{ $loop->iteration }}');"
+                                                                        data-iteration="{{ $loop->iteration }}" id="price_{{ $loop->iteration }}" checkAllRowsValidity();>
+                                                                    </td>
+                                                                    <td class="amount" id="amount_{{ $loop->iteration }}"></td>
+                                                                </tr>
+                                                            @endif
                                                         @endforeach
                                                     </tbody>
+
                                                     <tfoot>
                                                         <tr>
-                                                            <td colspan="6" class="fw-bold text-end">Total Amount:</td>
+                                                            <td colspan="7" class="fw-bold text-end">Total Amount:</td>
                                                             <td colspan="0" class="fw-bold" id="totalAmount"></td>
                                                         </tr>
                                                         <tr>
@@ -142,7 +128,7 @@
                                                                     @endforeach
                                                                    
                                                                     <div class="col-md-12 text-center">
-                                                                        <button type="submit" class="btn btn-primary btn-sm w-100" id="saveBillingBtn" disabled>Generate billing</button>
+                                                                        <button type="submit" class="btn btn-primary fw-bold btn-sm w-100" id="saveBillingBtn" disabled>Generate billing</button>
                                                                     </div>
                                                                 </form>
                                                             </td>

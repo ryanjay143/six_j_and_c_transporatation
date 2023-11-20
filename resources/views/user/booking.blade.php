@@ -42,8 +42,8 @@
                                 <label for="floatingInput">Company name</label>
                             </div>
                             <div class="form-floating mb-3">
-                            <select class="form-select" name="origin" id="origin" 
-        aria-label="Floating label select example" required onchange="updateOriginReadOnly()">
+                                <select class="form-select" name="origin" id="origin" 
+                                    aria-label="Floating label select example" required onchange="updateOriginReadOnly()">
                                     <option selected disabled>Select Origin</option>
                                     <option value="Cagayan de Oro">Cagayan de Oro</option>
                                     <option value="Iligan City">Iligan City</option>
@@ -59,7 +59,7 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                            <select class="form-select" id="destination" name="destination" aria-label="Floating label select example" required readonly>
+                                <select class="form-select" id="destination" name="destination" aria-label="Floating label select example" required readonly>
                                     <option selected disabled>Select Destination</option>
                                     <option value="Cagayan de Oro">Cagayan de Oro</option>
                                     <option value="Iligan City">Iligan City</option>

@@ -572,14 +572,11 @@ class AdminController extends Controller
     {
         // Validate the form data
         $validator = Validator::make($request->all(), [
-        'client_id' => 'required|exists:users,id', // Check if the 'client_id' exists in the 'users' table
-        'start_date' => 'required|date',
-        'end_date' => 'required|date|after_or_equal:start_date',
-
+        'client_id' => 'required|exists:users,id', 
         ]);
         
         if ($validator->fails()) {
-            Alert::error('Please Input All field for Filter');
+            Alert::error('Please choose the company');
             return redirect()->back()->withErrors($validator)->withInput();
         }
         
@@ -665,7 +662,7 @@ class AdminController extends Controller
         // Filter based on the date range and sort in ascending order (oldest date first)
         if ($start_date && $end_date) {
             $query->whereHas('booking', function ($query) use ($start_date, $end_date) {
-                $query->whereBetween('date', [$start_date, $end_date])->orderBy('date', 'asc');
+                $query->whereBetween('pickUp_date', [$start_date, $end_date])->orderBy('pickUp_date', 'asc');
             });
         }
 
@@ -919,18 +916,6 @@ class AdminController extends Controller
 
     public function save_payroll(Request $request)
     {
-        // Validate the incoming data
-        $validator = Validator::make($request->all(), [
-            'start_date' => 'required|date', // Validate that the input is a valid date format
-            'end_date' => 'required|date', // Validate that the input is a valid date format
-        ]);
-
-        // Check if the validation fails
-        if ($validator->fails()) {
-            Alert::error('Please click the button filter date','Please Input start and end date');
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
         // Save the main payroll information (employee_id, total_rate, total_deduction, total_net_salary, payroll_start_date, payroll_end_date) into the "payrolls" table
         $payroll = new Payroll();
         $payroll->employee_id = $request->employee_id;
@@ -1652,7 +1637,7 @@ class AdminController extends Controller
 
         // Update the transportation_date field in the transportation_details table
         $booking->update([
-            'date' => $request->input('transportation_date'),
+            'pickUp_date' => $request->input('transportation_date'),
         ]);
 
         return response()->json('Event Updated');
