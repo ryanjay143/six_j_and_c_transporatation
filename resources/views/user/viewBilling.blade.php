@@ -45,7 +45,7 @@
                                                     @foreach ($billingDetails as $b)
                                                     <tr>
                                                         <th scope="row">{{ $loop->iteration }}</th>
-                                                        <td>{{ date('M d, Y', strtotime($b->transpo->booking->date)) }}</td>
+                                                        <td>{{ date('M d, Y', strtotime($b->transpo->booking->transportation_date)) }}</td>
                                                         <td>{{ $b->transpo->employee->user->name }} {{ $b->transpo->employee->user->lname }}</td>
                                                         <td>{{ $b->transpo->truck->plate_number }}</td>
                                                         <td class="text-uppercase">{{ $b->transpo->truck->truck_type }}</td>

@@ -34,10 +34,10 @@
                                             
                                         </div>
                                         <div id="start_date_input" class="col-sm-3">
-                                            <input hidden="" type="date" class="form-control" name="start_date" placeholder="Start Date" aria-label="Start Date" value="" >
+                                            <input hidden="" type="date" class="form-control" name="start_date" placeholder="Start Date" aria-label="Start Date">
                                         </div>
                                         <div id="end_date_input" class="col-sm-3">
-                                            <input hidden="" type="date" class="form-control" name="end_date" placeholder="End Date" aria-label="End Date" value="" >
+                                            <input hidden="" type="date" class="form-control" name="end_date" placeholder="End Date" aria-label="End Date">
                                         </div>
 
                                         <!-- <div class="col-sm-3 align-self-end">
@@ -107,12 +107,12 @@
                                                                     @csrf
 
                                                                     <input hidden="" type="text" name="client_id" id="clientNameInput" value="{{ old('client_id') }}">
-                                                                    <input type="date" hidden="" class="form-control" name="start_date" 
-                                                                        placeholder="Start Date" aria-label="Start Date" 
-                                                                        value="{{ $start_date ? date('Y-m-d', strtotime($start_date)) : '' }}">
-                                                                    <input type="date" hidden="" class="form-control" name="end_date" 
-                                                                        placeholder="End Date" aria-label="End Date" 
-                                                                        value="{{ $end_date ? date('Y-m-d', strtotime($end_date)) : '' }}">
+                                                                    <div id="start_date_input_copy" class="col-auto">
+                                                                        <input type="date" class="form-control" name="start_date" placeholder="Start Date" aria-label="Start Date">
+                                                                    </div>
+                                                                    <div id="end_date_input_copy" class="col-auto">
+                                                                        <input type="date" class="form-control" name="end_date" placeholder="End Date" aria-label="End Date">
+                                                                    </div>
                                                                     <input hidden="" type="text" name="totalAmount" class="form-control form-control-sm" id="totalAmountCopy">
 
                                                                     @foreach ($transpo as $t)

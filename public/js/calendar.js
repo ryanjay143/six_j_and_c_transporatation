@@ -3,7 +3,7 @@ $(document).ready(function() {
     var today = moment().format('YYYY-MM-DD');
     // var currentDate = moment();
 
-    // // Helper function to render an event on the calendar
+    // Helper function to render an event on the calendar
     // function renderEvent(event) {
     //     if (!addedEventIds.includes(event.id)) {
     //         calendar.fullCalendar('renderEvent', event);
@@ -179,7 +179,49 @@ $(document).ready(function() {
                         $('#company_name').val('').trigger('change');
                     }
                 
-                    // Show the booking modal if the options are available for the date
+                    // // Show the booking modal if the options are available for the date
+                    // $('#bookingModal').modal('toggle');
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error, show an alert or message if needed
+                    console.error(error);
+                }
+                
+            });
+
+            $.ajax({
+                url: getAssignedTruckURL,
+                type: "GET",
+                data: { date: formattedDate},
+                dataType: "json",
+                success: function(response) {
+                    var assignedTruck1 = response.assignedTruck1;
+                    var assignedTruck2 = response.assignedTruck2;
+                
+                    // Reset the text for all options in the dropdown
+                    $('#truck_id option').each(function() {
+                        var option = $(this);
+                        option.text(option.text().replace(' (Assigned)', ''));
+                    });
+                
+                    // Disable the options for the assigned trucks
+                    assignedTruck1.forEach(function(truck) {
+                        var option = $('#truck_id option[value="' + truck.id + '"]');
+                        option.prop('disabled', true);
+                        option.text(option.text() + ' (Assigned)');
+                    });
+
+                    // assignedTruck2.forEach(function(truck) {
+                    //     var option = $('#truck_id option[value="' + truck.id + '"]');
+                    //     option.prop('disabled', true);
+                    //     option.text(option.text() + ' (Not Available)');
+                    // });
+                
+                    // Check if the selected options are hidden
+                    if ($('#truck_id option:selected').is(true)) {
+                        
+                        $('#truck_id').val('').trigger('change');
+                    }
                     $('#bookingModal').modal('toggle');
                 },
                 error: function(xhr, status, error) {
@@ -192,88 +234,40 @@ $(document).ready(function() {
             // $.ajax({
             //     url: getAssignedTruckURL,
             //     type: "GET",
-            //     data: { date: formattedDate},
+            //     data: { date: formattedDate },
             //     dataType: "json",
-            //     success: function(response) {
+            //     success: function (response) {
             //         var assignedTruck1 = response.assignedTruck1;
             //         var assignedTruck2 = response.assignedTruck2;
-                
-            //         // Reset the text for all options in the dropdown
-            //         $('#truck_id option').each(function() {
+            
+            //         // Reset the text and enable all options in the dropdown
+            //         $('#truck_id option').each(function () {
             //             var option = $(this);
-            //             option.text(option.text().replace(' (Assigned)', ''));
+            //             option.text(option.text().replace(' (Assigned)', '').replace(' (Not Available)', ''));
+                       
             //         });
-                
+            
             //         // Disable the options for the assigned trucks
-            //         assignedTruck1.forEach(function(truck) {
+            //         assignedTruck1.forEach(function (truck) {
             //             var option = $('#truck_id option[value="' + truck.id + '"]');
             //             option.prop('disabled', true);
             //             option.text(option.text() + ' (Assigned)');
             //         });
-
-            //         assignedTruck2.forEach(function(truck) {
-            //             var option = $('#truck_id option[value="' + truck.id + '"]');
-            //             option.prop('disabled', true);
-            //             option.text(option.text() + ' (Not Available)');
-            //         });
-                
+            
             //         // Check if the selected options are hidden
             //         if ($('#truck_id option:selected').is(true)) {
                         
             //             $('#truck_id').val('').trigger('change');
             //         }
-            //         $('#bookingModal').modal('toggle');
-            //     },
-            //     error: function(xhr, status, error) {
-            //         // Handle the error, show an alert or message if needed
-            //         console.error(error);
-            //     }
-                
-            // });
-
-            $.ajax({
-                url: getAssignedTruckURL,
-                type: "GET",
-                data: { date: formattedDate },
-                dataType: "json",
-                success: function (response) {
-                    var assignedTruck1 = response.assignedTruck1;
-                    var assignedTruck2 = response.assignedTruck2;
-            
-                    // Reset the text and enable all options in the dropdown
-                    $('#truck_id option').each(function () {
-                        var option = $(this);
-                        option.text(option.text().replace(' (Assigned)', '').replace(' (Not Available)', ''));
-                       
-                    });
-            
-                    // Disable the options for the assigned trucks
-                    assignedTruck1.forEach(function (truck) {
-                        var option = $('#truck_id option[value="' + truck.id + '"]');
-                        option.prop('disabled', true);
-                        option.text(option.text() + ' (Assigned)');
-                    });
-            
-                    assignedTruck2.forEach(function (truck) {
-                        var option = $('#truck_id option[value="' + truck.id + '"]');
-                        option.prop('disabled', true);
-                        option.text(option.text() + ' (Not Available)');
-                    });
-            
-                    // Check if the selected options are hidden
-                    if ($('#truck_id option:selected').is(true)) {
-                        
-                        $('#truck_id').val('').trigger('change');
-                    }
             
                    
-                },
-                error: function (xhr, status, error) {
-                    // Handle the error, show an alert or message if needed
-                    console.error(error);
+            //     },
+            //     error: function (xhr, status, error) {
+            //         // Handle the error, show an alert or message if needed
+            //         console.error(error);
                     
-                }
-            });
+            //     }
+            // });
             
 
             
@@ -881,5 +875,9 @@ $(document).ready(function() {
         },
     });
 
-    
+     // Get the current date in the format required by the min attribute
+     var currentDate = new Date().toISOString().split('T')[0];
+
+     // Set the min attribute of the input element to the current date
+     document.getElementById('trasportationDate').min = currentDate;
   

@@ -1388,21 +1388,19 @@ class AdminController extends Controller
        
         // Retrieve the list of truck IDs assigned for the given date from bookings
         $assignedTruckDate = TransportationDetails::whereHas('booking', function ($query) use ($date) {
-            $query->whereDate('pickUp_date', $date);
+            $query->whereDate('transportation_date', '>=', $date);
         })->pluck('truck_id')->toArray();
 
 
-        $assignedTruckdateandtime = TransportationDetails::whereHas('booking', function ($query) use ($date) {
-            $query->where('transportation_date', '>=', $date);
-        })->pluck('truck_id')->toArray();
+        
         
         // Retrieve the details of assigned companies
         $assignedTruck1 = Truck::whereIn('id', $assignedTruckDate)->get();
-        $assignedTruck2 = Truck::with('truckInformation')->whereIn('id', $assignedTruckdateandtime)->get();
+       
 
         return response()->json([
             'assignedTruck1' => $assignedTruck1,
-            'assignedTruck2' => $assignedTruck2,
+          
         ]);
     }
 

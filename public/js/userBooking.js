@@ -333,5 +333,9 @@ document.getElementById("destination").addEventListener("change", function() {
 // Call the function initially to set the initial state
 updateOriginReadOnly();
 
+ // Get the current date in the format required by the min attribute
+ var currentDate = new Date().toISOString().split('T')[0];
 
+ // Set the min attribute of the input element to the current date
+ document.getElementById('transportationDate').min = currentDate;
 
