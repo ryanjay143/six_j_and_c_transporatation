@@ -27,52 +27,52 @@
                                         </nav>
                                         <div class="tab-content" id="nav-tabContent">
                                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                                            <div class="table-responsive">
-                                            <table id="example" class="table table-bordered table-hover letter-size" >
-                                                <thead class="table-primary">
-                                                    <tr>
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">Company Name</th>
-                                                        <th scope="col">Transportation Date</th>
-                                                        <th scope="col">Route</th>
-                                                        <th scope="col">Helper</th>
-                                                        <th scope="col">Transportation Status</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @php
-                                                        // Sort the $transpo array based on the date
-                                                        $sortedTranspo = $transpo->sortBy(function ($t) {
-                                                            return Carbon\Carbon::parse($t->booking->date);
-                                                        });
-                                                    @endphp
-                                                    @foreach ($sortedTranspo as $t)
-                                                        <tr>
-                                                            <th scope="row">{{ $loop->iteration }}</th>
-                                                            <td>{{ $t->booking->user->name }}</td>
-                                                            <td>{{ \Carbon\Carbon::parse($t->booking->date)->format('M d, Y') }}</td>
-                                                            <td>{{ $t->booking->origin }} - {{ $t->booking->destination }}</td>
-                                                            <td>
-                                                                @if ($t->helper)
-                                                                    {{ $t->helper->user->name }} {{ $t->helper->user->lname }}
-                                                                @else
-                                                                    N/A <!-- Display "N/A" if there is no associated helper -->
-                                                                @endif
-                                                            </td>
-                                                            <td>
-                                                                @if ($t->status == '1')
-                                                                    <span class="badge bg-success">To be picked-up</span>
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                <div class="table-responsive table-responsive-for-transportation">
+                                                    <table id="datatable1" class="table table-bordered letter-size" >
+                                                        <thead class="table-primary">
+                                                            <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Company Name</th>
+                                                                <th scope="col">Transportation Date</th>
+                                                                <th scope="col">Route</th>
+                                                                <th scope="col">Helper</th>
+                                                                <th scope="col">Transport Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @php
+                                                                // Sort the $transpo array based on the date
+                                                                $sortedTranspo = $transpo->sortBy(function ($t) {
+                                                                    return Carbon\Carbon::parse($t->booking->transportation_date);
+                                                                });
+                                                            @endphp
+                                                            @foreach ($sortedTranspo as $t)
+                                                                <tr>
+                                                                    <td scope="row">{{ $loop->iteration }}</td>
+                                                                    <td>{{ $t->booking->user->name }}</td>
+                                                                    <td>{{ \Carbon\Carbon::parse($t->booking->transportation_date)->format('M d, Y') }}</td>
+                                                                    <td>{{ $t->booking->origin }} - {{ $t->booking->destination }}</td>
+                                                                    <td>
+                                                                        @if ($t->helper)
+                                                                            {{ $t->helper->user->name }} {{ $t->helper->user->lname }}
+                                                                        @else
+                                                                            N/A <!-- Display "N/A" if there is no associated helper -->
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($t->status == '1')
+                                                                            <span class="badge bg-success">To be picked-up</span>
+                                                                        @endif
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                                                <div class="table-responsive">
-                                                    <table id="examples" class="table table-bordered table-hover letter-size">
+                                                <div class="table-responsive table-responsive-for-transportation-history">
+                                                    <table id="datatable2" class="table table-bordered table-hover letter-size">
                                                         <thead class="table-primary">
                                                             <tr>
                                                                 <th scope="col">#</th>
@@ -87,14 +87,14 @@
                                                             @php
                                                                 // Sort the $transpo array based on the date
                                                                 $deliveredTransportation = $deliveredTranspo->sortBy(function ($t) {
-                                                                    return Carbon\Carbon::parse($t->booking->date);
+                                                                    return Carbon\Carbon::parse($t->booking->transportation_date);
                                                                 });
                                                             @endphp
                                                             @foreach ($deliveredTransportation as $t)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $t->booking->user->name }}</td>
-                                                                    <td>{{ \Carbon\Carbon::parse($t->booking->date)->format('M d, Y') }}</td>
+                                                                    <td>{{ \Carbon\Carbon::parse($t->booking->transportation_date)->format('M d, Y') }}</td>
                                                                     <td>{{ $t->booking->origin }} - {{ $t->booking->destination }}</td>
                                                                     <td>
                                                                         @if ($t->helper)

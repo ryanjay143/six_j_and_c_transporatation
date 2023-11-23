@@ -183,4 +183,14 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function () {
+    $('#dashboardforDriver').DataTable();
+});
 
+$(document).ready(function () {
+    $('#datatable1').DataTable();
+});
+
+$(document).ready(function () {
+    $('#datatable2').DataTable();
+});

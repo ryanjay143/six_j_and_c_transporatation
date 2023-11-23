@@ -66,9 +66,9 @@
                                                     <p class="mb-0 float-end">Date: {{ date('F j, Y') }}</p>
                                                 </div>
                                                 <div class="card-body">
-                                                    <div class="table-responsive">
-                                                        <table id="examples" class="table table-bordered letter-size">
-                                                            <thead class="table-primary">
+                                                    <div class="table-responsive-for-dashboard">
+                                                        <table id="dashboardforDriver" class="table table-bordered letter-size">
+                                                            <thead class="table-primary ">
                                                                 <tr>
                                                                     <th scope="col">Client name</th>
                                                                    
@@ -125,28 +125,28 @@
                                                                                         <div class="modal-body">
                                                                                             <div class="container">
                                                                                                 <div class="row">
-                                                                                                    <div class="col-sm-12 col-md-4">
+                                                                                                    <div class="col-12 col-md-4">
                                                                                                         <label for="staticEmail" class="col-form-label">Pick-up date:</label>
                                                                                                     </div>
-                                                                                                    <div class="col-sm-12 col-md-8">
+                                                                                                    <div class="col-12 col-md-4">
                                                                                                         <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ \Carbon\Carbon::parse($t->booking->date)->format('F j, Y') }}">
                                                                                                     </div>
                                                                                                 </div>
 
                                                                                                 <div class="row">
-                                                                                                    <div class="col-sm-12 col-md-4">
+                                                                                                    <div class="col-12 col-md-4">
                                                                                                         <label for="staticEmail" class="col-form-label">Helper:</label>
                                                                                                     </div>
-                                                                                                    <div class="col-sm-12 col-md-8">
+                                                                                                    <div class="col-12 col-md-8">
                                                                                                         <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $t->helper->user->name }} {{ $t->helper->user->lname }}">
                                                                                                     </div>
                                                                                                 </div>
 
                                                                                                 <div class="row">
-                                                                                                    <div class="col-sm-12 col-md-4">
+                                                                                                    <div class="col-12 col-md-4">
                                                                                                         <label for="staticEmail" class="col-form-label">Origin:</label>
                                                                                                     </div>
-                                                                                                    <div class="col-sm-12 col-md-8">
+                                                                                                    <div class="col-12 col-md-8">
                                                                                                         <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $t->booking->origin }}">
                                                                                                     </div>
                                                                                                 </div>
@@ -154,19 +154,19 @@
                                                                                                
 
                                                                                                 <div class="row">
-                                                                                                    <div class="col-sm-12 col-md-4">
+                                                                                                    <div class="col-12 col-md-4">
                                                                                                         <label for="staticEmail" class="col-form-label">Destination:</label>
                                                                                                     </div>
-                                                                                                    <div class="col-sm-12 col-md-8">
+                                                                                                    <div class="col-12 col-md-8">
                                                                                                         <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $t->booking->destination }}">
                                                                                                     </div>
                                                                                                 </div>
 
                                                                                                 <div class="mb-3 row">
-                                                                                                    <div class="col-sm-12 col-md-4">
+                                                                                                    <div class="col-12 col-md-4">
                                                                                                         <label for="staticEmail" class="col-form-label">Transportation date:</label>
                                                                                                     </div>
-                                                                                                    <div class="col-sm-12 col-md-8">
+                                                                                                    <div class="col-12 col-md-8">
                                                                                                         @php
                                                                                                         // Convert the Transportation time time to 12-hour format
                                                                                                         $transportationDate = date("F j, Y", strtotime($t->booking->transportation_date));
@@ -177,7 +177,7 @@
                                                                                             </div>
 
 
-                                                                                            <div class="table-responsive">
+                                                                                            <div class="table-responseve table-responsive-for-modal-dashboard">
                                                                                                 <table class="table table-bordered table-hover">
                                                                                                     <thead class="table-primary">
                                                                                                         <tr>

@@ -61,3 +61,203 @@
 .letter-size {
   font-size: 12px;
 }
+
+/* for Dashboard driver */
+
+
+/* Add a max-width to the table */
+.table-responsive-for-dashboard-for-dashboard {
+  overflow-x: hidden; /* Hide horizontal scroll */
+  display: block;
+  position: relative; /* Add this line to make the position relative */
+}
+
+/* Responsive table */
+.table-responsive-for-dashboard-for-dashboard thead,
+.table-responsive-for-dashboard tbody,
+.table-responsive-for-dashboard th,
+.table-responsive-for-dashboard td,
+.table-responsive-for-dashboard tr {
+  display: block;
+}
+
+/* Add color to thead */
+.table-responsive-for-dashboard thead {
+  background-color: #3498db; /* Change the color as needed */
+  color: #fff; /* Change the text color as needed */
+}
+
+/* Hide table headers (but not display: none;, for accessibility) */
+.table-responsive-for-dashboard thead tr {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.table-responsive-for-dashboard tr {
+  margin-bottom: 15px;
+  border-left: 1px solid #eee;
+}
+
+.table-responsive-for-dashboard td {
+  /* Behave like a "row" */
+  border-bottom: 1px solid #eee;
+  position: relative;
+  padding-left: 50%;
+}
+
+.table-responsive-for-dashboard td:before {
+  /* Now like a table header */
+  position: absolute;
+  /* Top/left values mimic padding */
+  top: 6px;
+  left: 6px;
+  width: 45%;
+  padding-right: 10px;
+  white-space: nowrap;
+}
+
+/* Label the data */
+.table-responsive-for-dashboard td:nth-of-type(1):before {
+  content: "Client name";
+  font-weight: bold; /* Add this line to make it bold */
+}
+
+.table-responsive-for-dashboard td:nth-of-type(2):before {
+  content: "Plate no.";
+  font-weight: bold; /* Add this line to make it bold */
+}
+
+.table-responsive-for-dashboard td:nth-of-type(3):before {
+  content: "Status";
+  font-weight: bold; /* Add this line to make it bold */
+}
+
+.table-responsive-for-dashboard td:nth-of-type(4):before {
+  content: "Action";
+  font-weight: bold; /* Add this line to make it bold */
+}
+
+/* Add a background color to the even rows */
+.table-responsive-for-dashboard tr:nth-of-type(even) {
+  background: #f9f9f9;
+}
+
+/* Add border in the center of the table */
+.table-responsive-for-dashboard:after {
+  content: "";
+  display: table;
+  clear: both;
+  border-bottom: 1px solid #eee; /* Change the border color as needed */
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .table-responsive-for-dashboard {
+    overflow-x: hidden;
+  }
+
+  /* Label the data */
+  .table-responsive-for-dashboard td:before {
+    font-weight: bold;
+  }
+
+  #dashboardforDriver_wrapper .dataTables_filter input {
+    max-width: 170px !important; 
+    margin-bottom: 10px;
+    float: inline-end;
+    margin-top: 10px;
+  }
+
+  #dashboardforDriver_wrapper .dataTables_filter label {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: block;
+  }
+}
+
+/* Modal dashboard */
+
+/* Add a max-width to the table */
+.table-responsive-for-modal-dashboard {
+  overflow-x: hidden; /* Hide horizontal scroll */
+  display: block;
+  position: relative; /* Add this line to make the position relative */
+}
+
+/* Responsive table */
+.table-responsive-for-modal-dashboard thead,
+.table-responsive-for-modal-dashboard tbody,
+.table-responsive-for-modal-dashboard th,
+.table-responsive-for-modal-dashboard td,
+.table-responsive-for-modal-dashboard tr {
+  display: block;
+}
+
+/* Add color to thead */
+.table-responsive-for-modal-dashboard thead {
+  background-color: #3498db; /* Change the color as needed */
+  color: #fff; /* Change the text color as needed */
+}
+
+/* Hide table headers (but not display: none;, for accessibility) */
+.table-responsive-for-modal-dashboard thead tr {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.table-responsive-for-modal-dashboard tr {
+  margin-bottom: 15px;
+}
+
+.table-responsive-for-modal-dashboard td {
+  /* Behave like a "row" */
+  position: relative;
+  padding-left: 50%;
+}
+
+/* Add a background color to the even rows */
+.table-responsive-for-modal-dashboard tr:nth-of-type(even) {
+  background: #f9f9f9;
+}
+
+/* Add vertical border in the center of the table */
+.table-responsive-for-modal-dashboard td:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: #eee; /* Change the border color as needed */
+}
+
+/* Label the data */
+.table-responsive-for-modal-dashboard td:nth-of-type(1):before {
+  content: "Transportation status";
+  font-weight: bold; /* Add this line to make it bold */
+}
+
+.table-responsive-for-modal-dashboard td:nth-of-type(2):before {
+  content: "Updated date & time";
+  font-weight: bold; /* Add this line to make it bold */
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .table-responsive-for-modal-dashboard {
+    overflow-x: auto;
+  }
+
+  /* Label the data */
+  .table-responsive-for-modal-dashboard td:before {
+    font-weight: bold;
+  }
+
+}
+
+
+
+
+

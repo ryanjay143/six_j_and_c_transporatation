@@ -1,0 +1,245 @@
+/* Add a max-width to the table */
+.table-responsive-for-transportation {
+    overflow-x: hidden; /* Hide horizontal scroll */
+    display: block;
+    position: relative; /* Add this line to make the position relative */
+  }
+  
+  /* Responsive table */
+  .table-responsive-for-transportation thead,
+  .table-responsive-for-transportation tbody,
+  .table-responsive-for-transportation th,
+  .table-responsive-for-transportation td,
+  .table-responsive-for-transportation tr {
+    display: block;
+  }
+  
+  /* Add color to thead */
+  .table-responsive-for-transportation thead {
+    background-color: #3498db; /* Change the color as needed */
+    color: #fff; /* Change the text color as needed */
+  }
+  
+  /* Hide table headers (but not display: none;, for accessibility) */
+  .table-responsive-for-transportation thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  
+  .table-responsive-for-transportation tr {
+    margin-bottom: 15px;
+    border-left: 1px solid #eee;
+  }
+  
+  .table-responsive-for-transportation td {
+    /* Behave like a "row" */
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+  
+  .table-responsive-for-transportation td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+  
+  /* Label the data */
+  .table-responsive-for-transportation td:nth-of-type(1):before {
+    content: "#";
+    font-weight: bold; /* Add this line to make it bold */
+    padding: 1px;
+  }
+  
+  .table-responsive-for-transportation td:nth-of-type(2):before {
+    content: "Company Name";
+    font-weight: bold; /* Add this line to make it bold */
+  }
+  
+  .table-responsive-for-transportation td:nth-of-type(3):before {
+    content: "Transportation Date";
+    font-weight: bold; /* Add this line to make it bold */
+  }
+  
+  .table-responsive-for-transportation td:nth-of-type(4):before {
+    content: "Route";
+    font-weight: bold; /* Add this line to make it bold */
+  }
+  
+  .table-responsive-for-transportation td:nth-of-type(5):before {
+    content: "Helper";
+    font-weight: bold; /* Add this line to make it bold */
+  }
+  
+  .table-responsive-for-transportation td:nth-of-type(6):before {
+    content: "Transport Status";
+    font-weight: bold; /* Add this line to make it bold */
+  }
+  
+  /* Add a background color to the even rows */
+  .table-responsive-for-transportation tr:nth-of-type(even) {
+    background: #f9f9f9;
+  }
+  
+  /* Add border in the center of the table */
+  .table-responsive-for-transportation:after {
+    content: "";
+    display: table;
+    clear: both;
+    border-bottom: 1px solid #eee; /* Change the border color as needed */
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 767px) {
+    .table-responsive-for-transportation {
+      overflow-x: auto;
+    }
+  
+    /* Label the data */
+    .table-responsive-for-transportation td:before {
+      font-weight: bold;
+    }
+
+    #datatable1_wrapper .dataTables_filter input {
+        max-width: 170px !important; 
+        margin-bottom: 10px;
+        float: inline-end;
+        margin-top: 10px;
+      }
+    
+    #datatable1_wrapper .dataTables_filter label {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: block;
+    }
+  }
+
+  /* Transportation history */
+
+  /* Add a max-width to the table */
+.table-responsive-for-transportation-history {
+    overflow-x: hidden; /* Hide horizontal scroll */
+    display: block;
+    position: relative; /* Add this line to make the position relative */
+  }
+  
+  /* Responsive table */
+  .table-responsive-for-transportation-history thead,
+  .table-responsive-for-transportation-history tbody,
+  .table-responsive-for-transportation-history th,
+  .table-responsive-for-transportation-history td,
+  .table-responsive-for-transportation-history tr {
+    display: block;
+  }
+  
+  /* Add color to thead */
+  .table-responsive-for-transportation-history thead {
+    background-color: #3498db; /* Change the color as needed */
+    color: #fff; /* Change the text color as needed */
+  }
+  
+  /* Hide table headers (but not display: none;, for accessibility) */
+  .table-responsive-for-transportation-history thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  
+  .table-responsive-for-transportation-history tr {
+    margin-bottom: 15px;
+    border-left: 1px solid #eee;
+  }
+  
+  .table-responsive-for-transportation-history td {
+    /* Behave like a "row" */
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+  
+  .table-responsive-for-transportation-history td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+  
+  /* Label the data */
+  .table-responsive-for-transportation-history td:nth-of-type(1):before {
+    content: "#";
+    font-weight: bold; /* Add this line to make it bold */
+    padding: 1px;
+  }
+  
+  .table-responsive-for-transportation-history td:nth-of-type(2):before {
+    content: "Company Name";
+    font-weight: bold; /* Add this line to make it bold */
+  }
+  
+  .table-responsive-for-transportation-history td:nth-of-type(3):before {
+    content: "Transportation Date";
+    font-weight: bold; /* Add this line to make it bold */
+  }
+  
+  .table-responsive-for-transportation-history td:nth-of-type(4):before {
+    content: "Route";
+    font-weight: bold; /* Add this line to make it bold */
+  }
+  
+  .table-responsive-for-transportation-history td:nth-of-type(5):before {
+    content: "Helper";
+    font-weight: bold; /* Add this line to make it bold */
+  }
+  
+  .table-responsive-for-transportation-history td:nth-of-type(6):before {
+    content: "Transport Status";
+    font-weight: bold; /* Add this line to make it bold */
+  }
+  
+  /* Add a background color to the even rows */
+  .table-responsive-for-transportation-history tr:nth-of-type(even) {
+    background: #f9f9f9;
+  }
+  
+  /* Add border in the center of the table */
+  .table-responsive-for-transportation-history:after {
+    content: "";
+    display: table;
+    clear: both;
+    border-bottom: 1px solid #eee; /* Change the border color as needed */
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 767px) {
+    .table-responsive-for-transportation-history {
+      overflow-x: auto;
+    }
+  
+    /* Label the data */
+    .table-responsive-for-transportation-history td:before {
+      font-weight: bold;
+    }
+
+    #datatable2_wrapper .dataTables_filter input {
+        max-width: 170px !important; 
+        margin-bottom: 10px;
+        float: inline-end;
+        margin-top: 10px;
+      }
+    
+    #datatable2_wrapper .dataTables_filter label {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: block;
+    }
+  }
