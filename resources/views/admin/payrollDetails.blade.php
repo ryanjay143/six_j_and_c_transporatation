@@ -83,14 +83,14 @@
                                                                                         <label for="staticEmail" class="col-sm-4 col-form-label fw-bold">Total transportation:</label>
                                                                                         <div class="col-sm-6">
                                                                                             <input type="text" readonly class="form-control-plaintext" id="staticEmail" 
-                                                                                            value="{{ $employee->user->name }} {{ $employee->user->lname }}">
+                                                                                            value="{{ $countTransportation }}">
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="table-responsive">
                                                                                         <table class="table table-bordered table-hover">
                                                                                             <thead class="table-primary">
                                                                                                 <tr>
-                                                                                                    <th scope="col">Delivery date</th>
+                                                                                                    <th scope="col">Delivered date</th>
                                                                                                     <th scope="col">Company name</th>
                                                                                                     <th scope="col">Route</th>
                                                                                                     <th scope="col">Rate</th>
@@ -99,7 +99,7 @@
                                                                                             <tbody>
                                                                                                 @foreach ($p->payrollDetails as $r)
                                                                                                     <tr>
-                                                                                                        <th scope="row">{{ $r->transportation->booking->date }}</th>
+                                                                                                        <th scope="row">{{ $r->transportation->booking->transportation_date }}</th>
                                                                                                         <td>{{ $r->transportation->booking->user->name }}</td>
                                                                                                         <td>{{ $r->transportation->booking->origin }} - {{ $r->transportation->booking->destination }}</td>
                                                                                                         <td>&#8369; {{ number_format($r->rate, 2) }}</td>

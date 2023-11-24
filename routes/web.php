@@ -172,7 +172,7 @@ Route::middleware(['auth', 'user-access:employee'])->group(function () {
     Route::get('/driver/payroll/reports', [EmployeeController::class, 'payroll_reports'])->name('employee.payroll.reports');
     Route::get('view/driver/payroll-details/{id}', [EmployeeController::class, 'view_payroll'])->name('view.payroll.details.for.driver');  
     Route::get('view/driver/payroll-details/reports/{id}', [EmployeeController::class, 'view_payroll_reports'])->name('view.payroll.details.for.driver.reports');              
-
+    Route::get('employee/driver/payroll-filter/reports/', [EmployeeController::class, 'filter_payroll_reports'])->name('employee.payroll.filter');              
     
 });
 

@@ -50,7 +50,7 @@
                                                                         <th scope="row">{{ $loop->iteration }}</th>
                                                                         <td>{{ $p->transportation->booking->user->name }}</td>
                                                                         <td>{{ $p->transportation->booking->origin }}-{{ $p->transportation->booking->destination }}</td>
-                                                                        <td>{{ \Carbon\Carbon::parse($p->transportation->booking->date)->format('F j, Y') }}</td>
+                                                                        <td>{{ \Carbon\Carbon::parse($p->transportation->booking->transportation_date)->format('F j, Y') }}</td>
                                                                         <td>&#8369; {{ number_format($p->rate, 2) }}</td>
                                                                     </tr>
                                                                 @endforeach

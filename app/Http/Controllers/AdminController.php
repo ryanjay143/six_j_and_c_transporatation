@@ -1056,11 +1056,22 @@ class AdminController extends Controller
     public function view_payrollDetails($id)
     {
         $employee = Employee::with('user')->find($id);
-        $payroll = Payroll::with('payrollDetails')->where('employee_id',$employee->id)->
-        where('status',1)->
-        get();
 
-        return view('admin.payrollDetails', compact('employee','payroll'));
+        // Assuming there's a relationship between Payroll and PayrollDetails in the Payroll model
+        $payroll = Payroll::with('payrollDetails')
+            ->where('employee_id', $employee->id)
+            ->where('status', 1)
+            ->get();
+
+        $countTransportation = 0;
+
+        foreach ($payroll as $payrolls) {
+            if ($payrolls->payrollDetails) {
+                $countTransportation += $payrolls->payrollDetails->count();
+            }
+        }
+
+        return view('admin.payrollDetails', compact('employee', 'payroll', 'countTransportation'));
     }
 
     public function view_payrollDetails_reports($id)

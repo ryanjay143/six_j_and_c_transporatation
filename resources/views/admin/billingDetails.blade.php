@@ -74,27 +74,34 @@
                                                             @php
                                                                 // Sort the billing details array by transportation date
                                                                 $sortedBillings = $billingDetails->sortBy(function($billing) {
-                                                                    return \Carbon\Carbon::parse($billing->transpo->booking->date);
+                                                                    return \Carbon\Carbon::parse($billing->transpo->booking->transportation_date);
                                                                 });
+
+                                                                // Initialize a counter variable
+                                                                $counter = 0;
                                                             @endphp
 
                                                             @foreach ($sortedBillings as $billings)
-                                                                <tr>
-                                                                    <th scope="row">{{ $loop->iteration }}</th>
-                                                                    <td>{{ \Carbon\Carbon::parse($billings->transpo->booking->date)->format('M. j, Y') }}</td>
-                                                                    <td>{{ $billings->transpo->employee->user->name }} {{ $billings->transpo->employee->user->lname }}</td>
-                                                                    <td class="text-uppercase">{{ $billings->transpo->truck->plate_number }}</td>
-                                                                    <td class="text-uppercase">{{ $billings->transpo->truck->truck_type }}</td>
-                                                                    <td>{{ $billings->transpo->booking->origin }} - {{ $billings->transpo->booking->destination }}</td>
-                                                                    <td>{{ $billings->tons }} Tons</td>
-                                                                    <td>&#8369; {{ number_format($billings->price, 2, '.', ',') }}</td>
-                                                                    <td>&#8369; {{ number_format( $billings->tons * $billings->price ) }}</td>
-                                                                </tr>
+                                                                @if ($billings->price !== null)
+                                                                    <tr>
+                                                                        <td>{{ ++$counter }}</td>
+                                                                        <td>{{ \Carbon\Carbon::parse($billings->transpo->booking->date)->format('M. j, Y') }}</td>
+                                                                        <td>{{ $billings->transpo->employee->user->name }} {{ $billings->transpo->employee->user->lname }}</td>
+                                                                        <td class="text-uppercase">{{ $billings->transpo->truck->plate_number }}</td>
+                                                                        <td class="text-uppercase">{{ $billings->transpo->truck->truck_type }}</td>
+                                                                        <td>{{ $billings->transpo->booking->origin }} - {{ $billings->transpo->booking->destination }}</td>
+                                                                        <td>{{ $billings->tons }} Tons</td>
+                                                                        <td>&#8369; {{ number_format($billings->price, 2, '.', ',') }}</td>
+                                                                        <td>&#8369; {{ number_format($billings->tons * $billings->price, 2, '.', ',') }}</td>
+                                                                    </tr>
+                                                                @endif
                                                             @endforeach
                                                         </tbody>
+
+
                                                         <tfoot>
                                                             <tr>
-                                                                <td colspan="8" class="fw-bold text-end">Total Amount:</td>
+                                                                <td colspan="7" class="fw-bold text-end">Total Amount:</td>
                                                                 <td class="fw-bold">&#8369; {{ $billing->total_amount }}</td>
                                                             </tr>
                                                         </tfoot>

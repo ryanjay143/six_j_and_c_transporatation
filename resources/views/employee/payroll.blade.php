@@ -31,72 +31,67 @@
                                                     </nav>
                                                     <div class="tab-content" id="nav-tabContent">
                                                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                                                            <div class="card-body"> 
-                                                                <div class="row g-3 mb-3 mt-3">
-                                                                    <form id="filterForm" action="" method="GET" class="row">
-                                                                        <div class="col-sm-3">
-                                                                            <label for="start_date">From:</label>
-                                                                            <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Start Date" aria-label="Start Date" value="" required>
-                                                                            @error('start_date')
-                                                                                <div class="invalid-feedback">{{ $message }}</div>
-                                                                            @enderror
-                                                                        </div>
-                                                                        <div class="col-sm-3">
-                                                                            <label for="end_date">To:</label>
-                                                                            <input type="date" class="form-control" name="end_date" id="end_date" placeholder="End Date" aria-label="End Date" value="" required>
-                                                                            @error('end_date')
-                                                                                <div class="invalid-feedback">{{ $message }}</div>
-                                                                            @enderror
-                                                                        </div>
-                                                                        <div class="col-sm-3 align-self-end">
-                                                                            <button type="submit" class="btn btn-outline-primary w-100">Filter Date</button>
-                                                                        </div>
-                                                                    </form>
-
-                                                                </div>
-                                                                <div class="card-body">
-                                                                    <div class="table-responsive">
-                                                                        <table id="table" class="table table-bordered letter-size table-hover">
-                                                                            <thead class="table-primary">
-                                                                                <tr>
-                                                                                    <th scope="col">#</th>
-                                                                                    <th scope="col">Payroll period</th>
-                                                                                    <th scope="col">Cash advance deduction</th>
-                                                                                    <th scope="col">Damage deduction</th>
-                                                                                    <th scope="col">Total deduction</th>
-                                                                                    <th scope="col">Total rate</th>
-                                                                                    <th scope="col">Action</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                @foreach ($payroll as $p)
-                                                                                    <tr>
-                                                                                        <th scope="row">{{ $loop->iteration }}</th>
-                                                                                        <td>
-                                                                                            {{ date('M. d', strtotime($p->payroll_start_date)) }}-{{ date('d Y', strtotime($p->payroll_end_date)) }}
-                                                                                        </td>
-                                                                                        <td>&#8369; {{ number_format($p->ca_deduction, 2) }}</td>
-                                                                                        <td>&#8369; {{ number_format($p->df_deduction, 2) }}</td>
-                                                                                        <td>&#8369; {{ number_format($p->total_deduction, 2) }}</td>
-                                                                                        <td>&#8369; {{ $p->total_rate }}</td>
-                                                                                        <td>
-                                                                                            <button type="button" class="btn btn-outline-primary btn-sm">
-                                                                                                <i class="fas fa-eye"></i>
-                                                                                            </button>
-                                                                                        
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                @endforeach
-                                                                            </tbody>
-                                                                        </table>
+                                                            <div class="row g-3 mb-3 mt-3">
+                                                                <form id="filterForm" action="{{ route('employee.payroll.filter') }}" method="GET" class="row">
+                                                                    <input type="text" hidden="" value="{{ Auth::user()->id }}">
+                                                                    <div class="col-sm-3">
+                                                                        <label for="start_date">From:</label>
+                                                                        <input type="date" class="form-control form-start-date" name="payroll_start_date"  placeholder="Start Date" aria-label="Start Date" value="{{ $payroll_start_date }}" required>
+                                                                        @error('payroll_start_date')
+                                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                                        @enderror
                                                                     </div>
-                                                                </div>
+                                                                    <div class="col-sm-3">
+                                                                        <label for="end_date">To:</label>
+                                                                        <input type="date" class="form-control form-end-date" name="payroll_end_date" placeholder="End Date" aria-label="End Date" value="{{ $payroll_end_date }}" required>
+                                                                        @error('payroll_end_date')
+                                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <div class="col-sm-3 align-self-end">
+                                                                        <button type="submit" class="btn btn-outline-primary filter-btn w-100">Filter Date</button>
+                                                                    </div>
+                                                                </form>
+
+                                                            </div>
+                                                            <div class="table-responsive-for-payroll">
+                                                                <table id="table" class="table table-bordered letter-size table-hover">
+                                                                    <thead class="table-primary">
+                                                                        <tr>
+                                                                            <th scope="col">#</th>
+                                                                            <th scope="col">Payroll period</th>
+                                                                            <th scope="col">Cash advance deduction</th>
+                                                                            <th scope="col">Damage deduction</th>
+                                                                            <th scope="col">Total deduction</th>
+                                                                            <th scope="col">Total rate</th>
+                                                                            <th scope="col">Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($payroll as $p)
+                                                                            <tr>
+                                                                                <td scope="row">{{ $loop->iteration }}</td>
+                                                                                <td>
+                                                                                    {{ date('M. d', strtotime($p->payroll_start_date)) }}-{{ date('d Y', strtotime($p->payroll_end_date)) }}
+                                                                                </td>
+                                                                                <td>&#8369; {{ number_format($p->ca_deduction, 2) }}</td>
+                                                                                <td>&#8369; {{ number_format($p->df_deduction, 2) }}</td>
+                                                                                <td>&#8369; {{ number_format($p->total_deduction, 2) }}</td>
+                                                                                <td>&#8369; {{ $p->total_rate }}</td>
+                                                                                <td>
+                                                                                    <a href="{{ route('view.payroll.details.for.driver', $p->id) }}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
                                                             </div>
                                                         </div>
                                                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                                                            <div class="card-body">
-                                                                <div class="table-responsive">
-                                                                    <table id="examples" class="table table-hover table-bordered letter-size">
+                                                            
+                                                                <div class="table-responsive-for-unpaid mt-3">
+                                                                    <table id="examples" class="table table-hover table-bordered letter-size ">
                                                                         <thead class="table-primary">
                                                                             <tr>
                                                                                 <th scope="col">#</th>
@@ -109,7 +104,7 @@
                                                                         <tbody>
                                                                             @foreach ($unpaidPayroll as $p)
                                                                                 <tr>
-                                                                                    <th scope="row">{{ $loop->iteration }}</th>
+                                                                                    <td scope="row">{{ $loop->iteration }}</td>
                                                                                     <td>{{ \Carbon\Carbon::parse($p->payroll_start_date)->format('F j') }}-{{ \Carbon\Carbon::parse($p->payroll_end_date)->format('j, Y') }}</td>
                                                                                     <td>&#8369; {{ number_format($p->total_net_salary, 2, '.', ',') }}</td>
                                                                                     <td>
@@ -125,11 +120,11 @@
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                            </div>
+                                                           
                                                         </div>
                                                         <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-                                                            <div class="card-body">
-                                                                <div class="table-responsive">
+                                                            
+                                                                <div class="table-responsive-cashAdvance mt-3">
                                                                     <table id="example" class="table table-bordered letter-size">
                                                                         <thead class="table-primary">
                                                                             <tr>
@@ -144,7 +139,7 @@
                                                                         <tbody>
                                                                             @foreach ($cashAdvance as $c)
                                                                                 <tr>
-                                                                                    <th scope="row">{{ $loop->iteration }}</th>
+                                                                                    <td scope="row">{{ $loop->iteration }}</td>
                                                                                     <td>&#8369; {{ number_format($c->amount) }}</td>
                                                                                     <td>{{ $c->purpose }}</td>
                                                                                     <td>{{ $c->pay_seq }}</td>
@@ -167,61 +162,68 @@
                                                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                                                     </div>
                                                                                                     <div class="modal-body">
-                                                                                                        <div class="card">
-                                                                                                            <div class="card-body">
-                                                                                                                <div class="row">
-                                                                                                                    <label for="staticEmail" class="col-sm-4 col-form-label">Date Borrowed:</label>
-                                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="container">
+                                                                                                            <div class="row">
+                                                                                                                <div class="col col-md-4">
+                                                                                                                    <label for="staticEmail" class="col-form-label">Date Borrowed:</label>
+                                                                                                                </div>
+                                                                                                                <div class="col col-md-4">
                                                                                                                     <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ date('F d, Y', strtotime($c->created_at)) }}">
-                                                                                                                    </div>
                                                                                                                 </div>
-                                                                                                                <div class="row">
-                                                                                                                    <label for="staticEmail" class="col-sm-4 col-form-label">Borrowed Amount:</label>
-                                                                                                                    <div class="col-sm-6">
-                                                                                                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="&#8369; {{ number_format($c->c_amount, 2) }}">
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                                <div class="mb-3 row">
-                                                                                                                    <label for="staticEmail" class="col-sm-4 col-form-label">Term:</label>
-                                                                                                                    <div class="col-sm-6">
-                                                                                                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $c->c_pay_sequence}}">
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                                <div class="card border border-primary">
-                                                                                                                    <div class="card-body">
-                                                                                                                        <div class="table-responsive">
-                                                                                                                            <table class="table table-bordered border-primary table-hover">
-                                                                                                                                <thead class="table-primary">
-                                                                                                                                    <tr>
-                                                                                                                                        <th scope="col">Pay Date</th>
-                                                                                                                                        <th scope="col">Paid Amount</th>
-                                                                                                                                        <th scope="col">Remaining Balance</th>
-                                                                                                                                    </tr>
-                                                                                                                                </thead>
-                                                                                                                                <tbody>
-                                                                                                                                    @if ($c->caDetails->isEmpty())
-                                                                                                                                        <tr>
-                                                                                                                                            <td class="text-center" colspan="3">No data available</td>
-                                                                                                                                        </tr>
-                                                                                                                                    @else
-                                                                                                                                    @foreach ($c->caDetails as $ca)
-                                                                                                                                        <tr>
-                                                                                                                                            <td>{{ date('F d, Y', strtotime($ca->created_at)) }}</td>
-                                                                                                                                            <td>&#8369; {{ number_format($ca->paid_amount, 2) }}</td>
-                                                                                                                                            <td>
-                                                                                                                                                @if ($ca->balance == 0)
-                                                                                                                                                    <span class="badge bg-success">Completed</span>
-                                                                                                                                                @else
-                                                                                                                                                    &#8369; {{ number_format($ca->balance, 2) }}
-                                                                                                                                                @endif
-                                                                                                                                            </td>
+                                                                                                            </div>
 
-                                                                                                                                        </tr>
-                                                                                                                                    @endforeach
-                                                                                                                                    @endif
-                                                                                                                                </tbody>
-                                                                                                                            </table>
-                                                                                                                        </div>
+                                                                                                            <div class="row">
+                                                                                                                <div class="col col-md-4">
+                                                                                                                    <label for="staticEmail" class="col-form-label">Borrowed Amount:</label>
+                                                                                                                </div>
+                                                                                                                <div class="col col-md-4">
+                                                                                                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="&#8369; {{ number_format($c->c_amount, 2) }}">
+                                                                                                                </div>
+                                                                                                            </div>
+
+                                                                                                            <div class="row">
+                                                                                                                <div class="col col-md-4">
+                                                                                                                    <label for="staticEmail" class="col-form-label">Term:</label>
+                                                                                                                </div>
+                                                                                                                <div class="col col-md-4">
+                                                                                                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $c->c_pay_sequence}}">
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            
+                                                                                                            <div class="card border border-primary">
+                                                                                                                <div class="card-body">
+                                                                                                                    <div class="table-responsive-modal-unpaid">
+                                                                                                                        <table class="table table-bordered border-primary table-hover">
+                                                                                                                            <thead class="table-primary">
+                                                                                                                                <tr>
+                                                                                                                                    <th scope="col">Pay Date</th>
+                                                                                                                                    <th scope="col">Paid Amount</th>
+                                                                                                                                    <th scope="col">Remaining Balance</th>
+                                                                                                                                </tr>
+                                                                                                                            </thead>
+                                                                                                                            <tbody>
+                                                                                                                                @if ($c->caDetails->isEmpty())
+                                                                                                                                    <tr>
+                                                                                                                                        <td class="text-center" colspan="3">No data available</td>
+                                                                                                                                    </tr>
+                                                                                                                                @else
+                                                                                                                                @foreach ($c->caDetails as $ca)
+                                                                                                                                    <tr>
+                                                                                                                                        <td>{{ date('F d, Y', strtotime($ca->created_at)) }}</td>
+                                                                                                                                        <td>&#8369; {{ number_format($ca->paid_amount, 2) }}</td>
+                                                                                                                                        <td>
+                                                                                                                                            @if ($ca->balance == 0)
+                                                                                                                                                <span class="badge bg-success">Completed</span>
+                                                                                                                                            @else
+                                                                                                                                                &#8369; {{ number_format($ca->balance, 2) }}
+                                                                                                                                            @endif
+                                                                                                                                        </td>
+
+                                                                                                                                    </tr>
+                                                                                                                                @endforeach
+                                                                                                                                @endif
+                                                                                                                            </tbody>
+                                                                                                                        </table>
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                             </div>
@@ -236,11 +238,11 @@
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                            </div>
+                                                            
                                                         </div>
                                                         <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">
-                                                            <div class="card-body">
-                                                                <div class="table-responsive">
+                                                            
+                                                                <div class="table-responsive-for-damage mt-3">
                                                                     <table id="examples1" class="table table-bordered letter-size">
                                                                         <thead class="table-primary">
                                                                             <tr>
@@ -256,7 +258,7 @@
                                                                         <tbody>
                                                                             @foreach ($damage as $d)
                                                                                 <tr>
-                                                                                    <th scope="row">{{ $loop->iteration }}</th>
+                                                                                    <td scope="row">{{ $loop->iteration }}</td>
                                                                                     <td>{{ \Carbon\Carbon::parse($d->date_of_incidence)->format('M. d, Y') }}</td>
                                                                                     <td>{{ $d->description }}</td>
                                                                                     <td>&#8369; {{ number_format($d->deduction, 2) }}</td>
@@ -282,45 +284,53 @@
                                                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                                                     </div>
                                                                                                     <div class="modal-body">
-                                                                                                        <div class="card">
-                                                                                                            <div class="card-body">
-                                                                                                                <div class="row">
-                                                                                                                    <label for="staticEmail" class="col-sm-4 col-form-label">Date of Incidence:</label>
-                                                                                                                    <div class="col-sm-4">
-                                                                                                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ \Carbon\Carbon::parse($d->date_of_incidence)->format('F j, Y') }}">
-                                                                                                                    </div>
+                                                                                                        <div class="container">
+                                                                                                            <div class="row">
+                                                                                                                <div class="col col-md-4">
+                                                                                                                    <label for="staticEmail" class="col-form-label">Date of Incidence:</label>
                                                                                                                 </div>
-                                                                                                                <div class="row">
-                                                                                                                    <label for="staticEmail" class="col-sm-4 col-form-label">Damage Amount:</label>
-                                                                                                                    <div class="col-sm-4">
-                                                                                                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="&#8369; {{ number_format($d->c_deduction,2) }}">
-                                                                                                                    </div>
+                                                                                                                <div class="col col-md-4">
+                                                                                                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ \Carbon\Carbon::parse($d->date_of_incidence)->format('F j, Y') }}">
                                                                                                                 </div>
-                                                                                                                <div class="mb-3 row">
-                                                                                                                    <label for="staticEmail" class="col-sm-4 col-form-label">Term:</label>
-                                                                                                                    <div class="col-sm-4">
-                                                                                                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $d->c_term }}">
-                                                                                                                    </div>
+                                                                                                            </div>
+
+                                                                                                            <div class="row">
+                                                                                                                <div class="col col-md-4">
+                                                                                                                    <label for="staticEmail" class="col-form-label">Damage Amount:</label>
                                                                                                                 </div>
-                                                                                                                <div class="card border border-primary">
-                                                                                                                    <div class="card-body">
-                                                                                                                        <div class="table-responsive">
-                                                                                                                            <table class="table table-hover table-bordered">
-                                                                                                                                <thead class="table-primary">
+                                                                                                                <div class="col col-md-4">
+                                                                                                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="&#8369; {{ number_format($d->c_deduction,2) }}">
+                                                                                                                </div>
+                                                                                                            </div>
+
+                                                                                                            <div class="row">
+                                                                                                                <div class="col col-md-4">
+                                                                                                                    <label for="staticEmail" class="col-form-label">Term:</label>
+                                                                                                                </div>
+                                                                                                                <div class="col col-md-4">
+                                                                                                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $d->c_term }}">
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            
+                                                                                                            <div class="card border border-primary">
+                                                                                                                <div class="card-body">
+                                                                                                                    <div class="table-responsive-modal-damage">
+                                                                                                                        <table class="table table-hover table-bordered">
+                                                                                                                            <thead class="table-primary">
+                                                                                                                                <tr>
+                                                                                                                                    <th scope="col">Pay Date</th>
+                                                                                                                                    <th scope="col">Paid amount</th>
+                                                                                                                                    <th scope="col">Remaining balance</th>
+                                                                                                                                    
+                                                                                                                                </tr>
+                                                                                                                            </thead>
+                                                                                                                            <tbody>
+                                                                                                                                @if ($d->damageDetails->isEmpty())
                                                                                                                                     <tr>
-                                                                                                                                        <th scope="col">Pay Date</th>
-                                                                                                                                        <th scope="col">Paid amount</th>
-                                                                                                                                        <th scope="col">Remaining balance</th>
-                                                                                                                                        
+                                                                                                                                        <td class="text-center" colspan="3">No data available</td>
                                                                                                                                     </tr>
-                                                                                                                                </thead>
-                                                                                                                                <tbody>
-                                                                                                                                    @if ($d->damageDetails->isEmpty())
-                                                                                                                                        <tr>
-                                                                                                                                            <td class="text-center" colspan="3">No data available</td>
-                                                                                                                                        </tr>
-                                                                                                                                    @else
-                                                                                                                                    @foreach ($d->damageDetails as $da)
+                                                                                                                                @else
+                                                                                                                                @foreach ($d->damageDetails as $da)
                                                                                                                                     <tr>
                                                                                                                                         <td>{{ $da->created_at->format('M. d, Y') }}</td>
                                                                                                                                         <td>&#8369; {{ number_format($da->paid_amount, 2) }}</td>
@@ -332,11 +342,10 @@
                                                                                                                                             @endif
                                                                                                                                         </td>
                                                                                                                                     </tr>
-                                                                                                                                    @endforeach
-                                                                                                                                    @endif
-                                                                                                                                </tbody>
-                                                                                                                            </table>
-                                                                                                                        </div>
+                                                                                                                                @endforeach
+                                                                                                                                @endif
+                                                                                                                            </tbody>
+                                                                                                                        </table>
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                             </div>
@@ -351,7 +360,7 @@
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                            </div>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>

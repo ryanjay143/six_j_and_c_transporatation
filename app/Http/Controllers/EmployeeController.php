@@ -228,6 +228,23 @@ class EmployeeController extends Controller
 
     public function update_transportation(Request $request, $id)
     {
+
+        $request->validate([
+            'tons' => ['required', 'numeric'],
+        ]);
+
+         // Check if 'tons' is null
+        if ($request->tons === null) {
+            Alert::error('Tons cannot be null. Please enter a valid value.');
+            return redirect()->back();
+        }
+
+        // Check if 'tons' is zero
+        if ($request->tons == 0) {
+            Alert::error('Tons cannot be zero. Please enter a valid value.');
+            return redirect()->back();
+        }
+
         // Find the transportation record by ID
         $transportation = TransportationDetails::find($id);
 
@@ -295,7 +312,7 @@ class EmployeeController extends Controller
         return redirect()->back();
     }
 
-    public function payroll()
+    public function payroll(Request $request)
     {
         $driver = Auth::user();
         $employee = Employee::where('user_id', $driver->id)->where('position', 0)->first();
@@ -303,7 +320,12 @@ class EmployeeController extends Controller
         $cashAdvance = CashAdvance::where('employee_id', $employee->id)->with('caDetails')->get();
         $damage = Damage::where('employee_id', $employee->id)->with('damageDetails')->get();
         $payroll = Payroll::with('employee')->where('employee_id', $employee->id)->where('status', 1)->get();
-        return view('employee.payroll', compact('employee', 'unpaidPayroll', 'cashAdvance','damage','payroll'));
+
+        // Get the start date and end date from the form submission
+        $payroll_start_date = $request->input('payroll_start_date');
+        $payroll_end_date = $request->input('payroll_end_date');
+
+        return view('employee.payroll', compact('employee', 'unpaidPayroll', 'cashAdvance','damage','payroll','payroll_start_date','payroll_end_date'));
     }
 
     public function payroll_reports()
@@ -351,4 +373,40 @@ class EmployeeController extends Controller
 
         return view('employee.payrollReportsDetails',compact('employee','payroll','payrollDetails'));
     }
+
+    public function filter_payroll_reports(Request $request)
+    {
+        $driver = Auth::user();
+        $employee = Employee::where('user_id', $driver->id)->where('position', 0)->first();
+        // Get the selected client's ID from the form submission
+        $employee_id = $request->input('employee_id');
+
+        // Get the start date and end date from the form submission
+        $payroll_start_date = $request->input('payroll_start_date');
+        $payroll_end_date = $request->input('payroll_end_date');
+
+        $query = Payroll::whereIn('status', [1]);
+
+        // Filter based on the client's ID
+        if ($employee_id) {
+            $query->where('employee_id', $employee_id);
+        }
+
+        // Filter based on the date range
+        if ($payroll_start_date && $payroll_end_date) {
+            $query->whereBetween('payroll_end_date', [$payroll_start_date, $payroll_end_date]);
+        }
+
+        // Retrieve the filtered data
+        $payroll = $query->orderBy('payroll_start_date', 'asc')->get();
+
+        $unpaidPayroll = Payroll::where('employee_id', $employee->id)->where('status', 0)->get();
+        $cashAdvance = CashAdvance::where('employee_id', $employee->id)->with('caDetails')->get();
+        $damage = Damage::where('employee_id', $employee->id)->with('damageDetails')->get();
+        return view('employee.payroll', compact('unpaidPayroll','cashAdvance', 'employee', 'payroll', 'damage', 'payroll_start_date', 'payroll_end_date'));
+    }
+
+
 }
+
+

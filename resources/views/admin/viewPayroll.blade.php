@@ -91,24 +91,24 @@
                                                                     <tr>
                                                                         <th scope="col">#</th>
                                                                         <th scope="col">Company Name</th>
-                                                                        <th scope="col">Delivery Date</th>
+                                                                        <th scope="col">Delivered Date</th>
                                                                         <th scope="col">Route</th>
                                                                         <th scope="col">Rates</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     @php
-                                                                        $sortedDriver = $driver->sortBy('booking.date');
-                                                                        $sortedHelper = $helper->sortBy('booking.date');
+                                                                        $sortedDriver = $driver->sortBy('booking.transportation_date');
+                                                                        $sortedHelper = $helper->sortBy('booking.transportation_date');
                                                                     @endphp
 
                                                                     @foreach ($sortedDriver as $t)
                                                                         @if ($t->status >= 5 && $t->status <= 7)
                                                                             <tr>
                                                                                 <input type="hidden" name="transpoId[]" value="{{ $t->id }}">
-                                                                                <th scope="row">{{ $loop->iteration }}</th>
+                                                                                <td class="border border-start" scope="row">{{ $loop->iteration }}</td>
                                                                                 <td>{{ $t->booking->user->name }}</td>
-                                                                                <td>{{ \Carbon\Carbon::parse($t->booking->pickUp_date)->format('F j, Y') }}</td>
+                                                                                <td>{{ \Carbon\Carbon::parse($t->booking->transportation_date)->format('F j, Y') }}</td>
                                                                                 <td>{{ $t->booking->origin }} - {{ $t->booking->destination }}</td>
                                                                                 <td>
                                                                                     <input type="text" style="width: 100px;" value="0" class="form-control form-control-sm rateInput" id="rateInput_{{ $loop->iteration }}" oninput="updateTotal(); this.value = this.value.replace(/\D/g, '')">
@@ -120,7 +120,7 @@
                                                                         @if ($h->status >= 5 && $h->status <= 7)
                                                                             <tr>
                                                                                 <input type="hidden" name="transpoId[]" value="{{ $h->id }}">
-                                                                                <th scope="row">{{ $loop->iteration }}</th>
+                                                                                <td class="border border-start" scope="row">{{ $loop->iteration }}</td>
                                                                                 <td>{{ $h->booking->user->name }}</td>
                                                                                 <td>{{ \Carbon\Carbon::parse($h->booking->pickUp_date)->format('F j, Y') }}</td>
                                                                                 <td>{{ $h->booking->origin }} - {{ $h->booking->destination }}</td>
@@ -133,9 +133,8 @@
                                                                 </tbody>
                                                                 <tfoot class="table-hover">
                                                                     <tr>
-                                                                        <td colspan="3" class="fw-bold text-end">Total Rate:</td>
+                                                                        <td colspan="4" class="fw-bold text-end">Total Rate:</td>
                                                                         <td class="fw-bold" id="totalRate">0</td>
-                                                                        <td></td>
                                                                     </tr>
 
                                                                     @php
@@ -271,13 +270,16 @@
                                                                                 </div>
 
                                                                                 @foreach ($driver as $t)
-                                                                                    <input type="text" hidden="" name="transportation_id[]" value="{{ $t->id }}">
-                                                                                    <input name="rate[]" hidden="" type="text" style="width: 100px;" value="0" 
-                                                                                    class="form-control form-control-sm rateArrayInput" id="rateArrayInput_{{ $loop->iteration }}">
-                                                                                    <input type="text" hidden="" value="1" name="pStatus">
+                                                                                    @if ($t->status >= 5 && $t->status <= 7)
+                                                                                        <input type="text" hidden="" name="transportation_id[]" value="{{ $t->id }}">
+                                                                                        <input name="rate[]" hidden="" type="text" style="width: 100px;" value="0" 
+                                                                                        class="form-control form-control-sm rateArrayInput" id="rateArrayInput_{{ $loop->iteration }}">
+                                                                                        <input type="text" hidden="" value="1" name="pStatus">
+                                                                                    @endif
                                                                                 @endforeach
 
                                                                                 @foreach ($helper as $h)
+                                                                                    @if ($h->status >= 5 && $h->status <= 7)
                                                                                     @php
                                                                                         $rateValueHelper = !empty($h->rate) ? $h->rate : 0;
                                                                                         $addRateButtonDisabledHelper = $rateValueHelper == 0;
@@ -286,6 +288,7 @@
                                                                                     <input name="rate[]" hidden="" type="text" style="width: 100px;" value="{{ $rateValueHelper }}" 
                                                                                         class="form-control form-control-sm" id="numericInputCopy{{ $loop->iteration }}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); checkRateValueCopy({{ $loop->iteration }});">
                                                                                     <input type="text" hidden="" value="1" name="pStatus">
+                                                                                    @endif
                                                                                 @endforeach
 
                                                                                 <button type="submit" class="btn btn-primary btn-sm w-100" id="savePayrollButton" disabled>
@@ -789,7 +792,7 @@
                                                                             <td>{{ \Carbon\Carbon::parse($e->payroll_start_date)->format('M. j') }}-{{ \Carbon\Carbon::parse($e->payroll_end_date)->format('j, Y') }}</td>
                                                                             <td>
                                                                                 @if($e->ca_deduction == 0)
-                                                                                    <p class="fw-bold">No DF Deduction</p>
+                                                                                    <p class="fw-bold">No CA Deduction</p>
                                                                                 @else
                                                                                     &#8369; {{ number_format($e->ca_deduction, 2) }}
                                                                                 @endif
@@ -853,7 +856,7 @@
                                                                                                         <table class="table table-bordered">
                                                                                                             <thead class="table-primary">
                                                                                                                 <tr>
-                                                                                                                    <th scope="col">Delivery date</th>
+                                                                                                                    <th scope="col">Delivered date</th>
                                                                                                                     <th scope="col">Company name</th>
                                                                                                                     <th scope="col">Route</th>
                                                                                                                     <th scope="col">Rate</th>
@@ -862,7 +865,7 @@
                                                                                                             <tbody>
                                                                                                                 @foreach ($e->payrollDetails as $p)
                                                                                                                     <tr>
-                                                                                                                        <td>{{ $p->transportation->booking->date }}</td>
+                                                                                                                        <td>{{ $p->transportation->booking->transportation_date }}</td>
                                                                                                                         <td>{{ $p->transportation->booking->user->name }}</td>
                                                                                                                         <td>{{ $p->transportation->booking->origin }}-{{ $p->transportation->booking->destination }}</td>
                                                                                                                         <td>{{ $p->rate }}</td>

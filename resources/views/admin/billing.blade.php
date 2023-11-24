@@ -53,7 +53,6 @@
                                                 <table id="billing" class="table table-bordered table-hover">
                                                     <thead class="table-primary">
                                                         <tr>
-                                                            <th scope="col">#</th>
                                                             <th scope="col">Transportation Date</th>
                                                             <th scope="col">Company Name</th>
                                                             <th scope="col">Origin</th>
@@ -65,14 +64,13 @@
                                                     </thead>
                                                     <tbody>
                                                         @php
-                                                            $sortedTranspo = $transpo->sortBy('booking.pickUp_date'); 
+                                                            $sortedTranspo = $transpo->sortBy('booking.transportation_date'); 
                                                             $totalAmount = 0;
                                                         @endphp
                                                         @foreach ($sortedTranspo as $t)
                                                             @if ($t->booking->tons !== null)
                                                                 <tr>
-                                                                    <th scope="row">{{ $loop->iteration }}</th>
-                                                                    <td>{{ date('F j, Y', strtotime($t->booking->pickUp_date)) }}</td>
+                                                                    <td>{{ date('F j, Y', strtotime($t->booking->transportation_date)) }}</td>
                                                                     <td>{{ $t->booking->user->name }}</td>
                                                                     <td>{{ $t->booking->origin }}</td>
                                                                     <td>{{ $t->booking->destination }}</td>
@@ -97,7 +95,7 @@
 
                                                     <tfoot>
                                                         <tr>
-                                                            <td colspan="7" class="fw-bold text-end">Total Amount:</td>
+                                                            <td colspan="6" class="fw-bold text-end">Total Amount:</td>
                                                             <td colspan="0" class="fw-bold" id="totalAmount"></td>
                                                         </tr>
                                                         <tr>
@@ -115,16 +113,22 @@
                                                                     </div>
                                                                     <input hidden="" type="text" name="totalAmount" class="form-control form-control-sm" id="totalAmountCopy">
 
-                                                                    @foreach ($transpo as $t)
-                                                                        <input hidden="" name="transportation_id[]" type="text" value="{{ $t->id }}">
-                                                                        <input type="text" hidden="" name="bStatus[]" value="1">
-                                                                        <input hidden="" name="price[]" type="text" class="form-control form-control-sm price-copy" 
-                                                                            aria-label="First name" pattern="[0-9]*"
-                                                                            id="priceCopy_{{ $loop->iteration }}" readonly>
-                                                                        <input hidden="" name="tons[]" type="text" class="form-control form-control-sm tons-copy" 
-                                                                            value="{{ $t->booking->tons }}" aria-label="Tons" pattern="[0-9]*"
-                                                                            id="tonsCopy_{{ $loop->iteration }}" readonly>
-                                                                            <input type="text" hidden="" name="status" value="1">
+                                                                    @php
+                                                                        $sortedTranspo = $transpo->sortBy('booking.transportation_date'); 
+                                                                        $totalAmount = 0;
+                                                                    @endphp
+                                                                    @foreach ($sortedTranspo as $t)
+                                                                        @if ($t->booking->tons !== null)
+                                                                            <input hidden="" name="transportation_id[]" type="text" value="{{ $t->id }}">
+                                                                            <input type="text" hidden="" name="bStatus[]" value="1">
+                                                                            <input hidden="" name="price[]" type="text" class="form-control form-control-sm price-copy" 
+                                                                                aria-label="First name" pattern="[0-9]*"
+                                                                                id="priceCopy_{{ $loop->iteration }}" readonly>
+                                                                            <input hidden="" name="tons[]" type="text" class="form-control form-control-sm tons-copy" 
+                                                                                value="{{ $t->booking->tons }}" aria-label="Tons" pattern="[0-9]*"
+                                                                                id="tonsCopy_{{ $loop->iteration }}" readonly>
+                                                                                <input type="text" hidden="" name="status" value="1">
+                                                                        @endif
                                                                     @endforeach
                                                                    
                                                                     <div class="col-md-12 text-center">

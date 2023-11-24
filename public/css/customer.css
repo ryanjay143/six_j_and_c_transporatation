@@ -1,12 +1,3 @@
-@media (max-width: 767.98px) {
-    .card {
-        margin-right: 5rem;
-    }
-}
-
-
-
-  
 /* CSS for the larger image */
 .zoomable-image.zoomed {
     max-width: 100%;
@@ -81,11 +72,6 @@
   display: block;
 }
 
-/* Add color to thead */
-.table-responsive-for-dashboard thead {
-  background-color: #3498db; /* Change the color as needed */
-  color: #fff; /* Change the text color as needed */
-}
 
 /* Hide table headers (but not display: none;, for accessibility) */
 .table-responsive-for-dashboard thead tr {
@@ -96,12 +82,16 @@
 
 .table-responsive-for-dashboard tr {
   margin-bottom: 15px;
-  border-left: 1px solid #eee;
+  border-left: 1px solid #2524247c;
+  border-top: 1px solid #2524247c; 
+  border-bottom: 1px solid #2524247c;
+  border-right: 1px solid #2524247c;
 }
+
 
 .table-responsive-for-dashboard td {
   /* Behave like a "row" */
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #2524247c;
   position: relative;
   padding-left: 50%;
 }
@@ -115,27 +105,51 @@
   width: 45%;
   padding-right: 10px;
   white-space: nowrap;
+  border-right: 1px solid #2524247c;
+ 
 }
 
 /* Label the data */
 .table-responsive-for-dashboard td:nth-of-type(1):before {
-  content: "Client name";
-  font-weight: bold; /* Add this line to make it bold */
+  content: "#";
+  font-weight: bold; 
+  font-size: 15px;
+ 
 }
 
+/* Label the data */
 .table-responsive-for-dashboard td:nth-of-type(2):before {
-  content: "Plate no.";
-  font-weight: bold; /* Add this line to make it bold */
+  content: "Client name";
+  font-weight: bold; 
+  font-size: 15px;
+ 
 }
 
 .table-responsive-for-dashboard td:nth-of-type(3):before {
-  content: "Status";
-  font-weight: bold; /* Add this line to make it bold */
+  content: "Plate no.";
+  font-weight: bold; 
+  font-size: 15px;
 }
 
 .table-responsive-for-dashboard td:nth-of-type(4):before {
+  content: "Tons";
+  font-weight: bold; 
+  font-size: 15px;
+ 
+ 
+}
+
+.table-responsive-for-dashboard td:nth-of-type(5):before {
+  content: "Status";
+  font-weight: bold; 
+  font-size: 15px;
+  
+}
+
+.table-responsive-for-dashboard td:nth-of-type(6):before {
   content: "Action";
-  font-weight: bold; /* Add this line to make it bold */
+  font-weight: bold; 
+  font-size: 15px;
 }
 
 /* Add a background color to the even rows */
@@ -146,10 +160,10 @@
 /* Add border in the center of the table */
 .table-responsive-for-dashboard:after {
   content: "";
-  display: table;
+  display: table-row;
   clear: both;
-  border-bottom: 1px solid #eee; /* Change the border color as needed */
 }
+
 
 /* Responsive styles */
 @media (max-width: 767px) {
@@ -194,11 +208,7 @@
   display: block;
 }
 
-/* Add color to thead */
-.table-responsive-for-modal-dashboard thead {
-  background-color: #3498db; /* Change the color as needed */
-  color: #fff; /* Change the text color as needed */
-}
+
 
 /* Hide table headers (but not display: none;, for accessibility) */
 .table-responsive-for-modal-dashboard thead tr {
@@ -221,24 +231,27 @@
 
 /* Add vertical border in the center of the table */
 .table-responsive-for-modal-dashboard td:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 1px;
+ /* Now like a table header */
+ position: absolute;
+ /* Top/left values mimic padding */
+ top: 6px;
+ left: 6px;
+ width: 45%;
+ padding-right: 10px;
+ white-space: nowrap;
+ border-right: 1px solid #2524247c;
  
 }
 
 /* Label the data */
 .table-responsive-for-modal-dashboard td:nth-of-type(1):before {
-  content: "Transportation status";
-  font-weight: bold; /* Add this line to make it bold */
+  content: "Transport status";
+  font-weight: bold; 
 }
 
 .table-responsive-for-modal-dashboard td:nth-of-type(2):before {
-  content: "Updated date & time";
-  font-weight: bold; /* Add this line to make it bold */
+  content: "Updated Datetime";
+  font-weight: bold; 
 }
 
 /* Responsive styles */
@@ -254,10 +267,785 @@
 
 }
 
+/* Payroll */
+
+/* Add a max-width to the table */
+.table-responsive-for-payroll {
+  overflow-x: hidden; /* Hide horizontal scroll */
+  display: block;
+  position: relative; /* Add this line to make the position relative */
+}
+
+/* Responsive table */
+.table-responsive-for-payroll thead,
+.table-responsive-for-payroll tbody,
+.table-responsive-for-payroll th,
+.table-responsive-for-payroll td,
+.table-responsive-for-payroll tr {
+  display: block;
+}
+
+
+/* Hide table headers (but not display: none;, for accessibility) */
+.table-responsive-for-payroll thead tr {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.table-responsive-for-payroll tr {
+  margin-bottom: 15px;
+  border-left: 1px solid #2524247c;
+  border-top: 1px solid #2524247c; 
+  border-bottom: 1px solid #2524247c;
+  border-right: 1px solid #2524247c;
+}
+
+
+.table-responsive-for-payroll td {
+  /* Behave like a "row" */
+  border-bottom: 1px solid #2524247c;
+  position: relative;
+  padding-left: 50%;
+}
+
+.table-responsive-for-payroll td:before {
+  /* Now like a table header */
+  position: absolute;
+  /* Top/left values mimic padding */
+  top: 6px;
+  left: 6px;
+  width: 45%;
+  padding-right: 10px;
+  white-space: nowrap;
+  border-right: 1px solid #2524247c;
+ 
+}
+
+/* Label the data */
+.table-responsive-for-payroll td:nth-of-type(1):before {
+  content: "#";
+  font-weight: bold; 
+  font-size: 15px;
+ 
+}
+
+/* Label the data */
+.table-responsive-for-payroll td:nth-of-type(2):before {
+  content: "Payroll period";
+  font-weight: bold; 
+  font-size: 15px;
+ 
+}
+
+.table-responsive-for-payroll td:nth-of-type(3):before {
+  content: "CA deduction";
+  font-weight: bold; 
+  font-size: 15px;
+}
+
+.table-responsive-for-payroll td:nth-of-type(4):before {
+  content: "Damage deduction";
+  font-weight: bold; 
+  font-size: 15px;
+ 
+ 
+}
+
+.table-responsive-for-payroll td:nth-of-type(5):before {
+  content: "Total deduction";
+  font-weight: bold; 
+  font-size: 15px;
+  
+}
+
+.table-responsive-for-payroll td:nth-of-type(6):before {
+  content: "Total rate";
+  font-weight: bold; 
+  font-size: 15px;
+}
+
+.table-responsive-for-payroll td:nth-of-type(7):before {
+  content: "Action";
+  font-weight: bold; 
+  font-size: 15px;
+}
+
+/* Add a background color to the even rows */
+.table-responsive-for-payroll tr:nth-of-type(even) {
+  background: #f9f9f9;
+}
+
+/* Add border in the center of the table */
+.table-responsive-for-payroll:after {
+  content: "";
+  display: table-row;
+  clear: both;
+}
+
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .table-responsive-for-payroll {
+    overflow-x: hidden;
+  }
+
+  /* Label the data */
+  .table-responsive-for-payroll td:before {
+    font-weight: bold;
+  }
+
+  #table_wrapper .dataTables_filter input {
+    max-width: 170px !important; 
+    margin-bottom: 10px;
+    float: inline-end;
+    margin-top: 10px;
+  }
+
+  #table_wrapper .dataTables_filter label {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: block;
+  }
+
+  .table-responsive-for-payroll td:nth-of-type(1):before {
+    content: "#";
+    font-weight: bold; 
+    font-size: 15px;
+   
+  }
+  
+  /* Label the data */
+  .table-responsive-for-payroll td:nth-of-type(2):before {
+    content: "Payroll period";
+    font-weight: bold; 
+    font-size: 15px;
+   
+  }
+  
+  .table-responsive-for-payroll td:nth-of-type(3):before {
+    content: "CA deduction";
+    font-weight: bold; 
+    font-size: 15px;
+  }
+  
+  .table-responsive-for-payroll td:nth-of-type(4):before {
+    content: "Damage deduction";
+    font-weight: bold; 
+    font-size: 13px;
+   
+   
+  }
+  
+  .table-responsive-for-payroll td:nth-of-type(5):before {
+    content: "Total deduction";
+    font-weight: bold; 
+    font-size: 15px;
+    
+  }
+  
+  .table-responsive-for-payroll td:nth-of-type(6):before {
+    content: "Total rate";
+    font-weight: bold; 
+    font-size: 15px;
+  }
+  
+  .table-responsive-for-payroll td:nth-of-type(7):before {
+    content: "Action";
+    font-weight: bold; 
+    font-size: 15px;
+  }
+
+  .filter-btn {
+    margin-top: 10px;
+  }
+
+  .form-start-date
+  .form-end-date {
+    margin: 20px;
+  }
+
+  .nav-tabs .nav-link{
+   margin: 5px;
+  }
+}
+
+/* Unpaid Payroll */
+
+/* Add a max-width to the table */
+.table-responsive-for-unpaid {
+  overflow-x: hidden; /* Hide horizontal scroll */
+  display: block;
+  position: relative; /* Add this line to make the position relative */
+}
+
+/* Responsive table */
+.table-responsive-for-unpaid thead,
+.table-responsive-for-unpaid tbody,
+.table-responsive-for-unpaid th,
+.table-responsive-for-unpaid td,
+.table-responsive-for-unpaid tr {
+  display: block;
+}
+
+
+/* Hide table headers (but not display: none;, for accessibility) */
+.table-responsive-for-unpaid thead tr {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.table-responsive-for-unpaid tr {
+  margin-bottom: 15px;
+  border-left: 1px solid #2524247c;
+  border-top: 1px solid #2524247c; 
+  border-bottom: 1px solid #2524247c;
+  border-right: 1px solid #2524247c;
+}
+
+
+.table-responsive-for-unpaid td {
+  /* Behave like a "row" */
+  border-bottom: 1px solid #2524247c;
+  position: relative;
+  padding-left: 50%;
+}
+
+.table-responsive-for-unpaid td:before {
+  /* Now like a table header */
+  position: absolute;
+  /* Top/left values mimic padding */
+  top: 6px;
+  left: 6px;
+  width: 45%;
+  padding-right: 10px;
+  white-space: nowrap;
+  border-right: 1px solid #2524247c;
+ 
+}
+
+/* Label the data */
+.table-responsive-for-unpaid td:nth-of-type(1):before {
+  content: "#";
+  font-weight: bold; 
+  font-size: 15px;
+ 
+}
+
+/* Label the data */
+.table-responsive-for-unpaid td:nth-of-type(2):before {
+  content: "Pay Period";
+  font-weight: bold; 
+  font-size: 15px;
+ 
+}
+
+.table-responsive-for-unpaid td:nth-of-type(3):before {
+  content: "Net Salary";
+  font-weight: bold; 
+  font-size: 15px;
+}
+
+.table-responsive-for-unpaid td:nth-of-type(4):before {
+  content: "Status";
+  font-weight: bold; 
+  font-size: 15px;
+ 
+ 
+}
+
+.table-responsive-for-unpaid td:nth-of-type(5):before {
+  content: "Action";
+  font-weight: bold; 
+  font-size: 15px;
+  
+}
+
+
+/* Add a background color to the even rows */
+.table-responsive-for-unpaid tr:nth-of-type(even) {
+  background: #f9f9f9;
+}
+
+/* Add border in the center of the table */
+.table-responsive-for-unpaid:after {
+  content: "";
+  display: table-row;
+  clear: both;
+}
+
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .table-responsive-for-unpaid {
+    overflow-x: hidden;
+  }
+
+  /* Label the data */
+  .table-responsive-for-unpaid td:before {
+    font-weight: bold;
+  }
+
+  #examples_wrapper .dataTables_filter input {
+    max-width: 170px !important; 
+    margin-bottom: 10px;
+    float: inline-end;
+    margin-top: 10px;
+  }
+
+  #examples_wrapper .dataTables_filter label {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: block;
+  }
+}
+
+/* Cash Advance */
+
+/* Add a max-width to the table */
+.table-responsive-cashAdvance {
+  overflow-x: hidden; /* Hide horizontal scroll */
+  display: block;
+  position: relative; /* Add this line to make the position relative */
+}
+
+/* Responsive table */
+.table-responsive-cashAdvance thead,
+.table-responsive-cashAdvance tbody,
+.table-responsive-cashAdvance th,
+.table-responsive-cashAdvance td,
+.table-responsive-cashAdvance tr {
+  display: block;
+}
+
+
+/* Hide table headers (but not display: none;, for accessibility) */
+.table-responsive-cashAdvance thead tr {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.table-responsive-cashAdvance tr {
+  margin-bottom: 15px;
+  border-left: 1px solid #2524247c;
+  border-top: 1px solid #2524247c; 
+  border-bottom: 1px solid #2524247c;
+  border-right: 1px solid #2524247c;
+}
+
+
+.table-responsive-cashAdvance td {
+  /* Behave like a "row" */
+  border-bottom: 1px solid #2524247c;
+  position: relative;
+  padding-left: 50%;
+}
+
+.table-responsive-cashAdvance td:before {
+  /* Now like a table header */
+  position: absolute;
+  /* Top/left values mimic padding */
+  top: 6px;
+  left: 6px;
+  width: 45%;
+  padding-right: 10px;
+  white-space: nowrap;
+  border-right: 1px solid #2524247c;
+ 
+}
+
+/* Label the data */
+.table-responsive-cashAdvance td:nth-of-type(1):before {
+  content: "#";
+  font-weight: bold; 
+  font-size: 15px;
+ 
+}
+
+/* Label the data */
+.table-responsive-cashAdvance td:nth-of-type(2):before {
+  content: "Amount Bal.";
+  font-weight: bold; 
+  font-size: 15px;
+ 
+}
+
+.table-responsive-cashAdvance td:nth-of-type(3):before {
+  content: "Purpose";
+  font-weight: bold; 
+  font-size: 15px;
+}
+
+.table-responsive-cashAdvance td:nth-of-type(4):before {
+  content: "Payment Seq.";
+  font-weight: bold; 
+  font-size: 15px;
+ 
+ 
+}
+
+.table-responsive-cashAdvance td:nth-of-type(5):before {
+  content: "Status";
+  font-weight: bold; 
+  font-size: 15px;
+  
+}
+
+.table-responsive-cashAdvance td:nth-of-type(6):before {
+  content: "Action";
+  font-weight: bold; 
+  font-size: 15px;
+  
+}
+
+
+/* Add a background color to the even rows */
+.table-responsive-cashAdvance tr:nth-of-type(even) {
+  background: #f9f9f9;
+}
+
+/* Add border in the center of the table */
+.table-responsive-cashAdvance:after {
+  content: "";
+  display: table-row;
+  clear: both;
+}
+
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .table-responsive-cashAdvance {
+    overflow-x: hidden;
+  }
+
+  /* Label the data */
+  .table-responsive-cashAdvance td:before {
+    font-weight: bold;
+  }
+
+  #example_wrapper .dataTables_filter input {
+    max-width: 170px !important; 
+    margin-bottom: 10px;
+    float: inline-end;
+    margin-top: 10px;
+  }
+
+  #example_wrapper .dataTables_filter label {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: block;
+  }
+}
+
+
+/* Modal Unpaid */
+
+/* Add a max-width to the table */
+.table-responsive-modal-unpaid {
+  overflow-x: hidden; /* Hide horizontal scroll */
+  display: block;
+  position: relative; /* Add this line to make the position relative */
+}
+
+/* Responsive table */
+.table-responsive-modal-unpaid thead,
+.table-responsive-modal-unpaid tbody,
+.table-responsive-modal-unpaid th,
+.table-responsive-modal-unpaid td,
+.table-responsive-modal-unpaid tr {
+  display: block;
+}
 
 
 
+/* Hide table headers (but not display: none;, for accessibility) */
+.table-responsive-modal-unpaid thead tr {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.table-responsive-modal-unpaid tr {
+  margin-bottom: 15px;
+}
+
+.table-responsive-modal-unpaid td {
+  /* Behave like a "row" */
+  position: relative;
+  padding-left: 50%;
+}
 
 
 
+/* Add vertical border in the center of the table */
+.table-responsive-modal-unpaid td:before {
+ /* Now like a table header */
+ position: absolute;
+ /* Top/left values mimic padding */
+ top: 6px;
+ left: 6px;
+ width: 45%;
+ padding-right: 10px;
+ white-space: nowrap;
+ border-right: 1px solid #2524247c;
+ 
+}
 
+/* Label the data */
+.table-responsive-modal-unpaid td:nth-of-type(1):before {
+  content: "Pay Date";
+  font-weight: bold; 
+}
+
+.table-responsive-modal-unpaid td:nth-of-type(2):before {
+  content: "Paid Amount";
+  font-weight: bold; 
+}
+
+.table-responsive-modal-unpaid td:nth-of-type(2):before {
+  content: "Remaining Bal,";
+  font-weight: bold; 
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .table-responsive-modal-unpaid {
+    overflow-x: auto;
+  }
+
+  /* Label the data */
+  .table-responsive-modal-unpaid td:before {
+    font-weight: bold;
+  }
+
+}
+
+
+/* Damage details */
+
+/* Add a max-width to the table */
+.table-responsive-for-damage {
+  overflow-x: hidden; /* Hide horizontal scroll */
+  display: block;
+  position: relative; /* Add this line to make the position relative */
+}
+
+/* Responsive table */
+.table-responsive-for-damage thead,
+.table-responsive-for-damage tbody,
+.table-responsive-for-damage th,
+.table-responsive-for-damage td,
+.table-responsive-for-damage tr {
+  display: block;
+}
+
+
+/* Hide table headers (but not display: none;, for accessibility) */
+.table-responsive-for-damage thead tr {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.table-responsive-for-damage tr {
+  margin-bottom: 15px;
+  border-left: 1px solid #2524247c;
+  border-top: 1px solid #2524247c; 
+  border-bottom: 1px solid #2524247c;
+  border-right: 1px solid #2524247c;
+}
+
+
+.table-responsive-for-damage td {
+  /* Behave like a "row" */
+  border-bottom: 1px solid #2524247c;
+  position: relative;
+  padding-left: 50%;
+}
+
+.table-responsive-for-damage td:before {
+  /* Now like a table header */
+  position: absolute;
+  /* Top/left values mimic padding */
+  top: 6px;
+  left: 6px;
+  width: 45%;
+  padding-right: 10px;
+  white-space: nowrap;
+  border-right: 1px solid #2524247c;
+ 
+}
+
+/* Label the data */
+.table-responsive-for-damage td:nth-of-type(1):before {
+  content: "#";
+  font-weight: bold; 
+  font-size: 15px;
+ 
+}
+
+/* Label the data */
+.table-responsive-for-damage td:nth-of-type(2):before {
+  content: "Date Incidence";
+  font-weight: bold; 
+  font-size: 15px;
+ 
+}
+
+.table-responsive-for-damage td:nth-of-type(3):before {
+  content: "Description";
+  font-weight: bold; 
+  font-size: 15px;
+}
+
+.table-responsive-for-damage td:nth-of-type(4):before {
+  content: "Deduction Bal.";
+  font-weight: bold; 
+  font-size: 15px;
+ 
+ 
+}
+
+.table-responsive-for-damage td:nth-of-type(5):before {
+  content: "Term";
+  font-weight: bold; 
+  font-size: 15px;
+  
+}
+
+.table-responsive-for-damage td:nth-of-type(6):before {
+  content: "Status";
+  font-weight: bold; 
+  font-size: 15px;
+  
+}
+
+.table-responsive-for-damage td:nth-of-type(7):before {
+  content: "Action";
+  font-weight: bold; 
+  font-size: 15px;
+  
+}
+
+
+/* Add a background color to the even rows */
+.table-responsive-for-damage tr:nth-of-type(even) {
+  background: #f9f9f9;
+}
+
+/* Add border in the center of the table */
+.table-responsive-for-damage:after {
+  content: "";
+  display: table-row;
+  clear: both;
+}
+
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .table-responsive-for-damage {
+    overflow-x: hidden;
+  }
+
+  /* Label the data */
+  .table-responsive-for-damage td:before {
+    font-weight: bold;
+  }
+
+  #examples1_wrapper .dataTables_filter input {
+    max-width: 170px !important; 
+    margin-bottom: 10px;
+    float: inline-end;
+    margin-top: 10px;
+  }
+
+  #examples1_wrapper .dataTables_filter label {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: block;
+  }
+}
+
+/* Modal Damage */
+
+/* Add a max-width to the table */
+.table-responsive-modal-damage {
+  overflow-x: hidden; /* Hide horizontal scroll */
+  display: block;
+  position: relative; /* Add this line to make the position relative */
+}
+
+/* Responsive table */
+.table-responsive-modal-damage thead,
+.table-responsive-modal-damage tbody,
+.table-responsive-modal-damage th,
+.table-responsive-modal-damage td,
+.table-responsive-modal-damage tr {
+  display: block;
+}
+
+
+
+/* Hide table headers (but not display: none;, for accessibility) */
+.table-responsive-modal-damage thead tr {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.table-responsive-modal-damage tr {
+  margin-bottom: 15px;
+}
+
+.table-responsive-modal-damage td {
+  /* Behave like a "row" */
+  position: relative;
+  padding-left: 50%;
+}
+
+
+
+/* Add vertical border in the center of the table */
+.table-responsive-modal-damage td:before {
+ /* Now like a table header */
+ position: absolute;
+ /* Top/left values mimic padding */
+ top: 6px;
+ left: 6px;
+ width: 45%;
+ padding-right: 10px;
+ white-space: nowrap;
+ border-right: 1px solid #2524247c;
+ 
+}
+
+/* Label the data */
+.table-responsive-modal-damage td:nth-of-type(1):before {
+  content: "Pay Date";
+  font-weight: bold; 
+}
+
+.table-responsive-modal-damage td:nth-of-type(2):before {
+  content: "Paid Amount";
+  font-weight: bold; 
+}
+
+.table-responsive-modal-damage td:nth-of-type(2):before {
+  content: "Remaining Bal,";
+  font-weight: bold; 
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .table-responsive-modal-damage {
+    overflow-x: auto;
+  }
+
+  /* Label the data */
+  .table-responsive-modal-damage td:before {
+    font-weight: bold;
+  }
+
+}

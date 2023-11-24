@@ -70,12 +70,10 @@
                                                         <table id="dashboardforDriver" class="table table-bordered letter-size">
                                                             <thead class="table-primary ">
                                                                 <tr>
+                                                                    <th scope="col">#</th>
                                                                     <th scope="col">Client name</th>
-                                                                   
                                                                     <th scope="col">Plate no.</th>
-                                                                    @if ($transpo->first() && !in_array($transpo->first()->status, ['1', '2', '3', '6', '7']))
-                                                                        <th scope="col" class="tons-header">Tons</th>
-                                                                    @endif
+                                                                    <th scope="col" class="tons-header">Tons</th>
                                                                     <th scope="col">Status</th>
                                                                     <th scope="col">Action</th>
                                                                 </tr>
@@ -83,17 +81,16 @@
                                                             <tbody>
                                                             
                                                                 @foreach ($transpo as $t)
+                                                                    <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $t->booking->user->name }}</td>
                                                                     <td class="text-uppercase">{{ $t->truck->plate_number }}</td>
                                                                     <form method="post" action="{{ route('update_transportation', ['id' => $t->id]) }}">
                                                                         @csrf
-                                                                        @if (!in_array($t->status, ['1', '2', '3', '6', '7']))
                                                                         <td>
                                                                             <input id="originalInput" type="number" class="form-control form-control-sm" min="1" name="tons"
-                                                                                value="{{ $t->booking->tons ?? 0 }}" style="width: 65px;" @if (in_array($t->status, ['5', '6', '7'])) readonly @endif>
-                                                                        </td>
-
-                                                                        @endif
+                                                                                value="{{ $t->booking->tons ?? 0 }}" style="width: 65px;" 
+                                                                                @if (in_array($t->status, ['1','2','3','5', '6', '7'])) readonly @endif>
+                                                                        </td>                                                 
                                                                         <td>
                                                                             <div class="row g-3">
                                                                                 <div class="col-12">
@@ -103,7 +100,7 @@
                                                                                         <option value="3" @if ($t->status == '3' || $t->status == '1' || $t->status == '4' || $t->status == '5') disabled @endif @if ($t->status == '3') selected @endif>Departed</option>
                                                                                         <option value="4" @if ($t->status == '4' || $t->status == '1' || $t->status == '2' || $t->status == '5') disabled @endif @if ($t->status == '4') selected @endif>In Transit</option>
                                                                                         <option value="5" @if ($t->status == '5' || $t->status == '1' || $t->status == '2' || $t->status == '3') disabled @endif @if ($t->status == '5') selected @endif>Delivered</option>
-                                                                                        <option disabled value="6" @if ($t->status == '6') selected  @endif>Arrived at the station</option>
+                                                                                        <option disabled value="6" @if ($t->status == '6' || $t->booking->tons !== 0) style="display: none;" @endif @if ($t->status == '6') selected @endif>Arrived at the station</option>
                                                                                     </select>
                                                                                 </div>
                                                                             </div>
@@ -125,28 +122,28 @@
                                                                                         <div class="modal-body">
                                                                                             <div class="container">
                                                                                                 <div class="row">
-                                                                                                    <div class="col-12 col-md-4">
+                                                                                                    <div class="col col-md-4">
                                                                                                         <label for="staticEmail" class="col-form-label">Pick-up date:</label>
                                                                                                     </div>
-                                                                                                    <div class="col-12 col-md-4">
-                                                                                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ \Carbon\Carbon::parse($t->booking->date)->format('F j, Y') }}">
+                                                                                                    <div class="col col-md-4">
+                                                                                                        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ \Carbon\Carbon::parse($t->booking->pickUp_date)->format('F j, Y') }}">
                                                                                                     </div>
                                                                                                 </div>
 
                                                                                                 <div class="row">
-                                                                                                    <div class="col-12 col-md-4">
+                                                                                                    <div class="col col-md-4">
                                                                                                         <label for="staticEmail" class="col-form-label">Helper:</label>
                                                                                                     </div>
-                                                                                                    <div class="col-12 col-md-8">
+                                                                                                    <div class="col col-md-8">
                                                                                                         <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $t->helper->user->name }} {{ $t->helper->user->lname }}">
                                                                                                     </div>
                                                                                                 </div>
 
                                                                                                 <div class="row">
-                                                                                                    <div class="col-12 col-md-4">
+                                                                                                    <div class="col col-md-4">
                                                                                                         <label for="staticEmail" class="col-form-label">Origin:</label>
                                                                                                     </div>
-                                                                                                    <div class="col-12 col-md-8">
+                                                                                                    <div class="col col-md-8">
                                                                                                         <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $t->booking->origin }}">
                                                                                                     </div>
                                                                                                 </div>
@@ -154,22 +151,21 @@
                                                                                                
 
                                                                                                 <div class="row">
-                                                                                                    <div class="col-12 col-md-4">
+                                                                                                    <div class="col col-md-4">
                                                                                                         <label for="staticEmail" class="col-form-label">Destination:</label>
                                                                                                     </div>
-                                                                                                    <div class="col-12 col-md-8">
+                                                                                                    <div class="col col-md-8">
                                                                                                         <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $t->booking->destination }}">
                                                                                                     </div>
                                                                                                 </div>
 
                                                                                                 <div class="mb-3 row">
-                                                                                                    <div class="col-12 col-md-4">
+                                                                                                    <div class="col col-md-4">
                                                                                                         <label for="staticEmail" class="col-form-label">Transportation date:</label>
                                                                                                     </div>
-                                                                                                    <div class="col-12 col-md-8">
+                                                                                                    <div class="col col-md-8">
                                                                                                         @php
-                                                                                                        // Convert the Transportation time time to 12-hour format
-                                                                                                        $transportationDate = date("F j, Y", strtotime($t->booking->transportation_date));
+                                                                                                            $transportationDate = date("F j, Y", strtotime($t->booking->transportation_date));
                                                                                                         @endphp
                                                                                                         <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ $transportationDate }}">
                                                                                                     </div>
