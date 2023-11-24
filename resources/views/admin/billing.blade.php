@@ -107,10 +107,10 @@
                                                                     @csrf
 
                                                                     <input hidden="" type="text" name="client_id" id="clientNameInput" value="{{ old('client_id') }}">
-                                                                    <div id="start_date_input_copy" class="col-auto">
+                                                                    <div hidden="" id="start_date_input_copy" class="col-auto">
                                                                         <input type="date" class="form-control" name="start_date" placeholder="Start Date" aria-label="Start Date">
                                                                     </div>
-                                                                    <div id="end_date_input_copy" class="col-auto">
+                                                                    <div hidden="" id="end_date_input_copy" class="col-auto">
                                                                         <input type="date" class="form-control" name="end_date" placeholder="End Date" aria-label="End Date">
                                                                     </div>
                                                                     <input hidden="" type="text" name="totalAmount" class="form-control form-control-sm" id="totalAmountCopy">

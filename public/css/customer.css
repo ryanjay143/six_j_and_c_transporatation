@@ -66,14 +66,14 @@
 
 
 /* Add a max-width to the table */
-.table-responsive-for-dashboard-for-dashboard {
+.table-responsive-for-dashboard {
   overflow-x: hidden; /* Hide horizontal scroll */
   display: block;
   position: relative; /* Add this line to make the position relative */
 }
 
 /* Responsive table */
-.table-responsive-for-dashboard-for-dashboard thead,
+.table-responsive-for-dashboard thead,
 .table-responsive-for-dashboard tbody,
 .table-responsive-for-dashboard th,
 .table-responsive-for-dashboard td,
@@ -217,10 +217,7 @@
   padding-left: 50%;
 }
 
-/* Add a background color to the even rows */
-.table-responsive-for-modal-dashboard tr:nth-of-type(even) {
-  background: #f9f9f9;
-}
+
 
 /* Add vertical border in the center of the table */
 .table-responsive-for-modal-dashboard td:before {
@@ -230,7 +227,7 @@
   top: 0;
   bottom: 0;
   width: 1px;
-  background-color: #eee; /* Change the border color as needed */
+ 
 }
 
 /* Label the data */
@@ -256,6 +253,9 @@
   }
 
 }
+
+
+
 
 
 
