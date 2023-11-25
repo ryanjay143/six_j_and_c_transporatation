@@ -66,63 +66,6 @@ cashAmountInputs.forEach(function (cashAmountInput) {
     });
 });
 
-
-
-// Add a click event listener to the delete button
-$('.delete-button').click(function () {
-    // Get the billing ID from the data-id attribute
-    const billingId = $(this).data('id');
-
-    // Get the delete URL from the data-delete-url attribute
-    const deleteUrl = $(this).data('delete-url');
-
-    // Set the billing ID in the modal's Delete button for reference
-    $('#confirmDelete').data('billing-id', billingId);
-
-    // Show the delete confirmation modal
-    $('#deleteConfirmationModal').modal('show');
-
-    // Add a click event listener to the modal's Delete button
-    $('#confirmDelete').click(function () {
-        // Get the billing ID from the modal's Delete button
-        const billingId = $(this).data('billing-id');
-
-        // Get the CSRF token from the meta tag
-        const csrfToken = $('meta[name="csrf-token"]').attr('content');
-
-        $.ajax({
-            url: deleteUrl,
-            type: 'DELETE',
-            dataType: 'json',
-            data: {
-                _token: csrfToken, // Include the CSRF token
-            },
-            success: function (response) {
-                if (response.success) {
-                    console.log('Billing deleted successfully.');
-
-                    location.reload();
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Billing deleted successfully.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                } else {
-                    console.error('Error deleting billing.');
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error('AJAX error:', error);
-            },
-        });
-
-        // Close the modal
-        $('#deleteConfirmationModal').modal('hide');
-    });
-});
-
 // Get all payment select elements and submit buttons
 var paymentSelects = document.querySelectorAll(".paymentSelect");
 var submitButtons = document.querySelectorAll(".btn-success");
@@ -179,7 +122,26 @@ $(document).ready(function () {
 });
 
 
+// $(document).ready(function() {
+//     fetchInvoiceNumber('');
 
+//     function fetchInvoiceNumber(query) {
+//         $.ajax({
+//             url: searchInvoiceRoute,
+//             method: 'GET',
+//             data: { query: query },
+//             dataType: 'json',
+//             success: function(data) {
+//                 $('#invoiceTableBody').html(data.table_data); 
+//             }
+//         });
+//     }
+
+//     $(document).on('keyup', '#search', function() {
+//         var query = $(this).val();
+//         fetchInvoiceNumber(query);
+//     });
+// });
 
 
 

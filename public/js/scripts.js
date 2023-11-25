@@ -81,13 +81,9 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     });
 
-    $(document).ready(function () {
-        // Initialize the DataTable
-        var table = $('#billingReports').DataTable({
-            "searching": false, // Hide the default search box
-            "lengthChange": false, // Hide the show entries dropdown
-        });
-    });
+    
+    
+    
 
     $(document).ready(function () {
         // Initialize the DataTable

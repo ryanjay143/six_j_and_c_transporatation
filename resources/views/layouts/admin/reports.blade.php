@@ -7,8 +7,6 @@
     <!-- CSRF Token -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/logo/six_j_and_c_logo.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="{{ asset('/css/styles.css') }}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -21,18 +19,11 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
    
     <link rel="stylesheet" href="{{ asset('/css/dashboard.css') }}">
-
     <link rel="stylesheet" href="{{ asset('css/printBilling.css') }}">
-    
     <script src="{{ asset('js/scripts.js') }}"></script>
-
-   
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
 
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet"/>
@@ -138,14 +129,6 @@
                                     <div class="sb-nav-link-icon"><i class="bi bi-wallet-fill"></i></div>
                                     {{ __('Manage Payroll') }}
                                 </a>
-                                <!-- <a class="nav-link" href="{{ route('payroll.info') }}">
-                                    <div class="sb-nav-link-icon"><span class="fw-bold">₱</span></div>
-                                    {{ __('Payroll Information') }}
-                                </a>
-                                <a class="nav-link" href="{{ route('billing.information') }}">
-                                    <div class="sb-nav-link-icon"><i class="bi bi-receipt"></i></div>
-                                    {{ __('Billing Information') }}
-                                </a> -->
                                 <a class="nav-link active collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts1">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
                                 {{ __('Reports') }}
@@ -169,44 +152,20 @@
             @yield('content')
         </main>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
-        <script src="/js/datatables-simple-demo.js"></script>
-        <script src="{{ asset('js/print.js') }}"></script>
-        <script src="{{ asset('js/payment.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="{{ asset('js/reports.js') }}"></script>
+       
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
-
-        <script>
-            $(document).ready(function() {
-                fetchInvoiceNumber('');
-
-                function fetchInvoiceNumber(query) {
-                    $.ajax({
-                        url: "{{ route('search.invoice.number') }}",
-                        method: 'GET',
-                        data: { query: query },
-                        dataType: 'json',
-                        success: function(data) {
-                            $('#invoiceTableBody').html(data.table_data); // Update table body content
-                            $('#total_records').text(data.total_data);
-                        }
-                    });
-                }
-
-                $(document).on('keyup', '#search', function() {
-                    var query = $(this).val();
-                    fetchInvoiceNumber(query);
-                });
-            });
-
-        </script>
         <!-- MDB -->
-        <script type="text/javascript"src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
-    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        
+        <script src="{{ asset('js/print.js') }}"></script>
+        <script src="{{ asset('js/reports.js') }}"></script>
+        <script src="{{ asset('js/payment.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- <script>
+            var searchInvoiceRoute = "{{ route('search.invoice.number') }}";
+        </script> -->
+
 </body>
 </html>

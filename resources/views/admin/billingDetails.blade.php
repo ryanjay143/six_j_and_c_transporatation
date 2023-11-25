@@ -101,7 +101,7 @@
 
                                                         <tfoot>
                                                             <tr>
-                                                                <td colspan="7" class="fw-bold text-end">Total Amount:</td>
+                                                                <td colspan="8" class="fw-bold text-end">Total Amount:</td>
                                                                 <td class="fw-bold">&#8369; {{ $billing->total_amount }}</td>
                                                             </tr>
                                                         </tfoot>

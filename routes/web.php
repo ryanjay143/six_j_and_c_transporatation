@@ -133,6 +133,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('admin/payroll/reports', [AdminController::class, 'payroll_reports'])->name('admin.payrollReports');
     Route::get('admin/transportation/getTransportations', [AdminController::class, 'getTransportations']);
     Route::get('/filter-data', [AdminController::class, 'filterData'])->name('filter.data');
+    Route::get('admin/filter-transportation-date', [AdminController::class, 'filter_transportation_date'])->name('filter.transportationDate');
 
     Route::get('tranportation/filter', [AdminController::class, 'salary_filter'])->name('filterTransportationDate');
     Route::post('admin/save-truck', [AdminController::class, 'add_truck'])->name('save.truck');
@@ -140,6 +141,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('admin/list-of-trucks', [AdminController::class, 'truck_list'])->name('list.of.trucks');
 
     Route::get('admin/get/booking', [AdminController::class, 'get_booking'])->name('get.bookings.client');
+    Route::get('admin/client-filter/billing', [AdminController::class, 'client_filter_billing'])->name('filter.client.billing');
 
     Route::post('/update-transportation/for-admin/{id}', [AdminController::class, 'updateStatus'])->name('update_transportation.for.admin');
     Route::post('admin/billing/payment', [AdminController::class, 'billing_payment'])->name('billing.payment');

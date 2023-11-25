@@ -639,7 +639,25 @@ class AdminController extends Controller
         return response()->json(['bookings' => $todayBookings]);
     }
 
-    
+    public function client_filter_billing(Request $request)
+    {
+        $client_id = $request->input('client_id');
+
+        // Build the query for filtering
+        $query = Billing::query(); // Use the query method to start a new query
+
+        // Filter based on the client's ID
+        if ($client_id) {
+            $query->whereHas('user', function ($query) use ($client_id) {
+                $query->where('id', $client_id);
+            });
+        }
+
+        $billing = $query->get();
+        $users = User::where('type', 0)->get();
+        return view('admin.billingReports', compact('billing','users'));
+    }
+
     public function client_filter(Request $request)
     {
         // Get the selected client's ID from the form submission
@@ -764,18 +782,17 @@ class AdminController extends Controller
 
     public function billing_payment(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'payment' => 'required|in:Cash,Bank Transfer,Cheque',
             // Add other validation rules for other fields if needed
         ]);
-    
+
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
-    
+
             // Display SweetAlert pop-up with error message
             alert()->error('Error', implode('<br>', $errors))->persistent(true, false);
-    
+
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -784,21 +801,29 @@ class AdminController extends Controller
         $payment = new Payment;
         $payment->billing_id = $request->billing;
         $payment->payment_method = $request->payment;
-        $payment->ref_num = $request->refNum;
+        
+        if ($request->payment == 'Cash') {
+            // Generate a reference number for Cash payment
+            $payment->ref_num = 'CASHREF' . mt_rand(1000, 9999);
+        } else {
+            // For other payment methods, use the provided reference number
+            $payment->ref_num = $request->refNum;
+        }
+
         $payment->chique_num = $request->chique;
-        $payment->or_num  = $orNumber;
+        $payment->or_num = $orNumber;
         $payment->amount = $request->amount;
         $payment->save();
 
-         // Update the billing status
+        // Update the billing status
         $billing = Billing::find($request->billing);
-        $billing->status = 1; 
+        $billing->status = 1;
         $billing->save();
 
         Alert::success('Billing Payment success');
         return redirect()->back();
-
     }
+
 
     public function delete_billing($id)
     {
@@ -1191,11 +1216,71 @@ class AdminController extends Controller
             })
             ->get();
 
-        $driver = Employee::with('user')->where('position', 0)->get();
-        $helper = Employee::with('user')->where('position', 1)->get();
+       $driver = Employee::with('user')->whereHas('user', function ($query) {
+            $query->where('is_disabled', 0);
+        })->where('position', 0)->get();
+            
+        $helper = Employee::with('user')->whereHas('user', function ($query) {
+            $query->where('is_disabled', 0);
+        })->where('position', 1)->get();
 
         return view('admin.transportationReports', compact('transportations','driver','helper'));
     }
+
+    public function filter_transportation_date(Request $request)
+    {
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            'driver_id' => 'required',
+            'helper_id' => 'required',
+            'deliveredDate' => 'required|date',
+        ], [
+            'driver_id.required' => 'Please select a driver.',
+            'helper_id.required' => 'Please select a helper.',
+            'deliveredDate.required' => 'Please select a valid date.',
+            'deliveredDate.date' => 'Please select a valid date format.',
+        ]);
+    
+        if ($validator->fails()) {
+            // Redirect back with validation errors
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+    
+        $driver_id = $request->input('driver_id');
+        $helper_id = $request->input('helper_id');
+        $deliveredDate = $request->input('deliveredDate');
+    
+        // Query TransportationDetails with filters
+        $transportations = TransportationDetails::whereIn('status', [5, 6])
+            ->whereHas('employee', function ($query) use ($driver_id) {
+                $query->where('user_id', $driver_id);
+            })
+            ->whereHas('employee', function ($query) use ($helper_id) {
+                $query->where('user_id', $helper_id);
+            })
+            ->whereHas('updatedTimes', function ($query) use ($deliveredDate) {
+                // Correctly reference the updated_at column from the Updated_times table
+                $query->whereDate('updated_at', $deliveredDate);
+            })
+            ->with('updatedTimes')
+            ->get();
+    
+        // Get the list of drivers and helpers for the dropdowns
+        $driver = Employee::with('user')->whereHas('user', function ($query) {
+            $query->where('is_disabled', 0);
+        })->where('position', 0)->get();
+    
+        $helper = Employee::with('user')->whereHas('user', function ($query) {
+            $query->where('is_disabled', 0);
+        })->where('position', 1)->get();
+    
+        // Pass the results to the view
+        return view('admin.transportationReports', compact('transportations', 'driver', 'helper'));
+    }
+    
+    
+    
+
 
     public function filterData(Request $request)
     {

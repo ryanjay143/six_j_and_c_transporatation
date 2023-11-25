@@ -16,24 +16,18 @@
                                         <div class="card-body">                                 
                                             <div class="table-responsive">
                                                 <div class="row g-3 mb-3">
-                                                    <form id="filterForm" action="" method="GET">
-                                                        <div class="d-flex">
-                                                            <div class="col-sm-3 me-3">
-                                                                <label>Search Invoice number</label>
-                                                                <input type="text" class="form-control" id="search" name="search" placeholder="INV-0-00000000000">
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <label for="">Company name</label>
-                                                                <select class="form-select" id="clientSelect" name="client_id" aria-label="Default select example" required>
-                                                                    <option value="">All</option>
-                                                                    @foreach ($users as $client)
-                                                                        <option value="{{ $client->id }}" @if(request('client_id') == $client->id) selected @endif>{{ $client->name }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                                @error('client_id')
-                                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                                @enderror
-                                                            </div>
+                                                    <form id="filterForm" action="{{ route('filter.client.billing') }}" method="GET">
+                                                        <div class="col-sm-3">
+                                                            <label for="">Company name</label>
+                                                            <select class="form-select" id="clientSelect" name="client_id" aria-label="Default select example" required>
+                                                                <option value="">All</option>
+                                                                @foreach ($users as $client)
+                                                                    <option value="{{ $client->id }}" @if(request('client_id') == $client->id) selected @endif>{{ $client->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            @error('client_id')
+                                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                            @enderror
                                                         </div>
                                                     </form>
                                                 </div>
@@ -45,7 +39,7 @@
                                                             <th class="fw-bold" scope="col">Invoice Number</th>
                                                             <th class="fw-bold" scope="col">Billing Peroid</th>
                                                             <th class="fw-bold" scope="col">Amount</th>
-                                                            <th class="fw-bold" scope="col">Payment status</th>
+                                                            <th class="fw-bold action-column" scope="col">Payment status</th>
                                                             <th class="fw-bold action-column" scope="col">Action</th>
                                                         </tr>
                                                     </thead>
@@ -57,7 +51,7 @@
                                                                 <td>{{ $b->invoice_num }}</td>
                                                                 <td>{{ date('M d', strtotime($b->billing_start_date)) }}-{{ date('d, Y', strtotime($b->billing_end_date)) }}</td>
                                                                 <td data-amount="{{ $b->amount }}">&#8369; {{ $b->total_amount }}</td>
-                                                                <td>
+                                                                <td class="action-column">
                                                                     @if ($b->status == 0)
                                                                         <span class="badge text-bg-dark">Pending for payment</span>
                                                                     @elseif ($b->status == 1)
@@ -69,7 +63,7 @@
                                                                         <i class="fas fa-eye"></i>
                                                                     </a>
 
-                                                                    <button type="button" class="btn btn-outline-success btn-sm text-capitalize" data-bs-toggle="modal" data-bs-target="#paidModal{{ $b->id }}"  @if ($b->status == 1) disabled @endif>Paid</button>
+                                                                    <button type="button" class="btn btn-outline-success btn-sm text-capitalize" data-bs-toggle="modal" data-bs-target="#paidModal{{ $b->id }}" @if ($b->status == 1) disabled @endif>Paid</button>
 
                                                                     <!-- Modal -->
                                                                     <div class="modal fade" id="paidModal{{ $b->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -99,7 +93,6 @@
                                                                                             </div>
                                                                                             
                                                                                             <div class="payment-details" style="display: none;">
-                                                                                                <!-- Add the unique identifier (e.g., $b->id) to the ID attributes for each row -->
                                                                                                 <div class="chique-number" style="display: none;">
                                                                                                     <div class="mb-3">
                                                                                                         <label for="formGroupExampleInput" class="form-label">Cheque Number</label>
@@ -137,14 +130,14 @@
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
-                                                    <!-- <tfoot>
+                                                    <tfoot>
                                                         <tr>
                                                             <td colspan="3"></td>
-                                                            <td ><strong>Total Amount:</strong></td>
-                                                            <td id="totalAmountCell"><strong>&#8369;</strong></td>
-                                                            <td></td>
+                                                            <td><strong>Total Billing Amount:</strong></td>
+                                                            <td colspan="3" id="totalAmountCell"><strong>&#8369;</strong></td>
                                                         </tr>
-                                                    </tfoot> -->
+                                                    </tfoot>
+
                                                 </table>
                                             </div>
                                         </div>
@@ -156,6 +149,6 @@
                 </main>
             </div>
          
-
+           
 
 @endsection

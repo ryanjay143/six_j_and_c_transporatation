@@ -62,7 +62,6 @@ class TransportationDetails extends Model
         return $this->updated_at->format('F d, Y'); 
     }
 
-  
-
+    
 
 }

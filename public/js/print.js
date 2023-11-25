@@ -36,3 +36,19 @@ function generatePDF() {
     });
 }
 
+// Function to print the table
+document.getElementById("printButton").addEventListener("click", function () {
+    printJS({
+        printable: "billingReports",
+        type: "html",
+        header: "Billing Reports",
+    });
+});
+
+// Function to generate a PDF
+window.addEventListener('load', function () {
+    const doc = new jsPDF();
+    doc.text("Billing Reports", 10, 10);
+    doc.autoTable({ html: "#billingReports" });
+    doc.save("billing_reports.pdf");
+});

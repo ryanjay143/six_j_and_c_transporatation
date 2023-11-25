@@ -64,21 +64,70 @@ $(document).ready(function() {
 });
 
 
-// Function to print the table
-document.getElementById("printButton").addEventListener("click", function () {
-    printJS({
-        printable: "billingReports", // The ID of the table to print
-        type: "html",
-        header: "Billing Reports",
+$(document).ready(function () {
+    // Initialize the DataTable
+    var table = $('#billingReports').DataTable({
+        language: {
+            search: "Search Invoice Number:"
+        },
+        
+    });
+
+    // Add custom CSS for the search input
+    $('#billingReports_filter input').css({
+        'font-size': '14px', // Adjust the font size as needed
+        'border': '1px solid #847E7D' // Set the border color to black
+    });
+
+    // Set custom placeholder for the search input
+    $('#billingReports_filter input').attr('placeholder', 'INV-0-000000000000');
+    $('#billingReports_filter label').css('font-size', '15px');
+
+    // Function to update the total amount
+    function updateTotalAmount() {
+        var totalAmount = 0;
+
+        // Iterate through the visible rows after search
+        table.rows({ search: 'applied' }).every(function () {
+            var data = this.data();
+            var amount = parseFloat(data[4].replace(/[^\d.-]/g, '')); // Assuming the total amount is in the 5th column (index 4)
+
+            totalAmount += amount;
+        });
+
+        // Format the total amount with commas and two decimal places
+        var formattedTotalAmount = totalAmount.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        // Update the content of the totalAmountCell with formatted currency
+        $('#totalAmountCell').html('<strong>&#8369; ' + formattedTotalAmount + '</strong>');
+    }
+
+    // Call the updateTotalAmount function initially
+    updateTotalAmount();
+
+    // Listen for DataTable search events to recalculate the total amount after a search
+    table.on('search', function () {
+        updateTotalAmount();
+    });
+
+    // Listen for DataTable draw events to recalculate the total amount on every draw
+    table.on('draw', function () {
+        updateTotalAmount();
     });
 });
 
-// Function to generate a PDF
-window.addEventListener('load', function () {
-    const doc = new jsPDF();
-    doc.text("Billing Reports", 10, 10);
-    doc.autoTable({ html: "#billingReports" });
-    doc.save("billing_reports.pdf");
-});
 
+
+
+// Wait for the DOM to be ready
+$(document).ready(function () {
+    // Select the input field with the name 'deliveredDate'
+    $('input[name="deliveredDate"]').change(function () {
+        // Submit the form when the input field is changed
+        $('#filterFormDate').submit();
+    });
+});
 

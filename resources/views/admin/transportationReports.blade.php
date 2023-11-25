@@ -12,34 +12,35 @@
                                     <div class="card mb-3">
                                         <div class="card-body">                                 
                                             <div class="table-responsive">
-                                                <div class="row g-3">
-                                                    <div class="col-md-4 mb-2">
-                                                        <label for="date" class="form-label">Filter Delivered date</label>
-                                                        <input type="date" class="form-control" id="date" name="date"> 
-                                                    </div>
+                                                <form id="filterFormDate" class="row g-3" action="{{ route('filter.transportationDate') }}" method="get">
                                                     <div class="col-md-4 align-self-end mb-2">
-                                                        <select id="driverSelect" class="form-select">
+                                                        <select name="driver_id" class="form-select" required>
                                                             <option selected disabled>Select driver</option>
                                                             @foreach ($driver as $d)
-                                                                <option>{{ $d->user->name }} {{ $d->user->lname }}</option>
+                                                                <option value="{{ $d->id }}">{{ $d->user->name }} {{ $d->user->lname }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-4 align-self-end mb-2">
-                                                        <select id="helperSelect" class="form-select align-self-end">
+                                                    <div class="col-md-4 align-self-end mb-2" required>
+                                                        <select name="helper_id" class="form-select align-self-end">
                                                             <option selected disabled>Select helper</option>
                                                             @foreach ($helper as $h)
-                                                                <option>{{ $h->user->name }} {{ $h->user->lname }}</option>
+                                                                <option value="{{ $h->id }}">{{ $h->user->name }} {{ $h->user->lname }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                </div>
+                                                    <div class="col-md-4 mb-2">
+                                                        <label for="date" class="form-label">Filter Delivered date</label>
+                                                        <input type="date" class="form-control" id="deliveredDate" name="deliveredDate"> 
+                                                    </div>
+                                                </form>
                                                 <table id="transportationReports" class="table table-bordered table-hover">
                                                     <thead class="table-primary">
                                                         <tr>
                                                             <th class="fw-bold" scope="col">Delivered date</th>
                                                             <th class="fw-bold" scope="col">Driver name</th>
                                                             <th class="fw-bold" scope="col">Helper name</th>
+                                                            <th class="fw-bold" scope="col">Route</th>
                                                             <th class="fw-bold" scope="col">Plate No.</th>
                                                             <th class="fw-bold" scope="col">Action</th>
                                                         </tr>
@@ -48,14 +49,15 @@
                                                         @foreach ($transportations as $t)
                                                             <tr>
                                                                 <td>
-                                                                    @foreach ($t->updatedTimes as $updatedTime)
-                                                                        @if ($updatedTime->status == 5)
-                                                                            {{ $updatedTime->updated_at->format('F d, Y') }}
-                                                                        @endif
-                                                                    @endforeach
+                                                                @foreach ($t->updatedTimes as $updatedTime)
+                                                                    @if ($updatedTime->status == 5)
+                                                                        {{ $updatedTime->updated_at->format('F d, Y') }}
+                                                                    @endif
+                                                                @endforeach
                                                                 </td>
                                                                 <td>{{ $t->employee->user->name }} {{ $t->employee->user->lname }}</td>
                                                                 <td>{{ $t->helper->user->name }} {{ $t->helper->user->lname }}</td>
+                                                                <td>{{ $t->booking->origin }}-{{ $t->booking->destination }}</td>
                                                                 <td>{{ $t->truck->plate_number }}</td>
                                                                 <td>
                                                                     <button type="button" class="btn btn-outline-primary btn-sm"data-bs-toggle="modal" 
@@ -79,7 +81,7 @@
                                                                                                         <th scope="col">#</th>
                                                                                                         <th scope="col">Client name</th>
                                                                                                         <th scope="col">Transportation status</th>
-                                                                                                        <th scope="col">Updated time</th>
+                                                                                                        <th scope="col">Updated datetime</th>
                                                                                                     </tr>
                                                                                                 </thead>
                                                                                                 <tbody>
@@ -101,7 +103,7 @@
                                                                                                                 @endif
                                                                                                                 
                                                                                                             </td>
-                                                                                                            <td>{{ $u->created_at->format('h:i A') }}</td>
+                                                                                                            <td>{{ $u->created_at->format('M d, Y h:i A') }}</td>
                                                                                                         </tr>
                                                                                                     @endforeach
                                                                                                 </tbody>
