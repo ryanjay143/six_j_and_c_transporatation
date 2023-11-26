@@ -9,32 +9,39 @@
                         <h2 class="mt-4 mb-4">Transportation Reports</h2>
                             <div class="row">
                                 <div class="container">
-                                    <div class="card mb-3">
+                                    <div class="btn-group mb-3" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="printForm()">Print with PDF</button>
+                                    </div>
+                                    <div id="printableForm" class="card mb-3 print-form">
                                         <div class="card-body">                                 
                                             <div class="table-responsive">
-                                                <form id="filterFormDate" class="row g-3" action="{{ route('filter.transportationDate') }}" method="get">
-                                                    <div class="col-md-4 align-self-end mb-2">
-                                                        <select name="driver_id" class="form-select" required>
+                                                <div class="row g-3">
+                                                    <div class="col-md-4 mb-2">
+                                                        <select id="driverSelect" class="form-select action-column" required>
                                                             <option selected disabled>Select driver</option>
                                                             @foreach ($driver as $d)
-                                                                <option value="{{ $d->id }}">{{ $d->user->name }} {{ $d->user->lname }}</option>
+                                                                <option>{{ $d->user->name }} {{ $d->user->lname }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4 align-self-end mb-2" required>
-                                                        <select name="helper_id" class="form-select align-self-end">
+                                                        <select id="helperSelect" class="form-select align-self-end action-column">
                                                             <option selected disabled>Select helper</option>
                                                             @foreach ($helper as $h)
-                                                                <option value="{{ $h->id }}">{{ $h->user->name }} {{ $h->user->lname }}</option>
+                                                                <option>{{ $h->user->name }} {{ $h->user->lname }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-4 mb-2">
-                                                        <label for="date" class="form-label">Filter Delivered date</label>
-                                                        <input type="date" class="form-control" id="deliveredDate" name="deliveredDate"> 
+                                                    <div class="col-md-4 align-self-end mb-2" required>
+                                                        <select id="plateNumberSelect" class="form-select align-self-end action-column">
+                                                            <option selected disabled>Select plate number</option>
+                                                            @foreach ($truck as $t)
+                                                                <option>{{ $t->plate_number }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
-                                                </form>
-                                                <table id="transportationReports" class="table table-bordered table-hover">
+                                                </div>
+                                                <table id="transportationReports" class="table table-bordered">
                                                     <thead class="table-primary">
                                                         <tr>
                                                             <th class="fw-bold" scope="col">Delivered date</th>
@@ -42,24 +49,24 @@
                                                             <th class="fw-bold" scope="col">Helper name</th>
                                                             <th class="fw-bold" scope="col">Route</th>
                                                             <th class="fw-bold" scope="col">Plate No.</th>
-                                                            <th class="fw-bold" scope="col">Action</th>
+                                                            <th class="fw-bold action-column" scope="col">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach ($transportations as $t)
-                                                            <tr>
+                                                            <tr class="uniqueIdentifier">
                                                                 <td>
-                                                                @foreach ($t->updatedTimes as $updatedTime)
-                                                                    @if ($updatedTime->status == 5)
-                                                                        {{ $updatedTime->updated_at->format('F d, Y') }}
-                                                                    @endif
-                                                                @endforeach
+                                                                    @foreach ($t->updatedTimes as $updatedTime)
+                                                                        @if ($updatedTime->status == 5)
+                                                                            {{ $updatedTime->updated_at->format('F d, Y') }}
+                                                                        @endif
+                                                                    @endforeach
                                                                 </td>
                                                                 <td>{{ $t->employee->user->name }} {{ $t->employee->user->lname }}</td>
                                                                 <td>{{ $t->helper->user->name }} {{ $t->helper->user->lname }}</td>
                                                                 <td>{{ $t->booking->origin }}-{{ $t->booking->destination }}</td>
                                                                 <td>{{ $t->truck->plate_number }}</td>
-                                                                <td>
+                                                                <td class="action-column">
                                                                     <button type="button" class="btn btn-outline-primary btn-sm"data-bs-toggle="modal" 
                                                                     data-bs-target="#exampleModal2{{ $t->id }}"><i class="bi bi-eye-fill"></i></button>
                                                                      
@@ -84,10 +91,10 @@
                                                                                                         <th scope="col">Updated datetime</th>
                                                                                                     </tr>
                                                                                                 </thead>
-                                                                                                <tbody>
+                                                                                                <tbody id="modalTable">
                                                                                                     @foreach ($t->updatedTimes as $u)
                                                                                                         <tr>
-                                                                                                            <th scope="row">{{ $loop->iteration }}</th>
+                                                                                                            <td scope="row">{{ $loop->iteration }}</td>
                                                                                                             <td>{{ $u->transportationDetails->booking->user->name }}</td>
                                                                                                             <td>
                                                                                                                 @if ($u->status == 2)

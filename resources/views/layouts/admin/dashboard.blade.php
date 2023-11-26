@@ -46,7 +46,7 @@
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars fa-lg text-light"></i></button>
             <!-- Navbar Search-->
             <div class="d-none d-md-flex form-inline ms-auto me-0 me-md-3 my-2 my-md-0 text-light">
-                <div class="nav-item dropdown me-3">
+                <!-- <div class="nav-item dropdown me-3">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                     <i class="far fa-bell fa-lg"></i>
                         <span class="badge text-bg-danger">15</span>
@@ -60,7 +60,7 @@
                             requested by Alpha Food
                         </span>
                     </a>
-                    <!-- <div class="dropdown-divider"></div>
+                    <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
                         <i class="fas fa-users mr-2"></i> 8 friend requests
                         <span class="float-right text-muted text-sm">12 hours</span>
@@ -69,11 +69,11 @@
                     <a href="#" class="dropdown-item">
                         <i class="fas fa-file mr-2"></i> 3 new reports
                         <span class="float-right text-muted text-sm">2 days</span>
-                    </a> -->
+                    </a>
                     <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                     </div>
-                </div>
+                </div> -->
                 {{ now()->format('F d, Y h:i A') }}
             </div>
 

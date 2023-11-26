@@ -1,66 +1,89 @@
-// Initialize arrays to store driver and helper names
-var driverNames = [];
-var helperNames = [];
-
-// Iterate through table rows and collect driver and helper names
-$("#transportationReports tbody tr").each(function () {
-    var driverName = $(this).find("td:eq(1)").text(); // Assuming the driver name is in the second column (index 1)
-    var helperName = $(this).find("td:eq(2)").text(); // Assuming the helper name is in the third column (index 2)
-
-    driverNames.push(driverName);
-    helperNames.push(helperName);
+$(document).ready(function () {
+    // Initialize DataTable
+    var table = $("#transportationReports").DataTable({
+        searching: false,
+        lengthChange: false,
+        paging: false 
+    });
 });
 
-// Remove duplicates from the driver and helper names arrays (if needed)
-var uniqueDriverNames = [...new Set(driverNames)];
-var uniqueHelperNames = [...new Set(helperNames)];
-
-// Add event listeners for driver and helper selections
-$(document).ready(function () {
-    var driverSelect = $("#driverSelect");
-    var helperSelect = $("#helperSelect");
+document.addEventListener('DOMContentLoaded', function () {
+    // Get references to the select elements
+    var driverSelect = document.getElementById('driverSelect');
+    var helperSelect = document.getElementById('helperSelect');
+    var plateNumberSelect = document.getElementById('plateNumberSelect');
     
-
-    driverSelect.on("change", filterTable);
-    helperSelect.on("change", filterTable);
-
+    // Get reference to the table body
+    var tableBody = document.getElementById('transportationReports').getElementsByTagName('tbody')[0];
+    
+    // Attach event listeners to the select elements
+    driverSelect.addEventListener('change', filterTable);
+    helperSelect.addEventListener('change', filterTable);
+    plateNumberSelect.addEventListener('change', filterTable);
+    
+    // Function to filter the table based on selected values
     function filterTable() {
-        var selectedDriver = driverSelect.val();
-        var selectedHelper = helperSelect.val();
+        var selectedDriver = driverSelect.value;
+        var selectedHelper = helperSelect.value;
+        var selectedPlateNumber = plateNumberSelect.value;
 
-        $("#transportationReports tbody tr").each(function () {
-            var driverName = $(this).find("td:eq(1)").text(); // Assuming the driver name is in the second column (index 1)
-            var helperName = $(this).find("td:eq(2)").text(); // Assuming the helper name is in the third column (index 2)
+        // Loop through each row in the table
+        for (var i = 0, row; row = tableBody.rows[i]; i++) {
+            var driverName = row.cells[1].innerText;
+            var helperName = row.cells[2].innerText;
+            var plateNumber = row.cells[4].innerText;
 
-            var driverMatch = selectedDriver === "Select driver" || driverName === selectedDriver;
-            var helperMatch = selectedHelper === "Select helper" || helperName === selectedHelper;
+            // Check if the row should be displayed based on the selected filters
+            var displayRow = (selectedDriver === 'Select driver' || driverName === selectedDriver) &&
+                             (selectedHelper === 'Select helper' || helperName === selectedHelper) &&
+                             (selectedPlateNumber === 'Select plate number' || plateNumber === selectedPlateNumber);
 
-            if (driverMatch && helperMatch) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
+            // Show or hide the row accordingly
+            row.style.display = displayRow ? '' : 'none';
+        }
     }
 });
 
+$(document).ready(function () {
+    // Initialize the DataTable
+    var table = $('#paymentReports').DataTable({
+        language: {
+            search: "Search Invoice or OR number:"
+        },
+    });
 
-$(document).ready(function() {
-    $('#date').on('change', function() {
-        var selectedDate = $(this).val();
-        console.log(selectedDate)
-        
-        // Loop through each row in the table and hide/show based on the selected date
-        $('#transportationReports tbody tr').each(function() {
-            var deliveryDate = $(this).find('td:first-child').text(); // Assuming the date is in the first column
-            
-            if (deliveryDate === selectedDate) {
-                $(this).show();
-            } else {
-                $(this).hide();
+    // Add custom CSS for the search input
+    $('#paymentReports_filter input').css({
+        'font-size': '14px',
+        'border': '1px solid #847E7D'
+    });
+
+    // Calculate and display the formatted total payment amount
+    calculateTotal();
+
+    // Recalculate total on draw event (search, pagination, etc.)
+    table.on('draw', function () {
+        calculateTotal();
+    });
+
+    // Function to calculate the total payment amount
+    function calculateTotal() {
+        var total = 0;
+
+        // Iterate through each row in the table body
+        $('#paymentRows tr').each(function () {
+            var amountString = $(this).find('td:last-child').text().trim().replace('₱', '').replace(',', '');
+            var amount = parseFloat(amountString);
+
+            // Check if the amount is a valid number
+            if (!isNaN(amount)) {
+                total += amount;
             }
         });
-    });
+
+        // Format and update the total amount in the table footer with .00
+        $('#totalPaymentAmount').text('₱ ' + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+    }
 });
 
 
@@ -120,14 +143,11 @@ $(document).ready(function () {
 });
 
 
-
-
 // Wait for the DOM to be ready
 $(document).ready(function () {
     // Select the input field with the name 'deliveredDate'
-    $('input[name="deliveredDate"]').change(function () {
+    $('select[name="helper_id"]').change(function () {
         // Submit the form when the input field is changed
         $('#filterFormDate').submit();
     });
 });
-

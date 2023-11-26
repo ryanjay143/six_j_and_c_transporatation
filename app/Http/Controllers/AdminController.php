@@ -905,7 +905,7 @@ class AdminController extends Controller
 
         // Get helper data for the employee
         $helper = TransportationDetails::with('booking.user')
-            ->whereIn('p_status', [0])
+            ->whereIn('h_status', [0])
             ->where('helper_id', $employee->id)
             ->get();
 
@@ -941,41 +941,53 @@ class AdminController extends Controller
 
     public function save_payroll(Request $request)
     {
-        // Save the main payroll information (employee_id, total_rate, total_deduction, total_net_salary, payroll_start_date, payroll_end_date) into the "payrolls" table
-        $payroll = new Payroll();
-        $payroll->employee_id = $request->employee_id;
-        $payroll->total_rate = $request->total_rate;
-        $payroll->total_deduction = $request->totalDeduction;
-        $payroll->ca_deduction = $request->ca_deduction;
-        $payroll->df_deduction = $request->df_deduction;
-        $payroll->total_net_salary = $request->total_net_salary;
-        $payroll->payroll_start_date = $request->start_date;
-        $payroll->payroll_end_date = $request->end_date;
-        $payroll->save();
+     // Save the main payroll information
+$payroll = new Payroll();
+$payroll->employee_id = $request->employee_id;
+$payroll->total_rate = $request->total_rate;
+$payroll->total_deduction = $request->totalDeduction;
+$payroll->ca_deduction = $request->ca_deduction;
+$payroll->df_deduction = $request->df_deduction;
+$payroll->total_net_salary = $request->total_net_salary;
+$payroll->payroll_start_date = $request->start_date;
+$payroll->payroll_end_date = $request->end_date;
+$payroll->save();
 
-        // Save rates for each driver
-        if (is_array($request->transportation_id) && is_array($request->rate)) {
-            foreach ($request->transportation_id as $index => $transportationId) {
-                $rate = (int)$request->rate[$index];
+// Save rates for each driver
+if (is_array($request->transportation_id) && is_array($request->rate)) {
+    // Set pStatusHelper to 1 outside the loop
+    $pStatusHelper = $request->input('pStatusHelper');
 
-              
-                if (!empty($rate)) {
-                    $payrollDetails = new PayrollDetails();
-                    $payrollDetails->payroll_id = $payroll->id;
-                    $payrollDetails->transportation_id = $transportationId;
-                    $payrollDetails->rate = $rate;
-                    $payrollDetails->save();
+    foreach ($request->transportation_id as $index => $transportationId) {
+        $rate = (int)$request->rate[$index];
 
-                    // Update p_status in transportation_details table
-                    $pStatus = $request->input('pStatus'); // Assuming pStatus is the same for all transportations
-                    $transportationDetail = TransportationDetails::where('id', $transportationId)->first(); 
-                    if ($transportationDetail) {
-                        $transportationDetail->p_status = $pStatus;
-                        $transportationDetail->save();
-                    }
-                }
+        if (!empty($rate)) {
+            $payrollDetails = new PayrollDetails();
+            $payrollDetails->payroll_id = $payroll->id;
+            $payrollDetails->transportation_id = $transportationId;
+            $payrollDetails->rate = $rate;
+            $payrollDetails->save();
+
+            // Update p_status in transportation_details table
+            $pStatus = $request->input('pStatus');
+            $transportationDetail = TransportationDetails::where('id', $transportationId)->first(); 
+            if ($transportationDetail) {
+                $transportationDetail->p_status = $pStatus;
+                $transportationDetail->save();
+            }
+
+            // Check if the current transportation is a helper and update h_status
+            $helperDetail = TransportationDetails::where('id', $transportationId)->first();
+
+            if ($helperDetail) {
+                $helperDetail->h_status = $pStatusHelper;
+                $helperDetail->save();
             }
         }
+    }
+}
+
+
 
 
         $caDetails = new CaDetails();
@@ -1078,26 +1090,54 @@ class AdminController extends Controller
         return view('admin.payrollInfo', compact('payroll'));
     }
 
-    public function view_payrollDetails($id)
+    public function view_payrollDetails(Request $request, $id)
     {
         $employee = Employee::with('user')->find($id);
 
-        // Assuming there's a relationship between Payroll and PayrollDetails in the Payroll model
         $payroll = Payroll::with('payrollDetails')
             ->where('employee_id', $employee->id)
             ->where('status', 1)
             ->get();
 
-        $countTransportation = 0;
+        $payroll_start_date = $request->input('payroll_start_date');
+        $payroll_end_date = $request->input('payroll_end_date');
+       
+        return view('admin.payrollDetails', compact('employee', 'payroll','payroll_start_date','payroll_end_date'));
+    }
 
-        foreach ($payroll as $payrolls) {
-            if ($payrolls->payrollDetails) {
-                $countTransportation += $payrolls->payrollDetails->count();
-            }
+    public function filter_reports(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'payroll_start_date' => 'nullable|date',
+                'payroll_end_date' => 'nullable|date|after_or_equal:payroll_start_date',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Alert::error('Date cannot found');
+            return redirect()->back()->withErrors($e->errors())->withInput();
         }
 
-        return view('admin.payrollDetails', compact('employee', 'payroll', 'countTransportation'));
+        $employee = Employee::where('position', 0)->first();
+
+        $employee_id = $request->input('employee_id');
+        $payroll_start_date = $request->input('payroll_start_date');
+        $payroll_end_date = $request->input('payroll_end_date');
+
+        $query = Payroll::whereIn('status', [1]);
+
+        if ($employee_id) {
+            $query->where('employee_id', $employee_id);
+        }
+
+        if ($payroll_start_date && $payroll_end_date) {
+            $query->whereBetween('payroll_end_date', [$payroll_start_date, $payroll_end_date]);
+        }
+
+        $payroll = $query->orderBy('payroll_start_date', 'asc')->get();
+
+        return view('admin.payrollDetails', compact('payroll', 'employee', 'payroll_start_date', 'payroll_end_date'));
     }
+
 
     public function view_payrollDetails_reports($id)
     {
@@ -1224,59 +1264,50 @@ class AdminController extends Controller
             $query->where('is_disabled', 0);
         })->where('position', 1)->get();
 
-        return view('admin.transportationReports', compact('transportations','driver','helper'));
+        $truck = Truck::where('status', 0)->get();
+
+        return view('admin.transportationReports', compact('transportations','driver','helper','truck'));
     }
 
-    public function filter_transportation_date(Request $request)
+    public function filter_transportation_driverHelper(Request $request)
     {
         // Validate the incoming request data
         $validator = Validator::make($request->all(), [
             'driver_id' => 'required',
             'helper_id' => 'required',
-            'deliveredDate' => 'required|date',
         ], [
             'driver_id.required' => 'Please select a driver.',
             'helper_id.required' => 'Please select a helper.',
-            'deliveredDate.required' => 'Please select a valid date.',
-            'deliveredDate.date' => 'Please select a valid date format.',
         ]);
-    
+
         if ($validator->fails()) {
             // Redirect back with validation errors
             return redirect()->back()->withErrors($validator)->withInput();
         }
-    
-        $driver_id = $request->input('driver_id');
-        $helper_id = $request->input('helper_id');
-        $deliveredDate = $request->input('deliveredDate');
-    
-        // Query TransportationDetails with filters
-        $transportations = TransportationDetails::whereIn('status', [5, 6])
-            ->whereHas('employee', function ($query) use ($driver_id) {
-                $query->where('user_id', $driver_id);
-            })
-            ->whereHas('employee', function ($query) use ($helper_id) {
-                $query->where('user_id', $helper_id);
-            })
-            ->whereHas('updatedTimes', function ($query) use ($deliveredDate) {
-                // Correctly reference the updated_at column from the Updated_times table
-                $query->whereDate('updated_at', $deliveredDate);
-            })
-            ->with('updatedTimes')
-            ->get();
-    
-        // Get the list of drivers and helpers for the dropdowns
+
+        $driverId = $request->input('driver_id');
+        $helperId = $request->input('helper_id');
+
+        $transportations = UpdatedTime::filterByDriverAndHelper($driverId, $helperId)->get();
+
         $driver = Employee::with('user')->whereHas('user', function ($query) {
             $query->where('is_disabled', 0);
         })->where('position', 0)->get();
-    
+
         $helper = Employee::with('user')->whereHas('user', function ($query) {
             $query->where('is_disabled', 0);
         })->where('position', 1)->get();
-    
-        // Pass the results to the view
+
+        $transportations = TransportationDetails::with('booking', 'employee', 'helper', 'truck','updatedTimes')
+        ->whereIn('status', [5, 6])
+        ->whereHas('updatedTimes', function ($query) {
+            $query->where('status', 5);
+        })
+        ->get();
+
         return view('admin.transportationReports', compact('transportations', 'driver', 'helper'));
     }
+
     
     
     

@@ -268,6 +268,7 @@
                                                                                     <label for="inputCopyEndDate" class="visually-hidden">Copy End Date</label>
                                                                                     <input hidden="" type="date" name="end_date" class="form-control form-control-sm" value="">
                                                                                 </div>
+                                                                                
 
                                                                                 @foreach ($driver as $t)
                                                                                     @if ($t->status >= 5 && $t->status <= 7)
@@ -280,122 +281,14 @@
 
                                                                                 @foreach ($helper as $h)
                                                                                     @if ($h->status >= 5 && $h->status <= 7)
-                                                                                    @php
-                                                                                        $rateValueHelper = !empty($h->rate) ? $h->rate : 0;
-                                                                                        $addRateButtonDisabledHelper = $rateValueHelper == 0;
-                                                                                    @endphp
-                                                                                    <input type="text" hidden="" name="transportation_id[]" value="{{ $h->id }}">
-                                                                                    <input name="rate[]" hidden="" type="text" style="width: 100px;" value="{{ $rateValueHelper }}" 
-                                                                                        class="form-control form-control-sm" id="numericInputCopy{{ $loop->iteration }}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); checkRateValueCopy({{ $loop->iteration }});">
-                                                                                    <input type="text" hidden="" value="1" name="pStatus">
+                                                                                        <input type="text" hidden="" name="transportation_id[]" value="{{ $h->id }}">
+                                                                                        <input name="rate[]" hidden="" type="text" style="width: 100px;" value="0" 
+                                                                                            class="form-control form-control-sm" id="numericInputCopy{{ $loop->iteration }}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); checkRateValueCopy({{ $loop->iteration }});">
+                                                                                        <input type="text" hidden="" value="1" name="pStatusHelper">
                                                                                     @endif
                                                                                 @endforeach
 
                                                                                 <button type="submit" class="btn btn-primary btn-sm w-100" id="savePayrollButton" disabled>
-                                                                                    <i class="bi bi-file-earmark-check-fill"></i> Save Payroll
-                                                                                </button>
-
-                                                                            </form>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tfoot>
-                                                                <tfoot id="helperTfoot">
-                                                                <tr>
-                                                                    <td colspan="3" class="fw-bold text-end">Total Rate:</td>
-                                                                    <td id="totalRate" class="fw-bold">0</td>
-                                                                    <td></td>
-                                                                </tr>
-
-                    
-                                                                @php
-                                                                    $cashAdvanceAmountHelper = 0; // Initialize the cash advance amount for helper to zero
-                                                                    if ($cashAdvanceHelper && $cashAdvanceHelper->pay_seq > 0) {
-                                                                        $cashAdvanceAmountHelper = $cashAdvanceHelper->amount / $cashAdvanceHelper->pay_seq;
-                                                                    }
-
-                                                                    $damageAmountHelper = 0; // Initialize the damage amount for helper to zero
-                                                                    if ($damagesHelper && $damagesHelper->damage_sequence > 0) {
-                                                                        $damageAmountHelper = $damagesHelper->deduction / $damagesHelper->damage_sequence;
-                                                                    }
-                                                                @endphp
-
-                                                                    <tr>
-                                                                        <td colspan="3" class="fw-bold text-end">Cash Advance Deduction (Helper):</td>
-                                                                        <td id="vale" class="fw-bold">
-                                                                            @if ($cashAdvanceAmountHelper > 0)
-                                                                                <input readonly value="{{ $cashAdvanceAmountHelper }}" type="text" style="width: 100px;" class="form-control form-control-sm" placeholder="0" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-                                                                            @else
-                                                                                <span class="badge rounded-pill text-bg-secondary">No Cash Advance for this helper</span>
-                                                                            @endif
-                                                                        </td>
-                                                                        <td></td>
-                                                                    </tr>
-
-                                                                    <tr>
-                                                                        <td colspan="3" class="fw-bold text-end">Damage Fees Deduction (Helper):</td>
-                                                                        <td id="bangga" class="fw-bold">
-                                                                            @if ($damageAmountHelper > 0)
-                                                                                <input readonly value="{{ $damageAmountHelper }}" type="text" style="width: 100px;" class="form-control form-control-sm" placeholder="0" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-                                                                            @else
-                                                                                <span class="badge rounded-pill text-bg-secondary">No damages found for this helper</span>
-                                                                            @endif
-                                                                        </td>
-                                                                        <td></td>
-                                                                    </tr>
-
-                                                                    <tr>
-                                                                        <td colspan="3" class="fw-bold text-end">Total Deduction (Helper):</td>
-                                                                        <td id="totalDeductionHelper" class="fw-bold">
-                                                                            @php
-                                                                                $totalDeductionHelper = (isset($cashAdvanceAmountHelper) ? $cashAdvanceAmountHelper : 0) + (isset($damageAmountHelper) ? $damageAmountHelper : 0);
-                                                                            @endphp
-
-                                                                            @if ($totalDeductionHelper > 0)
-                                                                                <input readonly value="{{ $totalDeductionHelper }}" type="text" style="width: 100px;" class="form-control form-control-plaintext fw-bold" placeholder="0" id="numericInputHelper" oninput="this.value = this.value.replace(/[^0-9]/g, ''); calculateHelperTotalDeduction();">
-                                                                            @else
-                                                                                No Deduction
-                                                                            @endif
-                                                                        </td>
-                                                                        <td></td>
-                                                                    </tr>
-
-                                                                    <tr>
-                                                                        <td colspan="3" class="fw-bold text-end">Total Net Salary (Helper):</td>
-                                                                        <td id="totalNetSalaryAmountHelper" class="fw-bold">0</td>
-                                                                        <td>
-                                                                            <form action="{{ route('save.payroll') }}" method="post" id="payrollFormHelper">
-                                                                                @csrf
-                                                                                <input type="text" hidden=""  value="{{ $employee->id }}">
-                                                                                <input type="text" hidden="" id="totalRateInputHelper">
-
-                                                                                @php
-                                                                                    $totalDeductionHelper = (isset($cashAdvanceAmountHelper) ? $cashAdvanceAmountHelper : 0) + (isset($damageAmountHelper) ? $damageAmountHelper : 0);
-                                                                                @endphp
-
-                                                                                @if ($totalDeductionHelper > 0)
-                                                                                    <input value="{{ $totalDeductionHelper }}" hidden=""  type="text" style="width: 100px;" class="form-control form-control-plaintext fw-bold" placeholder="0" id="numericInputHelper" oninput="this.value = this.value.replace(/[^0-9]/g, ''); calculateHelperTotalDeduction();">
-                                                                                @endif
-
-                                                                                <input type="text" hidden=""  id="totalNetSalaryInputHelper" value="0">
-                                                                                <div class="col-auto">
-                                                                                    <label for="inputCopyStartDate" class="visually-hidden">Copy Start Date</label>
-                                                                                    <input hidden="" type="date"  class="form-control form-control-sm" id="inputCopyStartDate" value="{{ $start_date ? date('Y-m-d', strtotime($start_date)) : '' }}">
-                                                                                </div>
-                                                                                <div class="col-auto">
-                                                                                    <label for="inputCopyEndDate" class="visually-hidden">Copy End Date</label>
-                                                                                    <input hidden="" type="date"  class="form-control form-control-sm" id="inputCopyEndDate" value="{{ $end_date ? date('Y-m-d', strtotime($end_date)) : '' }}">
-                                                                                </div>
-
-                                                                                @foreach ($helper as $h)
-                                                                                    @php
-                                                                                        $rateValueHelper = !empty($h->rate) ? $h->rate : 0;
-                                                                                        $addRateButtonDisabledHelper = $rateValueHelper == 0;
-                                                                                    @endphp
-                                                                                    <input type="text" hidden=""  value="{{ $h->id }}">
-                                                                                    <input  hidden="" type="text" style="width: 100px;" value="{{ $rateValueHelper }}" class="form-control form-control-sm" id="numericInputCopy{{ $loop->iteration }}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); checkRateValueCopy({{ $loop->iteration }});">
-                                                                                @endforeach
-
-                                                                                <button type="submit" class="btn btn-primary btn-sm w-100" id="savePayrollButtonHelper" disabled>
                                                                                     <i class="bi bi-file-earmark-check-fill"></i> Save Payroll
                                                                                 </button>
                                                                             </form>

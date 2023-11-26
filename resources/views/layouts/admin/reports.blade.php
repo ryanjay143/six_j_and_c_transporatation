@@ -46,6 +46,11 @@
         td.action-column {
             display: none;
         }
+
+        select.action-column,
+        select.action-column {
+            display: none;
+        }
     }
 </style>
 
@@ -152,6 +157,10 @@
             @yield('content')
         </main>
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        
+
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
        
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
@@ -160,12 +169,16 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         
         <script src="{{ asset('js/print.js') }}"></script>
-        <script src="{{ asset('js/reports.js') }}"></script>
+       
         <script src="{{ asset('js/payment.js') }}"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+       
         <!-- <script>
             var searchInvoiceRoute = "{{ route('search.invoice.number') }}";
         </script> -->
 
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="{{ asset('js/reports.js') }}"></script>
+
+        
 </body>
 </html>

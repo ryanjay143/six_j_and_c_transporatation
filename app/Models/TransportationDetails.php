@@ -22,7 +22,9 @@ class TransportationDetails extends Model
         'driver_id',
         'helper_id',
         'truck_id',
-        'status'
+        'status',
+        'p_status',
+        'h_status'
     ];
 
     public function booking()

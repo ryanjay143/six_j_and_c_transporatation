@@ -65,13 +65,7 @@ window.addEventListener('DOMContentLoaded', event => {
         $('.damageDatatable').DataTable();
     });
 
-    $(document).ready(function () {
-        // Initialize the DataTable
-        var table = $('#transportationReports').DataTable({
-            "searching": false, // Hide the default search box
-            "lengthChange": false, // Hide the show entries dropdown
-        });
-    });
+   
 
     $(document).ready(function () {
         // Initialize the DataTable
@@ -83,17 +77,6 @@ window.addEventListener('DOMContentLoaded', event => {
 
     
     
-    
-
-    $(document).ready(function () {
-        // Initialize the DataTable
-        var table = $('#paymentReports').DataTable({
-            "searching": false, // Hide the default search box
-            "lengthChange": false, // Hide the show entries dropdown
-        });
-    });
-    
-
 
 
 });

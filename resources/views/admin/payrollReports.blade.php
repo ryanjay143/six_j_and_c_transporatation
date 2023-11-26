@@ -36,7 +36,7 @@
                                                             </td>
                                                             <td>
                                                                 <a href="{{ route('view.payroll.details', $e->id) }}" type="button" class="btn btn-outline-primary btn-sm">
-                                                                    <i class="fas fa-eye"></i>
+                                                                    View Payroll Reports
                                                                 </a>
                                                             </td>
                                                         </tr>
