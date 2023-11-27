@@ -810,7 +810,7 @@ $(document).ready(function() {
                     1: 'To be pick-up',
                     2: 'Picked-up',
                     3: 'Departure',
-                    4: 'Delivered',
+                    4: 'Delivery on the way',
                     5: 'Delivered',
                     6: 'Delivered',
                     7: 'Delivered',

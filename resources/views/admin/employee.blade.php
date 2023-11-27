@@ -59,7 +59,8 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="inputEmail4" class="form-label">Phone Number <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="phone" name="phone" required>
+                                                    <input type="text" class="form-control" id="phone_num" name="phone" required>
+                                                    <span class="text-secondary form-text">Required format example: +639000000000</span>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="inputPassword4" class="form-label">Home Address <span class="text-danger">*</span></label>

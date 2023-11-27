@@ -48,6 +48,7 @@
                                                         <label for="phone_num" class="col-md-4 col-form-label text-md-end form-label">{{ __('Phone Number') }}</label>
                                                         <div class="col-md-8">
                                                             <input id="phone_num" type="tel" class="form-control @error('phone_num') is-invalid @enderror" name="phone_num" value="{{ old('phone_num') }}" required autocomplete="phone_num" pattern="^\+[1-9]\d{1,14}$">
+                                                            <span class="text-secondary form-text">Required format example: +639000000000</span>
                                                             @error('phone_num')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>

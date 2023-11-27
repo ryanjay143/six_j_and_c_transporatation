@@ -229,21 +229,17 @@ class EmployeeController extends Controller
     public function update_transportation(Request $request, $id)
     {
 
+        // Validate 'tons' based on the selected status
         $request->validate([
-            'tons' => ['required', 'numeric'],
+            'tons' => ($request->status == 5) ? ['required', 'numeric'] : [],
         ]);
 
-         // Check if 'tons' is null
-        if ($request->tons === null) {
-            Alert::error('Tons cannot be null. Please enter a valid value.');
-            return redirect()->back();
-        }
-
-        // Check if 'tons' is zero
-        if ($request->tons == 0) {
+        // Check if 'tons' is null or zero only when the status is '5'
+        if ($request->status == 5 && ($request->tons === null || $request->tons == 0)) {
             Alert::error('Tons cannot be zero. Please enter a valid value.');
             return redirect()->back();
         }
+
 
         // Find the transportation record by ID
         $transportation = TransportationDetails::find($id);

@@ -53,7 +53,14 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($transportations as $t)
+                                                        @php
+                                                            // Sort the transportations array based on the latest updated_at timestamp
+                                                            $sortedTransportations = $transportations->sortByDesc(function ($t) {
+                                                                $latestUpdatedTime = $t->updatedTimes->where('status', 5)->max('created_at');
+                                                                return $latestUpdatedTime ?? '';
+                                                            });
+                                                        @endphp
+                                                        @foreach ($sortedTransportations as $t)
                                                             <tr class="uniqueIdentifier">
                                                                 <td>
                                                                     @foreach ($t->updatedTimes as $updatedTime)
