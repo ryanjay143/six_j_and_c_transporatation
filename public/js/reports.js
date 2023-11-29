@@ -3,7 +3,8 @@ $(document).ready(function () {
     var table = $("#transportationReports").DataTable({
         searching: false,
         lengthChange: false,
-        paging: false 
+        paging: false,
+        info: false  // Hide the information about the table's current display
     });
 });
 
@@ -21,27 +22,37 @@ document.addEventListener('DOMContentLoaded', function () {
     helperSelect.addEventListener('change', filterTable);
     plateNumberSelect.addEventListener('change', filterTable);
     
-    // Function to filter the table based on selected values
     function filterTable() {
         var selectedDriver = driverSelect.value;
         var selectedHelper = helperSelect.value;
         var selectedPlateNumber = plateNumberSelect.value;
-
+    
+        var overallCount = 0; // Initialize the count
+    
         // Loop through each row in the table
         for (var i = 0, row; row = tableBody.rows[i]; i++) {
             var driverName = row.cells[1].innerText;
             var helperName = row.cells[2].innerText;
             var plateNumber = row.cells[4].innerText;
-
+    
             // Check if the row should be displayed based on the selected filters
             var displayRow = (selectedDriver === 'Select driver' || driverName === selectedDriver) &&
                              (selectedHelper === 'Select helper' || helperName === selectedHelper) &&
                              (selectedPlateNumber === 'Select plate number' || plateNumber === selectedPlateNumber);
-
+    
             // Show or hide the row accordingly
             row.style.display = displayRow ? '' : 'none';
+    
+            // Update the count if the row is displayed
+            if (displayRow) {
+                overallCount++;
+            }
         }
+    
+        // Update the overall count in the footer
+        document.getElementById('overallCount').innerText = overallCount;
     }
+    
 });
 
 $(document).ready(function () {

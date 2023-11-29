@@ -1,4 +1,4 @@
-@extends('layouts.landing.contact')
+@extends('layouts.landing.transportation')
     
     @section('content')
     <div class="my-image bg-image">

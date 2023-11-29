@@ -10,11 +10,11 @@
                         <div class="text-white row justify-content-center">
                             <div class="col-lg-8 col-md-10"> 
                                 <h3 class="text-primary fw-bold text-start display-5 slideInDown">
-                                    <span style="letter-spacing: 8px; word-spacing: 5px;">Welcome to Six J And C</span>
+                                    <span class="custom-span">Welcome to Six J And C</span>
                                     <br>
-                                    <span class="text-light text-uppercase">Transportation</span>
+                                    <span class="text-light text-uppercase transportation">Transportation</span>
                                 </h3>
-                                <p class="fs-6 fst-normal font-monospace" >"We deliver your perishable goods safely"</p>
+                                <p class="fs-6 fst-normal font-monospace" >"We deliver your perishable goods safely, do not delay."</p>
                                 <a href="{{ route('user.booking') }}" class="btn btn-outline-primary py-sm-3 mb-5 px-sm-4">Book for Transportation Today</a>
                             </div>
                         </div>

@@ -132,6 +132,11 @@
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td class="fw-bold fs-5" colspan="6">Overall Transportation: <span id="overallCount"> {{  $countTransportations }}</span></td>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>

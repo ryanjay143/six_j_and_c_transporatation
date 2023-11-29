@@ -23,11 +23,11 @@
                                                     <div id="profile-image-container">
                                                         <form id="profile-form" action="{{ route('profile.photo.update', ['id' => $employees->id]) }}" method="post" enctype="multipart/form-data">
                                                             @csrf
-                                                            <img id="profile-preview" class="mt-5" width="180px" src="{{ $employees->photo ? asset('storage/' . $employees->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}">
+                                                            <img id="profile-preview" class="mt-5" width="180px" src="{{ $employees->photo ? asset($employees->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}">
                                                             <div class="font-weight-bold">{{ $employees->user->name }} {{ $employees->user->lname }}</div>
                                                             <span class="text-black-50 mb-2">{{ $employees->user->email }}</span>
-                                                            <!-- <input type="file" class="form-control" name="photo" id="photo-input"> -->
-                                                            <!-- <button type="button" class="btn btn-primary mt-3" id="upload-button" disabled>Upload Photo</button> -->
+                                                            <!-- <input type="file" class="form-control" name="photo" id="photo-input">
+                                                            <button type="button" class="btn btn-primary mt-3" id="upload-button" disabled>Upload Photo</button> -->
                                                         </form>
                                                     </div>
                                                 </div>

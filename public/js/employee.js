@@ -174,14 +174,23 @@ $(document).ready(function() {
     $('#profile_photo_input').change(function() {
         var file = this.files[0];
         if (file) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#old_photo').html('<img src="' + e.target.result + '" alt="New Profile Photo" style="max-width: 200px; max-height: 200px;">');
-            };
-            reader.readAsDataURL(file);
+            // Check if the file size is within the allowed limit (2MB)
+            if (file.size <= 2 * 1024 * 1024) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#old_photo').html('<img src="' + e.target.result + '" alt="New Profile Photo" style="max-width: 200px; max-height: 200px;">');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Display an error message or handle the case when the file size exceeds the limit
+                alert('Please select a file with a size of 2MB or less.');
+                // Clear the file input if needed
+                $('#profile_photo_input').val('');
+            }
         }
     });
 });
+
 
 $(document).ready(function () {
     $('#dashboardforDriver').DataTable();

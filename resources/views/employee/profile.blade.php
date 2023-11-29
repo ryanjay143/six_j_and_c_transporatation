@@ -60,7 +60,7 @@
                                             <div class="mb-3">
                                                 @if($employee && $employee->photo)
                                                     <div id="old_photo">
-                                                        <img src="{{ asset('storage/' . $employee->photo) }}" alt="Profile Photo" style="max-width: 200px; max-height: 200px;">
+                                                        <img src="{{ asset($employee->photo) }}" alt="Profile Photo" style="max-width: 200px; max-height: 200px;">
                                                     </div>
                                                 @endif
                                             </div>

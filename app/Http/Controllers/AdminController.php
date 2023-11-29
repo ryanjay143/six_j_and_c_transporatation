@@ -270,32 +270,38 @@ class AdminController extends Controller
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-       
-       
+        // Create a new user
         $user = new User([
             'name' => $request->name,
             'lname' => $request->lname,
             'email' => $request->email,
             'phone_num' => $request->phone,
             'type' => $request->type,
-            'password' => Hash::make($request->password), 
-        
+            'password' => Hash::make($request->password),
         ]);
         $user->save();
 
-        $employee = new Employee;
-        $employee->user_id = $user->id;
-        $employee->dob = $request->date;
-        $employee->address = $request->address;
-        $employee->position = $request->position;
+        // Create a new employee
+        $employee = new Employee([
+            'dob' => $request->date,
+            'address' => $request->address,
+            'position' => $request->position,
+        ]);
 
-        $photoPath = $request->file('photo')->store('profile-photos', 'public');
+        // Save the uploaded truck photo to the storage
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('profile_photos');
+            $employee->photo = $photoPath;
+        }
 
-        $employee->photo = $photoPath;
-        $employee->save();
+        // Associate the employee with the user
+        $user->employees()->save($employee);
+
+        // Display a success message and redirect
         Alert::success('Add Employee Account Successfully');
         return redirect()->back();
     }
+
 
     public function helper_account(Request $request)
     {
@@ -346,7 +352,7 @@ class AdminController extends Controller
 
          // Save the uploaded truck photo to the storage
         if ($request->hasFile('truck_photo')) {
-            $imagePath = $request->file('truck_photo')->store('truck_photos'); // Using the 's3' disk
+            $imagePath = $request->file('truck_photo')->store('truck_photos'); 
             $truck->truck_image = $imagePath;
         }
 
@@ -1256,6 +1262,13 @@ if (is_array($request->transportation_id) && is_array($request->rate)) {
             })
             ->get();
 
+        $countTransportations = TransportationDetails::with('booking', 'employee', 'helper', 'truck','updatedTimes')
+        ->whereIn('status', [5, 6])
+        ->whereHas('updatedTimes', function ($query) {
+            $query->where('status', 5);
+        })
+        ->count();
+
        $driver = Employee::with('user')->whereHas('user', function ($query) {
             $query->where('is_disabled', 0);
         })->where('position', 0)->get();
@@ -1266,7 +1279,7 @@ if (is_array($request->transportation_id) && is_array($request->rate)) {
 
         $truck = Truck::where('status', 0)->get();
 
-        return view('admin.transportationReports', compact('transportations','driver','helper','truck'));
+        return view('admin.transportationReports', compact('transportations','driver','helper','truck','countTransportations'));
     }
 
     public function filter_transportation_driverHelper(Request $request)

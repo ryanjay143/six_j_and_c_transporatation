@@ -36,6 +36,35 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
     $(document).ready(function () {
+        var table = $('#client').DataTable({
+            "order": [[0, "asc"]], // Default sorting by the first column (change as needed)
+            "columnDefs": [
+                { "orderable": false, "targets": [3] } // Disable sorting for the Action column
+            ],
+            "language": {
+                search: "Search Company name:"
+            }
+        });
+    
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                var statusFilter = $('#status-filter').val();
+    
+                if (!statusFilter) {
+                    return true;
+                }
+    
+                return data[2].toLowerCase() === statusFilter.toLowerCase();
+            }
+        );
+    
+        $('#status-filter').on('change', function () {
+            table.draw();
+        });
+    });
+    
+
+    $(document).ready(function () {
         $('#examples').DataTable();
     });
 

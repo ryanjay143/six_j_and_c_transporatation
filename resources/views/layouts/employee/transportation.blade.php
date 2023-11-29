@@ -37,7 +37,7 @@
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <img id="profile-preview" class="rounded-circle w-25 h-25"  src="{{ $employee->photo ? asset('storage/' . $employee->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}">
+                            <img id="profile-preview" class="rounded-circle w-25 h-25"  src="{{ $employee->photo ? asset($employee->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}">
                             <a href="{{ route('user.employee') }}" class="user-link fs-6">{{ Auth::user()->name }} {{ Auth::user()->lname }}</a>
                         </div>
 

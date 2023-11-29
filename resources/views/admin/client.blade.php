@@ -88,7 +88,16 @@
                                         <div class="card mt-3 mb-5 bg-light">
                                             <div class="card-body">
                                                 <div class="table-responsive">
-                                                    <table id="example" class="table table-bordered table-hover">
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="status-filter">Filter by Status:</label>
+                                                        <select class="form-select" id="status-filter">
+                                                            <option value="">All</option>
+                                                            <option value="Active">Active</option>
+                                                            <option value="Inactive">Inactive</option>
+                                                        </select> 
+                                                    </div>
+                                                      
+                                                    <table id="client" class="table table-bordered table-hover">
                                                         <thead class="table-primary">
                                                             <tr>
                                                                 <th scope="col">#</th>

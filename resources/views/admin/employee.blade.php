@@ -208,8 +208,8 @@
                                                             <tr id="employee_row_{{ $employee->id }}">
                                                                 <td>
                                                                     <div class="d-flex justify-content-center align-items-center">
-                                                                        <a href="{{ $employee->photo ? asset('storage/' . $employee->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}" data-lightbox="profile-image">
-                                                                            <img id="profile-preview" class="rounded-circle" width="30px" height="35px" src="{{ $employee->photo ? asset('storage/' . $employee->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}">
+                                                                        <a href="{{ $employee->photo ? asset($employee->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}" data-lightbox="profile-image">
+                                                                            <img id="profile-preview" class="rounded-circle" width="30px" height="35px" src="{{ $employee->photo ? asset($employee->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}">
                                                                         </a>
                                                                     </div>
                                                                 </td>
@@ -258,8 +258,8 @@
                                                             <tr>
                                                                 <td>
                                                                     <div class="d-flex justify-content-center align-items-center">
-                                                                        <a href="{{ $employee->photo ? asset('storage/' . $employee->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}" data-lightbox="profile-image">
-                                                                            <img id="profile-preview" class="rounded-circle" width="30px" height="35px" src="{{ $employee->photo ? asset('storage/' . $employee->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}">
+                                                                        <a href="{{ $employee->photo ? asset($employee->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}" data-lightbox="profile-image">
+                                                                            <img id="profile-preview" class="rounded-circle" width="30px" height="35px" src="{{ $employee->photo ? asset($employee->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}">
                                                                         </a>
                                                                     </div>
                                                                 </td>

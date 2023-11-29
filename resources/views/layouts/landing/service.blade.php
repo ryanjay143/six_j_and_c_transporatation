@@ -13,6 +13,8 @@
 
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/logo/six_j_and_c_logo.png') }}">
 
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,7 +42,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     
-    <link rel="stylesheet" href="{{ asset('/css/transport.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/transport.css') }}">
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
 
@@ -48,8 +50,16 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
+    <script>
+        // Function to update the iframe src to focus on Cagayan de Oro
+        function updateMapSrc() {
+            const iframe = document.getElementById('mapIframe');
+            iframe.src = "https://www.openstreetmap.org/export/embed.html?bbox=119.2737,4.5921,126.7196,9.3167&layer=mapnik";
+        }
+    </script>
 
-<body style="background-image: linear-gradient(to right, blue, blue, white);">
+
+<body style="background-image: linear-gradient(to right, blue, blue, white);" onload="updateMapSrc()">
     <div id="app">
         <nav class="navbar  navbar-expand-lg bg-primary">
             <div class="container-fluid">
@@ -88,19 +98,16 @@
                     <div style="display: flex; justify-content: center;">
                         <ul class="navbar-nav nav-underline">
                             <li class="nav-item">
-                                <a class="nav-link active text-primary fs-5" aria-current="page" href="{{ url('/') }}">Home</a>
+                                <a class="nav-link text-dark fs-5" aria-current="page" href="{{ url('/') }}">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark fs-5" href="{{ route('about') }}">{{ __('About') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark fs-5" href="{{ route('contact') }}">{{ __('Transportation') }}</a>
+                                <a class="nav-link text-dark fs-5" href="{{ route('transportation') }}">{{ __('Transportation') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark fs-5" href="{{ route('service') }}">{{ __('Services') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark fs-5" href="{{ route('user.dashboard') }}">{{ __('Dashboard') }}</a>
+                                <a class="nav-link active text-primary fs-5" href="{{ route('service') }}">{{ __('Services') }}</a>
                             </li>
                         </ul>
                     </div>
@@ -162,7 +169,7 @@
 
                                                     <!-- 2 column grid layout -->
                                                     <div class="row mb-4">
-                                                        <div class="col-md-12 d-flex justify-content-center">
+                                                        <div class="col-md-12 d-flex justify-content-end">
                                                             <!-- Simple link -->
                                                             @if (Route::has('password.request'))
                                                                 <a href="{{ route('password.request') }}">Forgot password?</a>
@@ -224,12 +231,15 @@
 
     </div>
 
-    <script src="{{ asset('js/login.js') }}"></script>
+    @yield('footer')
 
+    <script src="{{ asset('js/login.js') }}"></script>
+    
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     
 </body>
 </html>

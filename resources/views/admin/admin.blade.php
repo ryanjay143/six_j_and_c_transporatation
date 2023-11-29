@@ -130,7 +130,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal1{{ $t->id }}"><i class="bi bi-eye-fill"></i></button>
+                                                    <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal1{{ $t->id }}" title="View transportation"><i class="bi bi-eye-fill"></i></button>
 
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="exampleModal1{{ $t->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

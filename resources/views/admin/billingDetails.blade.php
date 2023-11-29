@@ -59,7 +59,7 @@
                                                     <table class="table table-bordered">
                                                         <thead class="table-primary">
                                                             <tr>
-                                                                <th scope="col">#</th>
+                                                                
                                                                 <th scope="col">Transportation Date</th>
                                                                 <th scope="col">Driver</th>
                                                                 <th scope="col">Plate No.</th>
@@ -77,14 +77,13 @@
                                                                     return \Carbon\Carbon::parse($billing->transpo->booking->transportation_date);
                                                                 });
 
-                                                                // Initialize a counter variable
-                                                                $counter = 0;
+                                                                
                                                             @endphp
 
                                                             @foreach ($sortedBillings as $billings)
                                                                 @if ($billings->price !== null)
                                                                     <tr>
-                                                                        <td>{{ ++$counter }}</td>
+                                                                       
                                                                         <td>{{ \Carbon\Carbon::parse($billings->transpo->booking->date)->format('M. j, Y') }}</td>
                                                                         <td>{{ $billings->transpo->employee->user->name }} {{ $billings->transpo->employee->user->lname }}</td>
                                                                         <td class="text-uppercase">{{ $billings->transpo->truck->plate_number }}</td>
@@ -101,7 +100,7 @@
 
                                                         <tfoot>
                                                             <tr>
-                                                                <td colspan="8" class="fw-bold text-end">Total Amount:</td>
+                                                                <td colspan="7" class="fw-bold text-end">Total Amount:</td>
                                                                 <td class="fw-bold">&#8369; {{ $billing->total_amount }}</td>
                                                             </tr>
                                                         </tfoot>

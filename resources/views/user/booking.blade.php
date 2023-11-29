@@ -16,9 +16,11 @@
         <div id="main">
            
 
-            <div class="page-heading">
-                
-            </div>
+        <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
             <!-- <button type="button" class="btn btn-primary mb-3"  data-bs-toggle="modal" data-bs-target="#exampleModal">Add Booking</button> -->
 
             

@@ -184,13 +184,12 @@ class EmployeeController extends Controller
         $dateOfBirth = $request->input('date_of_birth');
         $address = $request->input('address');
 
-        // Handle profile photo upload
+        // Save the uploaded truck photo to the storage
         if ($request->hasFile('profile_photo')) {
-            $profilePhoto = $request->file('profile_photo');
-            $profilePhotoPath = $profilePhoto->store('profile_photos', 'public');
+            $profilePhotoPath = $request->file('profile_photo')->store('profile_photos');
         }
 
-         // Update User table
+        // Update User table
         $user = auth()->user();
         $user->name = $firstName;
         $user->lname = $lastName;
@@ -200,6 +199,7 @@ class EmployeeController extends Controller
 
         // Update or create Employee table
         $employees = $user->employees; // Access the employees associated with the User
+
         if ($employees->isNotEmpty()) {
             // If Employee records exist for the user, update each one
             foreach ($employees as $employee) {
@@ -215,7 +215,7 @@ class EmployeeController extends Controller
             $newEmployee = new Employee([
                 'dob' => $dateOfBirth,
                 'address' => $address,
-                'photo' => $profilePhotoPath ?? null,
+                'photo' => isset($profilePhotoPath) ? $profilePhotoPath : null,
             ]);
             $user->employees()->save($newEmployee); // Save the new Employee associated with the User
         }
@@ -223,8 +223,8 @@ class EmployeeController extends Controller
         // Redirect or return a response
         Alert::success('Profile updated successfully');
         return redirect()->route('driver.profile')->with('success', 'Profile updated successfully');
-
     }
+
 
     public function update_transportation(Request $request, $id)
     {

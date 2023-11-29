@@ -19,8 +19,10 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
     
-    <link rel="stylesheet" href="{{ asset('/css/dashboard.css') }}">
-    
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+
+        
 
     
     <!-- Google Fonts -->
@@ -111,14 +113,6 @@
                                 <div class="sb-nav-link-icon"><i class="bi bi-wallet-fill"></i></i></div>
                                 {{ __('Manage Payroll') }}
                             </a>
-                            <!-- <a class="nav-link" href="{{ route('payroll.info') }}">
-                                <div class="sb-nav-link-icon"><span class="fw-bold">₱</span></div>
-                                {{ __('Payroll Information') }}
-                            </a>
-                            <a class="nav-link" href="{{ route('billing.information') }}">
-                                <div class="sb-nav-link-icon"><i class="bi bi-receipt"></i></div>
-                                {{ __('Billing Information') }}
-                            </a> -->
                             <a class="nav-link collapsed " href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts1">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
                                 {{ __('Reports') }}
@@ -150,9 +144,11 @@
         <script src="{{ asset('/js/validation.js') }}"></script>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="/js/scripts.js"></script>
-        
-        
+        <script src="{{ asset('js/scripts.js') }}"></script>
+
+
+        <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     
 </body>
 </html>

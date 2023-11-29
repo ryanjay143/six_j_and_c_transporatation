@@ -21,8 +21,8 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', [LandingController::class, 'index'])->name('index');
 Route::get('about', [LandingController::class, 'about'])->name('about');
-Route::get('transportation', [LandingController::class, 'contact'])->name('contact');
-Route::get('annoucement', [LandingController::class, 'service'])->name('service');
+Route::get('transportation', [LandingController::class, 'transportation'])->name('transportation');
+Route::get('services', [LandingController::class, 'service'])->name('service');
 Route::get('logout', [LandingController::class, 'logout'])->name('logout');
 
 

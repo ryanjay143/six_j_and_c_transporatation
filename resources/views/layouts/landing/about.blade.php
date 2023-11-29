@@ -96,13 +96,10 @@
                                 <a class="nav-link active text-primary fs-5" href="{{ route('about') }}">{{ __('About') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark fs-5" href="{{ route('contact') }}">{{ __('Transportation') }}</a>
+                                <a class="nav-link text-dark fs-5" href="{{ route('transportation') }}">{{ __('Transportation') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark fs-5" href="{{ route('service') }}">{{ __('Services') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark fs-5" href="{{ route('user.dashboard') }}">{{ __('Dashboard') }}</a>
                             </li>
                         </ul>
                     </div>

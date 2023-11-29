@@ -13,9 +13,25 @@
 
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/logo/six_j_and_c_logo.png') }}">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
-    <link rel="stylesheet" text="text/css" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">  
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
@@ -23,17 +39,27 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.css" rel="stylesheet"/>
 
-    <link rel="stylesheet" href="{{ asset('css/transport.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    
+    <link rel="stylesheet" href="{{ asset('/css/transport.css') }}">
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
+    <script>
+        // Function to update the iframe src to focus on Cagayan de Oro
+        function updateMapSrc() {
+            const iframe = document.getElementById('mapIframe');
+            iframe.src = "https://www.openstreetmap.org/export/embed.html?bbox=119.2737,4.5921,126.7196,9.3167&layer=mapnik";
+        }
+    </script>
 
-<body style="background-image: linear-gradient(to right, blue, blue, white);">
+
+<body style="background-image: linear-gradient(to right, blue, blue, white);" onload="updateMapSrc()">
     <div id="app">
         <nav class="navbar  navbar-expand-lg bg-primary">
             <div class="container-fluid">
@@ -72,19 +98,16 @@
                     <div style="display: flex; justify-content: center;">
                         <ul class="navbar-nav nav-underline">
                             <li class="nav-item">
-                                <a class="nav-link active text-primary fs-5" aria-current="page" href="{{ url('/') }}">Home</a>
+                                <a class="nav-link text-dark fs-5" aria-current="page" href="{{ url('/') }}">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark fs-5" href="{{ route('about') }}">{{ __('About') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark fs-5" href="{{ route('contact') }}">{{ __('Transportation') }}</a>
+                                <a class="nav-link active text-primary fs-5" href="{{ route('transportation') }}">{{ __('Transportation') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark fs-5" href="{{ route('service') }}">{{ __('Services') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark fs-5" href="{{ route('user.dashboard') }}">{{ __('Dashboard') }}</a>
                             </li>
                         </ul>
                     </div>
@@ -107,18 +130,16 @@
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title fw-bold text-uppercase text-center">Login Information</h4>
+                                                    <h4 class="modal-title fw-bold text-uppercase text-center">Six J and C Transport</h4>
                                                     <button type="button" class="btn-close btn-close-white bg-light rounded-circle" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                 <center>
-                                                    <img src="/logo/six_j_and_c_logo.png" alt="Logo" class="mb-3" style="height: 100px;">
+                                                    <img src="/logo/six_j_and_c_logo.png" alt="Logo" style="height: 100px;">
                                                 </center>
-                                                <div class="alert alert-success d-none" id="loginSuccessAlert" role="alert">
-                                                    Reset successful! You can now access your account.
-                                                </div>
+                                                <p class="text-center fw-bold">Login Here!</p>
                                                     <form id="loginForm" method="POST" action="{{ route('login') }}">
-                                                    @csrf                      
+                                                    @csrf
 
                                                     <!-- Email Input -->
                                                     <div class="input-group input-group-lg mb-3">
@@ -207,31 +228,18 @@
         <main>
             @yield('content')
         </main>
+
     </div>
 
-    
     @yield('footer')
-   
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="{{ asset('js/login.js') }}"></script>
-
-    @if(session('show_login_alert'))
-        <script src="{{ asset('js/modal.js') }}"></script>
-    @endif
-
-    <script>
-        var resertpasswordURL = "{{ route('password.update') }}"
-    </script>
-
+    
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"></script>
     
-    <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-   
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     
 </body>
 </html>
