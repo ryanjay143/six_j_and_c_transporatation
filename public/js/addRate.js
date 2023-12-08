@@ -71,3 +71,22 @@ function toggleCashAdvances(employeeId) {
     }
 }
 
+// Your JavaScript code to handle the AJAX request
+document.getElementById('savePayrollButton').addEventListener('click', function () {
+    // Collect data from your form
+    var employeeId = document.getElementById('employeeId').value;
+    console.log('Employee ID:', employeeId);
+
+    if (roundedTotalDeduction > 0) {
+        console.log("Total Deduction:", roundedTotalDeduction);
+    }
+
+    if (roundedCashAdvanceAmount > 0) {
+        console.log("Cash Advance Deduction:", roundedCashAdvanceAmount);
+    }
+
+    if (roundedDamageAmount > 0) {
+        console.log("Damage Deduction:", roundedDamageAmount);
+    }
+
+});

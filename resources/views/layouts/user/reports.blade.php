@@ -27,7 +27,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
 </head>
+
+<style>
+        @media print {
+            /* Hide the "Action" column header and the "Action" column content */
+            th.action-column,
+            td.action-column {
+                display: none;
+            }
+
+            select.action-column,
+            select.action-column {
+                display: none;
+            }
+
+            input.action-column,
+            input.action-column {
+                display: none;
+            }
+        }
+    </style>
 
 <body>
     <div id="app">

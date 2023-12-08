@@ -15,22 +15,25 @@
                                     <li class="breadcrumb-item active" aria-current="page">Payroll Reports</li>
                                 </ol>
                                 </nav>
-                                <div class="card">
+                                <div class="btn-group mb-3" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="printForm()">Print with PDF</button>
+                                </div>
+                                <div class="card print-form" id="printableForm">
                                     <div class="card-body">
-                                        <h3 class="mb-3 text-secondary">Overall Payroll Reports</h3>
+                                        <h3 class="mb-3 text-secondary">Overall payroll reports for {{ $employee->user->name }} {{ $employee->user->lname }}</h3>
                                         <div class="table-responsive">
                                             <form action="{{ route('admin.payrollFilterReports') }}" class="row g-3 mb-3" method="get">
                                                 <input type="text" hidden="" name="employee_id" value="{{ $employee->id }}">
-                                                <div class="col-md-4">
+                                                <div class="col-md-4 action-column">
                                                     <label for="staticEmail2" class="fw-bold">From:</label>
-                                                    <input type="date" class="form-control" name="payroll_start_date" value="{{ $payroll_start_date }}">
+                                                    <input type="date" class="form-control  " name="payroll_start_date" value="{{ $payroll_start_date }}">
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-4 action-column">
                                                     <label for="inputPassword2" class="fw-bold">To:</label>
-                                                    <input type="date" class="form-control" name="payroll_end_date" value="{{ $payroll_end_date }}">
+                                                    <input type="date" class="form-control " name="payroll_end_date" value="{{ $payroll_end_date }}">
                                                 </div>
-                                                <div class="col-sm-3 align-self-end">
-                                                    <button type="submit" class="btn btn-outline-primary">Filter date</button>
+                                                <div class="col-sm-3 align-self-end ">
+                                                    <button type="submit" class="btn btn-outline-primary action-column">Filter date</button>
                                                 </div>
                                             </form>
                                             <table id="payrollReports" class="table table-bordered table-hover">
@@ -42,7 +45,7 @@
                                                         <th scope="col">Damage deduction</th>
                                                         <th scope="col">Total deduction deduction</th>
                                                         <th scope="col">Total rate</th>
-                                                        <th scope="col">Action</th>
+                                                        <th class="action-column" scope="col">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -73,7 +76,7 @@
                                                                 @endif
                                                             </td>
                                                             <td>&#8369; {{ number_format($p->total_rate, 2) }}</td>
-                                                            <td>
+                                                            <td class="action-column">
                                                                 <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" 
                                                                     data-bs-target="#exampleModal{{ $p->id }}">
                                                                     <i class="fas fa-eye"></i>
@@ -148,8 +151,24 @@
                                                                                             </tbody>
                                                                                             <tfoot>
                                                                                                 <tr>
-                                                                                                    <td colspan="3" class="text-end fw-bold">Total Rate:</td>
+                                                                                                    <td colspan="3" class="fw-bold">Total Rate:</td>
                                                                                                     <td class="fw-bold">&#8369; {{ number_format($totalRate, 2) }}</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="fw-bold" colspan="3">Cash advanve deduction:</td>
+                                                                                                    <td class="fw-bold">&#8369; {{ number_format($p->ca_deduction, 2) }}</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="fw-bold" colspan="3">Damage Deduction:</td>
+                                                                                                    <td class="fw-bold">&#8369; {{ number_format($p->df_deduction, 2) }}</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="fw-bold" colspan="3">Total deduction:</td>
+                                                                                                    <td class="fw-bold">&#8369; {{ number_format($p->total_deduction, 2) }}</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="fw-bold" colspan="3">Total net salary:</td>
+                                                                                                    <td class="fw-bold">&#8369; {{ number_format($p->total_net_salary,2 )  }} </td>
                                                                                                 </tr>
                                                                                             </tfoot>
                                                                                         </table>

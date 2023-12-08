@@ -3,6 +3,7 @@
     
     @include('sweetalert::alert')
 
+
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
@@ -24,7 +25,10 @@
                     <div class="col-12 col-lg-12">
                         <div class="row">
                             <div class="col-12">
-                                <div class="card mr-sm-3 border border-primary w-100">
+                            <div class="btn-group mb-3" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="printForm()">Print with PDF</button>
+                                </div>
+                                <div class="card mr-sm-3 border border-primary w-100 print-form" id="printableForm">
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <table id="example" class="table table-bordered table-hover">
@@ -35,7 +39,7 @@
                                                         <th scope="col">Invoice Number</th>
                                                         <th scope="col">Total Amount</th>
                                                         <th scope="col">Payment method</th>
-                                                        <th scope="col">Action</th>
+                                                        <th scope="col" class="action-column">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -54,7 +58,7 @@
                                                                     <span class="badge text-dark border border-dark bg-light">Cash</span>
                                                                 @endif
                                                             </td>
-                                                            <td>
+                                                            <td class="action-column">
                                                                 <a href="{{ route('view.billing.for.client', $b->id) }}" type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-eye"></i></a>
                                                             </td>
                                                         </tr>

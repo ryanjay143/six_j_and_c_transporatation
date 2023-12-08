@@ -23,14 +23,16 @@
                     <div class="col-12 col-lg-12">
                         <div class="row">
                             <div class="col-12">
-                                <div class="card mr-sm-3 border border-primary w-100">
+                                <div class="btn-group mb-3" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="printForm()">Print with PDF</button>
+                                </div>
+                                <div class="card mr-sm-3 border border-primary w-100 print-form" id="printableForm">
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <p class="text-center">This is bill you the various services rendered for the period of {{ \Carbon\Carbon::parse($billing->billing_start_date)->format('F d, Y') }} - {{ \Carbon\Carbon::parse($billing->billing_end_date)->format('F d, Y') }}</p>
                                             <table class="table letter-size table-bordered table-hover">
                                                 <thead class="table-primary">
                                                     <tr>
-                                                        <th scope="col">#</th>
                                                         <th scope="col">Transportation date</th>
                                                         <th scope="col">Driver</th>
                                                         <th scope="col">Plate No.</th>
@@ -44,7 +46,6 @@
                                                 <tbody>
                                                     @foreach ($billingDetails as $b)
                                                     <tr>
-                                                        <th scope="row">{{ $loop->iteration }}</th>
                                                         <td>{{ date('M d, Y', strtotime($b->transpo->booking->transportation_date)) }}</td>
                                                         <td>{{ $b->transpo->employee->user->name }} {{ $b->transpo->employee->user->lname }}</td>
                                                         <td>{{ $b->transpo->truck->plate_number }}</td>
@@ -58,7 +59,7 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th colspan="8" class="text-end">Total billing:</th>
+                                                        <th colspan="7" class="text-end">Total billing amount</th>
                                                         <th>&#8369; {{ $billing->total_amount }}</th>
                                                     </tr>
                                                 </tfoot>

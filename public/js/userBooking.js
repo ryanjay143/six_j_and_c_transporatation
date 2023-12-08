@@ -264,9 +264,9 @@ $(document).ready(function () {
                         } else if (status == 2) {
                             statusText = 'Picked up';
                         } else if (status == 3) {
-                            statusText = 'Departure';
+                            statusText = 'Departed';
                         }  else if (status == 4) {
-                            statusText = 'Delivery on the way';
+                            statusText = 'In transit';
                         } else if (status == 5 || status == 6 || status == 7) {
                             statusText = 'Delivered';
                         } else {
@@ -316,7 +316,7 @@ function updateOriginReadOnly() {
     var transportationDateInput = document.getElementById("transportationDate");
 
     originInput.readOnly = false; // Enable origin input
-    destinationInput.readOnly = true; // Make destination input readonly
+    destinationInput.ariaDisabled = true; // Make destination input readonly
     transportationDateInput.readOnly = true; // Make transportationDate input readonly
 }
 
@@ -339,3 +339,24 @@ updateOriginReadOnly();
  // Set the min attribute of the input element to the current date
  document.getElementById('transportationDate').min = currentDate;
 
+ function updateDestinationReadOnly() {
+    var originSelect = document.getElementById('origin');
+    var destinationSelect = document.getElementById('destination');
+
+    // Check if a valid origin is selected
+    if (originSelect.value !== "" && originSelect.value !== "Select Origin") {
+        // Enable the destination select
+        destinationSelect.disabled = false;
+    } else {
+        // If no valid origin is selected, disable the destination select
+        destinationSelect.disabled = true;
+    }
+}
+
+function updateTransportationDate() {
+    // Get the value of the pick-up date input
+    var pickUpDateValue = document.getElementById("pickUpDate").value;
+
+    // Set the value of the transportation date input to the pick-up date value
+    document.getElementById("transportationDate").value = pickUpDateValue;
+}

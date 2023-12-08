@@ -44,11 +44,22 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="invoiceTableBody">
-                                                        @foreach ($billing as $b)
+                                                        @php
+                                                            $sortedBilling = $billing->sortBy(function ($billings) {
+                                                                return [$billings->status, $billings->billing_start_date];
+                                                            });
+                                                        @endphp
+                                                        @foreach ($sortedBilling as $b)
                                                             <tr>
                                                                 <th scope="row">{{ $loop->iteration }}</th>
                                                                 <td>{{ $b->user->name }}</td>
-                                                                <td>{{ $b->invoice_num }}</td>
+                                                                <td>
+                                                                    @if ($b->status == 0)
+                                                                        <p>Pending Invoice num.</p>
+                                                                    @elseif ($b->status == 1)
+                                                                        {{ $b->invoice_num }}
+                                                                    @endif
+                                                                </td>
                                                                 <td>{{ date('M d', strtotime($b->billing_start_date)) }}-{{ date('d, Y', strtotime($b->billing_end_date)) }}</td>
                                                                 <td data-amount="{{ $b->amount }}">&#8369; {{ $b->total_amount }}</td>
                                                                 <td class="action-column">

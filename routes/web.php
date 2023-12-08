@@ -105,11 +105,18 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/view/payroll/{id}/details/reports', [AdminController::class, 'view_payrollDetails_reports'])->name('view.payroll.details.report');
     Route::get('/admin/payroll/{id}/paid', [AdminController::class, 'payroll_paid'])->name('payroll.paid');
     Route::get('/view/billing/{id}', [AdminController::class, 'view_billing'])->name('view.billing');
-    Route::get('/view/payroll/employee/{id}', [AdminController::class, 'view_payroll'])->name('view.payroll');
+
+    // View payroll
+    Route::get('/view/payroll/driver/{id}', [AdminController::class, 'view_payroll'])->name('view.payroll');
+    Route::get('/view/payroll/helper/{id}', [AdminController::class, 'view_payroll_for_helper'])->name('view.payroll.for.helper');
+
+
+    Route::post('/save-payroll', [AdminController::class, 'save_payroll'])->name('save.payroll');
+    Route::post('/save-payroll/for-helper', [AdminController::class, 'save_payroll_for_helper'])->name('save.payroll.for.helper');
 
     Route::post('admin/payroll-update-status/{id}', [AdminController::class, 'updateStatusforpayroll'])->name('update.status.payroll');
 
-    Route::get('/view/payroll/helper/{id}', [AdminController::class, 'view_payroll_helper'])->name('view.payroll.helper');
+
     // Route::post('/billing/details/{id}', [AdminController::class, 'billing_details'])->name('billing.details');
     Route::put('/update/billing/details/{id}', [AdminController::class, 'update_billing'])->name('update.billing');
     Route::put('/update/user/{id}', [AdminController::class, 'update_user'])->name('update.user');
@@ -119,7 +126,6 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::post('cash/advance/{id}', [AdminController::class, 'cash_advance'])->name('cash.advance');
     Route::post('/add-damage/{id}', [AdminController::class, 'addDamage'])->name('add.damage');
     Route::post('/save-billing', [AdminController::class, 'save_billing'])->name('save.billing');
-    Route::post('/save-payroll', [AdminController::class, 'save_payroll'])->name('save.payroll');
     Route::get('admin/billing/information', [AdminController::class, 'billing_info'])->name('billing.information');
     Route::get('admin/billing/details/{id}', [AdminController::class, 'billing_details'])->name('view.billing.details');
     Route::get('admin/billing/details/report/{id}', [AdminController::class, 'billing_details_report'])->name('view.billing.details.report');

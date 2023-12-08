@@ -70,7 +70,7 @@
                                                         @foreach ($sortedTranspo as $t)
                                                             @if ($t->booking->tons !== null)
                                                                 <tr>
-                                                                    <td>{{ date('F j, Y', strtotime($t->booking->transportation_date)) }}</td>
+                                                                    <td>{{ date('F j, Y', strtotime($t->booking->pickUp_date)) }}</td>
                                                                     <td>{{ $t->booking->user->name }}</td>
                                                                     <td>{{ $t->booking->origin }}</td>
                                                                     <td>{{ $t->booking->destination }}</td>

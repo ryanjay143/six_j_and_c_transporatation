@@ -23,7 +23,10 @@
                     <div class="col-12 col-lg-12">
                         <div class="row">
                             <div class="col-12">
-                                <div class="card mr-sm-3 border border-primary w-100">
+                                <div class="btn-group mb-3" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="printForm()">Print with PDF</button>
+                                </div>
+                                <div class="card mr-sm-3 border border-primary w-100 print-form" id="printableForm">
                                     <div class="card-body">
                                         <div class=" row">
                                             <label for="staticEmail" class="col-sm-6 col-form-label fw-bold ml-3">OR number:</label>
@@ -86,7 +89,7 @@
                                                     @foreach ($transportationDate as $b)
                                                         <tr>
                                                             <th class="text-dark" scope="row">{{ $loop->iteration }}</th>
-                                                            <td class="text-dark">{{ date('M d, Y', strtotime($b->transpo->booking->date)) }}</td>
+                                                            <td class="text-dark">{{ date('M d, Y', strtotime($b->transpo->booking->transportation_date)) }}</td>
                                                             <td class="text-dark">{{ $b->transpo->employee->user->name }} {{ $b->transpo->employee->user->lname }}</td>
                                                             <td class="text-dark">{{ $b->transpo->truck->plate_number }}</td>
                                                             <td class="text-dark">{{ $b->transpo->booking->origin }}-{{ $b->transpo->booking->destination }}</td>

@@ -157,6 +157,17 @@
         <script src="{{ asset('js/deduction.js') }}"></script>
         <script src="{{ asset('js/addRate.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- Add this in your HTML file to include jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+        <script>
+            var roundedTotalDeduction = {{ $roundedTotalDeduction }};
+        </script>
+
+       
+
+       
+
 
       <script>
          var csrfToken = "{{ $csrfToken }}";
@@ -212,6 +223,7 @@
                 document.querySelector('input[name="end_date"]').value = '{{ date('Y-m-30') }}';
             });
         </script>
+
 
        
 </body>

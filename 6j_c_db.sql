@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2023 at 07:29 PM
+-- Generation Time: Dec 08, 2023 at 02:00 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -50,7 +50,9 @@ INSERT INTO `billings` (`id`, `client_id`, `invoice_num`, `billing_start_date`, 
 (5, 2, 'INV-2-202310311757011', '2023-09-21', '2023-09-30', '5,700', 1, '2023-10-31 08:12:44', '2023-10-31 08:19:01'),
 (6, 2, 'INV-2-202310311757012', '2023-10-01', '2023-10-15', '3,000', 1, '2023-10-21 01:33:51', '2023-10-21 01:35:29'),
 (11, 45, 'INV-45-20231031175706', '2023-09-22', '2023-10-31', '5,600', 1, '2023-10-31 09:57:06', '2023-10-31 10:07:42'),
-(12, 2, 'INV-2-20231109003754', '2023-09-21', '2023-09-30', '8,900', 0, '2023-11-08 16:37:54', '2023-11-08 16:37:54');
+(12, 2, 'INV-2-20231109003754', '2023-09-21', '2023-09-30', '8,900', 1, '2023-11-08 16:37:54', '2023-11-26 01:25:06'),
+(13, 2, 'INV-2-20231020181218', '2023-10-16', '2023-10-31', '13,000', 1, '2023-10-20 10:12:18', '2023-12-07 17:51:32'),
+(14, 2, 'INV-2-20231124235439', '2023-11-16', '2023-11-30', '2,000', 0, '2023-11-24 23:54:39', '2023-11-24 23:54:39');
 
 -- --------------------------------------------------------
 
@@ -96,7 +98,13 @@ INSERT INTO `billing_details` (`id`, `billing_id`, `transportation_id`, `price`,
 (32, 12, 16, '100', '13', '2023-11-08 16:37:54', '2023-11-08 16:37:54'),
 (33, 12, 35, '100', '11', '2023-11-08 16:37:54', '2023-11-08 16:37:54'),
 (34, 12, 17, '100', '9', '2023-11-08 16:37:54', '2023-11-08 16:37:54'),
-(35, 12, 34, '100', '12', '2023-11-08 16:37:54', '2023-11-08 16:37:54');
+(35, 12, 34, '100', '12', '2023-11-08 16:37:54', '2023-11-08 16:37:54'),
+(36, 13, 36, '1000', '13', '2023-10-20 10:12:18', '2023-10-20 10:12:18'),
+(37, 14, 38, NULL, NULL, '2023-11-24 23:54:39', '2023-11-24 23:54:39'),
+(38, 14, 39, NULL, NULL, '2023-11-24 23:54:39', '2023-11-24 23:54:39'),
+(39, 14, 41, NULL, NULL, '2023-11-24 23:54:39', '2023-11-24 23:54:39'),
+(40, 14, 42, '100', '20', '2023-11-24 23:54:39', '2023-11-24 23:54:39'),
+(41, 14, 43, NULL, NULL, '2023-11-24 23:54:39', '2023-11-24 23:54:39');
 
 -- --------------------------------------------------------
 
@@ -141,16 +149,18 @@ INSERT INTO `bookings` (`id`, `user_id`, `pickUp_date`, `transportation_date`, `
 (31, 3, '2023-10-20', '2023-10-21', 'Pagadian City', 'Zamboanga', 19, 1, '2023-10-19 16:22:57', '2023-10-20 10:41:46'),
 (36, 2, '2023-10-21', '2023-10-21', 'Cagayan de Oro', 'Iligan City', 13, 1, '2023-10-21 01:24:19', '2023-10-21 01:30:44'),
 (37, 2, '2023-11-11', '2023-11-11', 'Cagayan de Oro', 'Iligan City', NULL, 1, '2023-11-11 01:22:51', '2023-11-11 01:22:51'),
-(38, 2, '2023-11-16', '2023-11-17', 'Cagayan de Oro', 'Iligan City', NULL, 1, '2023-11-16 15:24:53', '2023-11-16 17:06:39'),
+(38, 2, '2023-11-25', '2023-11-26', 'Cagayan de Oro', 'Iligan City', NULL, 1, '2023-11-16 15:24:53', '2023-11-21 10:04:40'),
 (39, 2, '2023-11-17', '2023-11-18', 'Cagayan de Oro', 'Pagadian City', NULL, 1, '2023-11-16 15:26:59', '2023-11-16 17:16:04'),
-(40, 2, '2023-11-20', '2023-11-21', 'Ozamiz City', 'Pagadian City', NULL, 0, '2023-11-16 15:28:15', '2023-11-16 15:28:15'),
-(41, 2, '2023-11-22', '2023-11-23', 'Cagayan de Oro', 'Davao', NULL, 0, '2023-11-16 15:34:12', '2023-11-16 15:34:12'),
-(42, 2, '2023-11-27', '2023-11-27', 'Cagayan de Oro', 'Iligan City', NULL, 0, '2023-11-16 15:37:58', '2023-11-16 15:37:58'),
+(40, 2, '2023-11-20', '2023-11-21', 'Ozamiz City', 'Pagadian City', NULL, 1, '2023-11-16 15:28:15', '2023-12-03 18:54:59'),
+(41, 2, '2023-11-21', '2023-11-23', 'Cagayan de Oro', 'Davao', NULL, 1, '2023-11-16 15:34:12', '2023-11-21 10:32:14'),
+(42, 2, '2023-11-27', '2023-11-27', 'Cagayan de Oro', 'Iligan City', 13, 1, '2023-11-16 15:37:58', '2023-11-27 09:05:38'),
 (43, 2, '2023-11-29', '2023-11-30', 'Iligan City', 'Ozamiz City', NULL, 0, '2023-11-16 15:42:04', '2023-11-16 15:42:04'),
-(44, 2, '2023-11-24', '2023-11-25', 'Iligan City', 'Iligan City', NULL, 0, '2023-11-16 15:57:07', '2023-11-16 15:57:07'),
-(45, 2, '2023-11-30', '2023-11-30', 'Iligan City', 'Pagadian City', NULL, 0, '2023-11-16 16:01:03', '2023-11-16 16:01:03'),
-(49, 3, '2023-11-21', '2023-11-22', 'Iligan City', 'Pagadian City', NULL, 1, '2023-11-16 17:35:26', '2023-11-16 17:35:26'),
-(50, 2, '2023-12-01', '2023-12-02', 'Cagayan de Oro', 'Zamboanga', NULL, 0, '2023-11-16 18:27:13', '2023-11-16 18:27:13');
+(44, 2, '2023-11-24', '2023-11-25', 'Iligan City', 'Iligan City', 20, 1, '2023-11-16 15:57:07', '2023-11-24 23:33:14'),
+(45, 2, '2023-11-30', '2023-11-30', 'Iligan City', 'Pagadian City', NULL, 1, '2023-11-16 16:01:03', '2023-11-30 15:18:53'),
+(49, 3, '2023-11-27', '2023-11-28', 'Iligan City', 'Pagadian City', 11, 1, '2023-11-16 17:35:26', '2023-11-27 09:18:41'),
+(50, 2, '2023-12-01', '2023-12-02', 'Cagayan de Oro', 'Zamboanga', NULL, 1, '2023-11-16 18:27:13', '2023-12-01 13:51:17'),
+(51, 2, '2023-11-23', '2023-11-24', 'Cagayan de Oro', 'Iligan City', NULL, 1, '2023-11-23 21:51:14', '2023-11-23 21:51:14'),
+(52, 2, '2023-12-08', '2023-12-08', 'Cagayan de Oro', 'Iligan City', NULL, 0, '2023-12-07 16:12:14', '2023-12-07 16:12:14');
 
 -- --------------------------------------------------------
 
@@ -178,7 +188,7 @@ CREATE TABLE `cash_advances` (
 INSERT INTO `cash_advances` (`id`, `employee_id`, `amount`, `c_amount`, `purpose`, `pay_seq`, `c_pay_sequence`, `status`, `created_at`, `updated_at`) VALUES
 (1, 1, '0', '2000', 'utang', 0, 3, 1, '2023-09-21 00:52:12', '2023-09-27 17:03:26'),
 (2, 1, '0', '1000', 'pang gatas', 0, 3, 1, '2023-09-27 14:27:51', '2023-10-30 03:44:31'),
-(3, 2, '3000', '3000', 'pang gatas', 4, 4, 0, '2023-09-27 14:42:46', '2023-09-27 14:42:46'),
+(3, 2, '750', '3000', 'pang gatas', 1, 4, 0, '2023-09-27 14:42:46', '2023-11-24 23:49:44'),
 (4, 4, '2000', '2000', 'hospital bill', 4, 4, 0, '2023-09-27 15:00:56', '2023-09-27 15:00:56'),
 (5, 1, '0', '3000', 'pang check-up', 0, 4, 1, '2023-09-27 17:04:42', '2023-09-30 11:39:16');
 
@@ -191,8 +201,8 @@ INSERT INTO `cash_advances` (`id`, `employee_id`, `amount`, `c_amount`, `purpose
 CREATE TABLE `ca_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `ca_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `paid_amount` varchar(255) NOT NULL,
-  `balance` varchar(255) NOT NULL,
+  `paid_amount` varchar(255) DEFAULT NULL,
+  `balance` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -212,7 +222,13 @@ INSERT INTO `ca_details` (`id`, `ca_id`, `paid_amount`, `balance`, `created_at`,
 (13, 5, '750', '1500', '2023-09-30 11:07:18', '2023-09-30 11:07:18'),
 (14, 5, '750', '750', '2023-09-30 11:14:24', '2023-09-30 11:14:24'),
 (15, 5, '750', '0', '2023-09-30 11:37:15', '2023-09-30 11:37:15'),
-(16, 5, '750', '0', '2023-09-30 11:39:16', '2023-09-30 11:39:16');
+(16, 5, '750', '0', '2023-09-30 11:39:16', '2023-09-30 11:39:16'),
+(17, 3, '750', '2250', '2023-11-20 09:35:20', '2023-11-20 09:35:20'),
+(18, 3, '750', '1500', '2023-11-20 09:49:08', '2023-11-20 09:49:08'),
+(19, 3, '750', '750', '2023-11-24 23:49:44', '2023-11-24 23:49:44'),
+(20, NULL, NULL, '0', '2023-11-27 01:08:39', '2023-11-27 01:08:39'),
+(21, NULL, NULL, '0', '2023-12-01 13:43:14', '2023-12-01 13:43:14'),
+(22, NULL, NULL, '0', '2023-12-01 13:43:45', '2023-12-01 13:43:45');
 
 -- --------------------------------------------------------
 
@@ -242,7 +258,7 @@ CREATE TABLE `damages` (
 INSERT INTO `damages` (`id`, `employee_id`, `date_of_incidence`, `deduction`, `c_deduction`, `description`, `damage_sequence`, `c_term`, `photo`, `status`, `created_at`, `updated_at`) VALUES
 (1, 1, '2023-09-01', 0, '5000', 'bagngga', 0, 4, 'damage_photos/baEaoeJeyTFG9luKgDl2Qapf9LDmj7Tl4k38W4sC.png', 1, '2023-09-21 00:54:24', '2023-09-27 17:03:26'),
 (2, 1, '2023-09-21', 0, '3500', 'bangga', 0, 3, 'damage_photos/X8vTKz7fp7NxtsGvY6sgkBE9bcd2Bf5ooEFki1Qc.png', 1, '2023-09-26 15:15:05', '2023-10-01 01:43:02'),
-(3, 2, '2023-09-07', 5000, '5000', 'bangga', 6, 6, 'damage_photos/seqb1NeAXTIY0vveaqHCjZATCUJe9TsUITZC0RzR.png', 0, '2023-09-27 14:44:25', '2023-09-27 14:44:25'),
+(3, 2, '2023-09-07', 2501, '5000', 'bangga', 3, 6, 'damage_photos/seqb1NeAXTIY0vveaqHCjZATCUJe9TsUITZC0RzR.png', 0, '2023-09-27 14:44:25', '2023-11-24 23:49:44'),
 (4, 1, '2023-09-26', 0, '5000', 'bangga', 0, 4, 'damage_photos/MBYLUXAJbmUjzZacTaDtkU6VcugIIG2kCUlGmELN.png', 1, '2023-09-27 17:05:39', '2023-09-30 11:14:24');
 
 -- --------------------------------------------------------
@@ -276,7 +292,13 @@ INSERT INTO `damage_details` (`id`, `d_id`, `paid_amount`, `balance`, `created_a
 (12, 4, '1250', '2500', '2023-09-30 10:58:58', '2023-09-30 10:58:58'),
 (13, 4, '1250', '1250', '2023-09-30 11:07:18', '2023-09-30 11:07:18'),
 (14, 4, '1250', '0', '2023-09-30 11:14:24', '2023-09-30 11:14:24'),
-(15, NULL, '0', '0', '2023-09-30 11:39:16', '2023-09-30 11:39:16');
+(15, NULL, '0', '0', '2023-09-30 11:39:16', '2023-09-30 11:39:16'),
+(16, 3, '833.33333333333', '4166.6666666667', '2023-11-20 09:35:20', '2023-11-20 09:35:20'),
+(17, 3, '833.4', '3333.6', '2023-11-20 09:49:08', '2023-11-20 09:49:08'),
+(18, 3, '833.5', '2500.5', '2023-11-24 23:49:44', '2023-11-24 23:49:44'),
+(19, NULL, '0', '0', '2023-11-27 01:08:39', '2023-11-27 01:08:39'),
+(20, NULL, '0', '0', '2023-12-01 13:43:14', '2023-12-01 13:43:14'),
+(21, NULL, '0', '0', '2023-12-01 13:43:45', '2023-12-01 13:43:45');
 
 -- --------------------------------------------------------
 
@@ -300,14 +322,14 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `user_id`, `dob`, `address`, `position`, `photo`, `created_at`, `updated_at`) VALUES
-(1, 4, '1998-09-06', 'Santa Ana Tagoloan Misamis Oriental', '0', 'profile_photos/HfxuIvDzRUQHEq1SYzD5qUgLcosk2OR07zSYRhMa.jpg', '2023-06-17 08:09:01', '2023-11-01 03:10:29'),
-(2, 5, '1995-01-17', 'abellanosa st. brgy 17', '0', 'profile-photos/aTFbAplQ5njos08vyHLVfvU4fCAvHjPrPxp4Y6V6.jpg', '2023-06-17 19:44:26', '2023-08-09 14:36:16'),
-(3, 18, '2023-06-22', 'CDO', '1', 'profile-photos/ya7WNLVdBlFP0enfEH3N5p6oL6NmWVGOPR5UJngk.jpg', '2023-06-22 08:41:24', '2023-09-07 01:14:14'),
-(4, 19, '1998-03-15', 'Cugman, Cagayan de Oro', '0', 'profile-photos/bVsqgdOsKhZ60L8ZCovv31QrL0JfrNLThh9NDcwR.jpg', '2023-06-28 02:59:38', '2023-08-11 00:21:37'),
+(1, 4, '1998-09-06', 'Santa Ana Tagoloan Misamis Oriental', '0', 'profile_photos/tChfAGnEx6LyIBZJlt4eVNKgMcoUIAxafdDCACaL.jpg', '2023-06-17 08:09:01', '2023-12-01 13:47:43'),
+(2, 5, '1995-01-17', 'abellanosa st. brgy 17', '0', 'profile_photos/z7v5p8sUMibsxCS0U5LGfMke5zw2YjCYS1t3pvx4.jpg', '2023-06-17 19:44:26', '2023-11-30 00:33:31'),
+(3, 18, '2023-06-22', 'CDO', '1', 'profile-photos/zVE9nFneXwS3VIGQz3FWTSoFSfR9wVYFqVHMX7Zr.jpg', '2023-06-22 08:41:24', '2023-11-30 00:55:11'),
+(4, 19, '1998-03-15', 'Cugman, Cagayan de Oro', '0', 'profile_photos/umjGyaRnhtfa0xsi9PDWhT5BPf2qSRVi8HNk0x08.jpg', '2023-06-28 02:59:38', '2023-11-30 00:37:18'),
 (5, 22, '2023-07-12', 'Nazareth, Cagayan de Oro, City', '1', 'profile-photos/xpJGodOyjwVwvfBQLblVVt1LF4Fv9juAOT7SurFq.jpg', '2023-07-12 15:24:53', '2023-08-11 00:22:49'),
-(6, 29, '2003-08-09', 'CDO', '0', 'profile-photos/KPMGjK4Ds1cUhZrjOoKnCI8TqmNsjZqHHqcNiebS.jpg', '2023-07-20 15:17:38', '2023-08-09 14:48:59'),
+(6, 29, '2003-08-09', 'CDO', '0', 'profile_photos/bkdOt8q0RO9g5KjcxILfOYjRZfVDG3AnZYRAuVmK.jpg', '2023-07-20 15:17:38', '2023-11-30 00:38:53'),
 (10, 33, '1997-09-14', 'Agora, Lapasan CDO', '1', 'profile-photos/ebIqRAFm8WqmDAMT8Cv8quuYiVGB3YA2Xaju8AD4.jpg', '2023-08-01 05:56:42', '2023-08-09 14:54:28'),
-(11, 34, '1998-01-01', 'CDO', '0', 'profile-photos/Fd46oZj371Aixtf7zKnVsIU3SmYK8FJ4Dc7RrfNv.jpg', '2023-08-01 05:58:32', '2023-08-09 14:51:52'),
+(11, 34, '1998-01-01', 'CDO', '0', 'profile_photos/sVwor5gDu5RYdUGALU50H74KTRt4gTjp7PI7hqrU.jpg', '2023-08-01 05:58:32', '2023-11-30 00:45:54'),
 (12, 35, '1998-02-26', 'CDO', '1', 'profile-photos/d33UfdRniC5ek3kdRih3CF8raUhVGzFF4vT5DJOP.jpg', '2023-08-01 05:59:22', '2023-08-09 14:55:05'),
 (14, 37, '1997-02-01', 'CDO', '1', 'profile-photos/Q0Obf6uXm2O1FmpweuDFqogA7yRlEzw7LTY5X2rd.jpg', '2023-08-01 06:03:51', '2023-08-09 14:55:37'),
 (15, 38, '1998-10-08', 'Santa Ana Tagoloan Misamis Oriental', '0', '', '2023-08-08 09:23:47', '2023-08-08 09:23:47');
@@ -369,8 +391,8 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 ('alpha@gmail.com', '$2y$10$r8WUpQnerefD9hwBWKssv.JR9EY/XioKmH26VdMithnbTqz7b/jce', '2023-08-15 07:03:27'),
 ('judphiland@gmail.com', '$2y$10$xDQii5w0OPa6fmCv7/5yuO5U6sVa7t/TzBDzG7nMcwb4ytoUZ7F7K', '2023-08-17 14:39:28'),
 ('nicolas@gmail.com', '$2y$10$ytGSXNuJeeTTSNKCkS6ZDOlTWjUqN2onfA1N/cwRmDZthtEBfrGJu', '2023-08-17 14:42:33'),
-('ryanjaytagolimotreyes@gmail.com', '$2y$10$sdOHwBrP.3yFWnBWFwp.aeqWNkrSD5CPdn9w98j2qQDr0Forj0/Gu', '2023-11-10 14:37:42'),
-('admin@gmail.com', '$2y$10$6uu.lEkuCiCqI1MrnkTTAukL4L8S8w.o0Yz6bsRqvbCr.6MzdWSK6', '2023-11-10 14:39:45');
+('admin@gmail.com', '$2y$10$6uu.lEkuCiCqI1MrnkTTAukL4L8S8w.o0Yz6bsRqvbCr.6MzdWSK6', '2023-11-10 14:39:45'),
+('ryanjaytagolimotreyes@gmail.com', '$2y$10$i4OeYjHfVfcb2le.0MRcUOWculO29InJIt0yrQK0gHFndbNQN.YA6', '2023-11-29 21:01:51');
 
 -- --------------------------------------------------------
 
@@ -396,11 +418,13 @@ CREATE TABLE `payments` (
 
 INSERT INTO `payments` (`id`, `billing_id`, `payment_method`, `ref_num`, `chique_num`, `or_num`, `amount`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Bank Transfer', '1001112', NULL, '202310032022063627', '5700', '2023-10-03 12:22:06', '2023-10-03 12:22:06'),
-(2, 2, 'Cash', NULL, NULL, '202310032121261591', '4500', '2023-10-03 13:21:26', '2023-10-03 13:21:26'),
+(2, 2, 'Cash', 'CASHREF773', NULL, '202310032121261591', '4500', '2023-10-03 13:21:26', '2023-10-03 13:21:26'),
 (3, 4, 'Bank Transfer', '1001112', NULL, '202310201358162545', '5700', '2023-10-20 05:58:16', '2023-10-20 05:58:16'),
-(4, 5, 'Cash', NULL, NULL, '202310311619019495', '5700', '2023-10-31 08:19:01', '2023-10-31 08:19:01'),
-(5, 6, 'Cash', NULL, NULL, '202310210935293784', '3000', '2023-10-21 01:35:29', '2023-10-21 01:35:29'),
-(6, 11, 'Cheque', NULL, '11122233', '202310311807421303', '5600', '2023-10-31 10:07:42', '2023-10-31 10:07:42');
+(4, 5, 'Cash', 'CASHREF7738', NULL, '202310311619019495', '5700', '2023-10-31 08:19:01', '2023-10-31 08:19:01'),
+(5, 6, 'Cash', 'CASHREF7739', NULL, '202310210935293784', '3000', '2023-10-21 01:35:29', '2023-10-21 01:35:29'),
+(6, 11, 'Cheque', NULL, '11122233', '202310311807421303', '5600', '2023-10-31 10:07:42', '2023-10-31 10:07:42'),
+(7, 12, 'Cash', 'CASHREF6397', NULL, '202311260125067815', '8900', '2023-11-26 01:25:06', '2023-11-26 01:25:06'),
+(8, 13, 'Cheque', NULL, '11110000', '202312080151328852', '13000', '2023-12-07 17:51:32', '2023-12-07 17:51:32');
 
 -- --------------------------------------------------------
 
@@ -428,17 +452,22 @@ CREATE TABLE `payrolls` (
 --
 
 INSERT INTO `payrolls` (`id`, `employee_id`, `total_deduction`, `ca_deduction`, `df_deduction`, `total_rate`, `total_net_salary`, `payroll_start_date`, `payroll_end_date`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, '1917', '667', '1250', '5,000', '3083', '2023-09-12', '2023-09-26', 0, '2023-09-26 15:16:34', '2023-10-19 04:00:46'),
-(2, 1, '1917', '667', '1250', '5,000', '3083', '2023-09-14', '2023-09-28', 1, '2023-09-27 16:10:11', '2023-09-30 08:39:14'),
-(9, 1, '1500', '333', '1167', '5,000', '3500', '2023-09-15', '2023-09-30', 1, '2023-09-30 08:37:49', '2023-09-30 08:38:59'),
-(10, 1, '1500', '333', '1167', '3,000', '1500', '2023-09-16', '2023-09-30', 0, '2023-10-01 01:43:02', '2023-10-01 01:43:02'),
-(11, 1, '1583', '333', '1250', '2,000', '417', '2023-10-17', '2023-10-18', 0, '2023-10-30 03:44:30', '2023-10-30 03:44:30'),
+(1, 1, '1917', '667', '1250', '5000', '3083', '2023-09-12', '2023-09-26', 1, '2023-09-26 15:16:34', '2023-11-11 08:20:38'),
+(2, 1, '1917', '667', '1250', '5000', '3083', '2023-09-14', '2023-09-28', 1, '2023-09-27 16:10:11', '2023-09-30 08:39:14'),
+(9, 1, '1500', '333', '1167', '5000', '3500', '2023-09-15', '2023-09-30', 1, '2023-09-30 08:37:49', '2023-09-30 08:38:59'),
+(10, 1, '1500', '333', '1167', '3000', '1500', '2023-09-16', '2023-09-30', 1, '2023-10-01 01:43:02', '2023-11-21 02:37:59'),
+(11, 1, '1583', '333', '1250', '2000', '417', '2023-10-17', '2023-10-18', 0, '2023-10-30 03:44:30', '2023-10-30 03:44:30'),
 (12, 1, '2000', '750', '1250', '3000', '1000', '2023-09-16', '2023-09-30', 0, '2023-09-30 10:58:58', '2023-09-30 10:58:58'),
 (13, 1, '2000', '750', '1250', '3000', '1000', '2023-09-15', '2023-09-30', 0, '2023-09-30 11:07:18', '2023-09-30 11:07:18'),
 (14, 1, '2000', '750', '1250', '3000', '1000', '2023-09-15', '2023-09-30', 0, '2023-09-30 11:14:24', '2023-09-30 11:14:24'),
 (15, 1, '750', '750', NULL, '3000', '2250', '2023-09-16', '2023-09-30', 0, '2023-09-30 11:37:15', '2023-09-30 11:37:15'),
-(16, 1, '750', '750', NULL, '3000', '2250', '2023-09-16', '2023-09-30', 0, '2023-09-30 11:39:16', '2023-09-30 11:39:16'),
-(17, 1, NULL, NULL, NULL, '1000', '1000', '2023-10-01', '2023-10-15', 1, '2023-10-15 11:40:50', '2023-10-31 09:39:01');
+(16, 1, '750', '750', NULL, '3000', '2250', '2023-09-16', '2023-09-30', 1, '2023-09-30 11:39:16', '2023-11-11 08:20:52'),
+(17, 1, NULL, NULL, NULL, '1000', '1000', '2023-10-01', '2023-10-15', 1, '2023-10-15 11:40:50', '2023-10-31 09:39:01'),
+(19, 2, '1583', '750', '833', '3000', '1417', '2023-11-16', '2023-11-30', 1, '2023-11-20 09:49:08', '2023-11-22 13:24:23'),
+(20, 2, '1584', '750', '834', '5000', '3416', '2023-11-16', '2023-11-30', 1, '2023-11-24 23:49:44', '2023-11-24 23:52:33'),
+(21, 5, NULL, NULL, NULL, '4000', '4000', '2023-11-16', '2023-11-30', 0, '2023-11-27 01:08:39', '2023-11-27 01:08:39'),
+(22, 12, NULL, NULL, NULL, '3000', '3000', '2023-11-16', '2023-11-30', 0, '2023-12-01 13:43:14', '2023-12-01 13:43:14'),
+(23, 1, NULL, NULL, NULL, '3000', '3000', '2023-11-16', '2023-11-30', 0, '2023-12-01 13:43:45', '2023-12-01 13:43:45');
 
 -- --------------------------------------------------------
 
@@ -474,7 +503,14 @@ INSERT INTO `payroll_details` (`id`, `payroll_id`, `transportation_id`, `rate`, 
 (18, 16, 6, '1000', '2023-09-30 11:39:16', '2023-09-30 11:39:16'),
 (19, 16, 9, '1000', '2023-09-30 11:39:16', '2023-09-30 11:39:16'),
 (20, 16, 10, '1000', '2023-09-30 11:39:16', '2023-09-30 11:39:16'),
-(21, 17, 25, '1000', '2023-10-15 11:40:50', '2023-10-15 11:40:50');
+(21, 17, 25, '1000', '2023-10-15 11:40:50', '2023-10-15 11:40:50'),
+(26, 19, 17, '1000', '2023-11-20 09:49:08', '2023-11-20 09:49:08'),
+(27, 19, 22, '1000', '2023-11-20 09:49:08', '2023-11-20 09:49:08'),
+(28, 19, 24, '1000', '2023-11-20 09:49:08', '2023-11-20 09:49:08'),
+(29, 20, 42, '5000', '2023-11-24 23:49:44', '2023-11-24 23:49:44'),
+(30, 23, 25, '1000', '2023-12-01 13:43:45', '2023-12-01 13:43:45'),
+(31, 23, 26, '1000', '2023-12-01 13:43:45', '2023-12-01 13:43:45'),
+(32, 23, 28, '1000', '2023-12-01 13:43:45', '2023-12-01 13:43:45');
 
 -- --------------------------------------------------------
 
@@ -491,6 +527,7 @@ CREATE TABLE `transportation_details` (
   `status` varchar(255) DEFAULT '1' COMMENT '1 = To be pick-up 2 = To be picked-up 3 = Departure 4 = In Route 5 = Delivered',
   `b_status` int(200) NOT NULL DEFAULT 0 COMMENT '0 = Unpaid 1 = Paid',
   `p_status` int(200) NOT NULL DEFAULT 0 COMMENT '0 = unpaid 1 = paid',
+  `h_status` int(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -499,29 +536,36 @@ CREATE TABLE `transportation_details` (
 -- Dumping data for table `transportation_details`
 --
 
-INSERT INTO `transportation_details` (`id`, `booking_id`, `driver_id`, `helper_id`, `truck_id`, `status`, `b_status`, `p_status`, `created_at`, `updated_at`) VALUES
-(6, 9, 1, 3, 2, '5', 1, 1, '2023-09-21 02:11:37', '2023-11-08 16:37:54'),
-(8, 10, 2, 3, 2, '6', 1, 0, '2023-09-22 00:26:05', '2023-11-08 16:37:54'),
-(9, 11, 1, 5, 3, '6', 1, 1, '2023-09-22 01:29:18', '2023-10-31 09:57:06'),
-(10, 13, 1, 3, 1, '6', 1, 1, '2023-09-24 23:26:01', '2023-10-31 09:57:06'),
-(11, 12, 4, 10, 3, '6', 1, 0, '2023-09-25 23:37:41', '2023-10-31 09:57:06'),
-(13, 14, 6, 12, 5, '5', 1, 0, '2023-09-25 23:38:32', '2023-10-31 09:57:06'),
-(16, 16, 11, 5, 2, '6', 1, 0, '2023-09-25 23:57:35', '2023-11-08 16:37:54'),
-(17, 19, 2, 3, 3, '6', 1, 0, '2023-09-26 06:18:29', '2023-11-08 16:37:54'),
-(22, 23, 2, 5, 4, '6', 1, 0, '2023-10-06 02:33:10', '2023-10-30 03:27:56'),
-(23, 24, 4, 5, 3, '6', 1, 0, '2023-10-06 02:36:41', '2023-10-30 03:27:57'),
-(24, 25, 2, 12, 1, '6', 1, 0, '2023-10-11 00:25:43', '2023-10-30 03:32:37'),
-(25, 26, 1, 3, 1, '6', 1, 1, '2023-10-11 06:26:15', '2023-10-15 11:40:50'),
-(26, 27, 1, 3, 3, '6', 1, 1, '2023-10-16 04:26:14', '2023-10-30 03:44:30'),
-(28, 29, 1, 3, 2, '6', 1, 1, '2023-10-17 17:09:41', '2023-10-30 03:44:31'),
-(30, 31, 4, 10, 3, '6', 1, 0, '2023-10-19 16:22:57', '2023-10-30 03:32:37'),
-(34, 20, 11, 5, 5, '6', 1, 0, '2023-09-20 14:08:36', '2023-11-08 16:37:54'),
-(35, 18, 4, 5, 4, '6', 1, 0, '2023-09-20 14:08:50', '2023-11-08 16:37:54'),
-(36, 36, 6, 12, 4, '6', 1, 0, '2023-10-21 01:25:26', '2023-10-30 03:27:57'),
-(37, 37, 1, 3, 1, '1', 0, 0, '2023-11-11 01:22:51', '2023-11-11 01:22:51'),
-(38, 38, 1, 3, 1, '1', 0, 0, '2023-11-16 17:06:39', '2023-11-16 17:06:39'),
-(39, 39, 2, 5, 2, '1', 0, 0, '2023-11-16 17:16:04', '2023-11-16 17:16:04'),
-(40, 49, 4, 5, 3, '1', 0, 0, '2023-11-16 17:35:26', '2023-11-16 17:35:26');
+INSERT INTO `transportation_details` (`id`, `booking_id`, `driver_id`, `helper_id`, `truck_id`, `status`, `b_status`, `p_status`, `h_status`, `created_at`, `updated_at`) VALUES
+(6, 9, 1, 3, 2, '5', 1, 1, 0, '2023-09-21 02:11:37', '2023-11-08 16:37:54'),
+(8, 10, 2, 3, 2, '6', 1, 1, 0, '2023-09-22 00:26:05', '2023-11-20 09:35:20'),
+(9, 11, 1, 5, 3, '6', 1, 1, 1, '2023-09-22 01:29:18', '2023-10-31 09:57:06'),
+(10, 13, 1, 3, 1, '6', 1, 1, 0, '2023-09-24 23:26:01', '2023-10-31 09:57:06'),
+(11, 12, 4, 10, 3, '6', 1, 0, 0, '2023-09-25 23:37:41', '2023-10-31 09:57:06'),
+(13, 14, 6, 12, 5, '5', 1, 0, 0, '2023-09-25 23:38:32', '2023-10-31 09:57:06'),
+(16, 16, 11, 5, 2, '6', 1, 0, 0, '2023-09-25 23:57:35', '2023-11-08 16:37:54'),
+(17, 19, 2, 3, 3, '6', 1, 1, 0, '2023-09-26 06:18:29', '2023-11-20 09:49:08'),
+(22, 23, 2, 5, 4, '6', 1, 1, 1, '2023-10-06 02:33:10', '2023-11-20 09:49:08'),
+(23, 24, 4, 5, 3, '6', 1, 0, 1, '2023-10-06 02:36:41', '2023-10-30 03:27:57'),
+(24, 25, 2, 12, 1, '6', 1, 1, 0, '2023-10-11 00:25:43', '2023-11-20 09:49:08'),
+(25, 26, 1, 3, 1, '6', 1, 1, NULL, '2023-10-11 06:26:15', '2023-12-01 13:43:45'),
+(26, 27, 1, 3, 3, '6', 1, 1, NULL, '2023-10-16 04:26:14', '2023-12-01 13:43:45'),
+(28, 29, 1, 3, 2, '6', 1, 1, NULL, '2023-10-17 17:09:41', '2023-12-01 13:43:45'),
+(30, 31, 4, 10, 3, '6', 1, 0, 0, '2023-10-19 16:22:57', '2023-10-30 03:32:37'),
+(34, 20, 11, 5, 5, '6', 1, 0, 0, '2023-09-20 14:08:36', '2023-11-08 16:37:54'),
+(35, 18, 4, 5, 4, '6', 1, 0, 0, '2023-09-20 14:08:50', '2023-11-08 16:37:54'),
+(36, 36, 6, 12, 4, '6', 1, 0, 0, '2023-10-21 01:25:26', '2023-10-20 10:12:18'),
+(37, 37, 1, 3, 1, '2', 0, 0, 0, '2023-11-11 01:22:51', '2023-11-11 07:51:12'),
+(38, 38, 1, 3, 1, '1', 1, 0, 0, '2023-11-16 17:06:39', '2023-11-24 23:54:39'),
+(39, 39, 2, 5, 2, '1', 1, 0, 0, '2023-11-16 17:16:04', '2023-11-24 23:54:39'),
+(40, 49, 4, 5, 3, '6', 0, 0, 0, '2023-11-16 17:35:26', '2023-11-27 09:18:56'),
+(41, 41, 2, 10, 4, '2', 1, 0, 0, '2023-11-21 01:12:41', '2023-11-24 23:54:39'),
+(42, 44, 2, 5, 3, '6', 1, 1, 0, '2023-11-22 00:05:14', '2023-11-24 23:54:39'),
+(43, 51, 6, 12, 2, '2', 1, 0, 0, '2023-11-23 21:51:14', '2023-11-24 23:54:39'),
+(44, 45, 1, 12, 5, '1', 0, 0, NULL, '2023-11-30 15:18:53', '2023-11-30 15:18:53'),
+(45, 42, 1, 10, 2, '6', 0, 0, NULL, '2023-12-01 13:39:49', '2023-11-27 09:06:04'),
+(46, 50, 2, 5, 3, '1', 0, 0, NULL, '2023-12-01 13:51:17', '2023-12-01 13:51:17'),
+(47, 40, 2, 10, 2, '1', 0, 0, NULL, '2023-12-03 18:54:59', '2023-12-03 18:54:59');
 
 -- --------------------------------------------------------
 
@@ -548,7 +592,8 @@ INSERT INTO `trucks` (`id`, `truck_type`, `plate_number`, `truck_image`, `status
 (2, 'isuzu forward', 'CBN-3142', 'truck_photos/XaaUMl96ShozFGYcGaSex0Kaw8IKCzoHBWW1zQUL.jpg', 0, '2023-08-25 02:02:44', '2023-08-25 02:02:44'),
 (3, 'isuzu forward', 'CBR-4869', 'truck_photos/G8MwTIkIdCddVFrHaVJoT8lKDVB6m7Xt1iNEOGMV.jpg', 0, '2023-08-25 02:04:44', '2023-08-25 02:04:44'),
 (4, 'isuzu forward', 'CBN-3145', 'truck_photos/QC9Uc1nwHPSfW1lYzukY8AGElEbmTjbwG0tS18bW.jpg', 0, '2023-08-25 02:05:25', '2023-08-26 19:01:58'),
-(5, 'isuzu forward', 'CCN-9345', 'truck_photos/xTpJ1GIlZ1ghxPcWnW41Uk80uz612ZjwPgNB9FJt.jpg', 0, '2023-08-25 02:05:57', '2023-08-25 02:05:57');
+(5, 'isuzu forward', 'CCN-9345', 'truck_photos/xTpJ1GIlZ1ghxPcWnW41Uk80uz612ZjwPgNB9FJt.jpg', 0, '2023-08-25 02:05:57', '2023-08-25 02:05:57'),
+(6, 'isuzu forward', 'CBN-3143', 'truck_photos/A1EaDmeGKW1nKvKvzM45MZYnjKodfp1C1cLs9xkh.jpg', 0, '2023-11-29 23:59:32', '2023-11-29 23:59:32');
 
 -- --------------------------------------------------------
 
@@ -646,7 +691,31 @@ INSERT INTO `truck_information` (`id`, `truck_id`, `status`, `created_at`, `upda
 (77, 4, 5, '2023-10-21 01:30:44', '2023-10-21 01:30:44'),
 (78, 4, 6, '2023-10-21 01:31:33', '2023-10-21 01:31:33'),
 (79, 1, 1, '2023-11-16 17:06:39', '2023-11-16 17:06:39'),
-(80, 2, 1, '2023-11-16 17:16:04', '2023-11-16 17:16:04');
+(80, 2, 1, '2023-11-16 17:16:04', '2023-11-16 17:16:04'),
+(81, 1, 2, '2023-11-11 07:51:12', '2023-11-11 07:51:12'),
+(82, 4, 1, '2023-11-21 01:12:41', '2023-11-21 01:12:41'),
+(83, 4, 2, '2023-11-21 11:17:45', '2023-11-21 11:17:45'),
+(84, 3, 1, '2023-11-22 00:05:14', '2023-11-22 00:05:14'),
+(85, 2, 2, '2023-11-23 21:59:28', '2023-11-23 21:59:28'),
+(86, 3, 2, '2023-11-24 01:15:42', '2023-11-24 01:15:42'),
+(87, 3, 3, '2023-11-24 01:45:30', '2023-11-24 01:45:30'),
+(88, 3, 4, '2023-11-24 15:36:18', '2023-11-24 15:36:18'),
+(89, 3, 5, '2023-11-24 23:33:14', '2023-11-24 23:33:14'),
+(90, 3, 6, '2023-11-24 23:35:45', '2023-11-24 23:35:45'),
+(91, 5, 1, '2023-11-30 15:18:53', '2023-11-30 15:18:53'),
+(92, 2, 1, '2023-12-01 13:39:49', '2023-12-01 13:39:49'),
+(93, 3, 1, '2023-12-01 13:51:17', '2023-12-01 13:51:17'),
+(94, 2, 1, '2023-12-03 18:54:59', '2023-12-03 18:54:59'),
+(95, 2, 2, '2023-11-27 09:02:55', '2023-11-27 09:02:55'),
+(96, 2, 3, '2023-11-27 09:03:56', '2023-11-27 09:03:56'),
+(97, 2, 4, '2023-11-27 09:05:23', '2023-11-27 09:05:23'),
+(98, 2, 5, '2023-11-27 09:05:38', '2023-11-27 09:05:38'),
+(99, 2, 6, '2023-11-27 09:06:05', '2023-11-27 09:06:05'),
+(100, 3, 2, '2023-11-27 09:18:18', '2023-11-27 09:18:18'),
+(101, 3, 3, '2023-11-27 09:18:23', '2023-11-27 09:18:23'),
+(102, 3, 4, '2023-11-27 09:18:28', '2023-11-27 09:18:28'),
+(103, 3, 5, '2023-11-27 09:18:41', '2023-11-27 09:18:41'),
+(104, 3, 6, '2023-11-27 09:18:56', '2023-11-27 09:18:56');
 
 -- --------------------------------------------------------
 
@@ -752,7 +821,25 @@ INSERT INTO `updated_times` (`id`, `t_id`, `status`, `created_at`, `updated_at`)
 (119, 36, 3, '2023-10-21 01:28:52', '2023-10-21 01:28:52'),
 (120, 36, 4, '2023-10-21 01:29:16', '2023-10-21 01:29:16'),
 (121, 36, 5, '2023-10-21 01:30:44', '2023-10-21 01:30:44'),
-(122, 36, 6, '2023-10-21 01:31:33', '2023-10-21 01:31:33');
+(122, 36, 6, '2023-10-21 01:31:33', '2023-10-21 01:31:33'),
+(123, 37, 2, '2023-11-11 07:51:12', '2023-11-11 07:51:12'),
+(124, 41, 2, '2023-11-21 11:17:45', '2023-11-21 11:17:45'),
+(125, 43, 2, '2023-11-23 21:59:28', '2023-11-23 21:59:28'),
+(126, 42, 2, '2023-11-24 01:15:42', '2023-11-24 01:15:42'),
+(127, 42, 3, '2023-11-24 01:45:30', '2023-11-24 01:45:30'),
+(128, 42, 4, '2023-11-24 15:36:18', '2023-11-24 15:36:18'),
+(129, 42, 5, '2023-11-24 23:33:14', '2023-11-24 23:33:14'),
+(130, 42, 6, '2023-11-24 23:35:45', '2023-11-24 23:35:45'),
+(131, 45, 2, '2023-11-27 09:02:55', '2023-11-27 09:02:55'),
+(132, 45, 3, '2023-11-27 09:03:56', '2023-11-27 09:03:56'),
+(133, 45, 4, '2023-11-27 09:05:23', '2023-11-27 09:05:23'),
+(134, 45, 5, '2023-11-27 09:05:38', '2023-11-27 09:05:38'),
+(135, 45, 6, '2023-11-27 09:06:05', '2023-11-27 09:06:05'),
+(136, 40, 2, '2023-11-27 09:18:18', '2023-11-27 09:18:18'),
+(137, 40, 3, '2023-11-27 09:18:23', '2023-11-27 09:18:23'),
+(138, 40, 4, '2023-11-27 09:18:28', '2023-11-27 09:18:28'),
+(139, 40, 5, '2023-11-27 09:18:41', '2023-11-27 09:18:41'),
+(140, 40, 6, '2023-11-27 09:18:56', '2023-11-27 09:18:56');
 
 -- --------------------------------------------------------
 
@@ -780,24 +867,25 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `lname`, `email`, `phone_num`, `email_verified_at`, `password`, `type`, `is_disabled`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin', 'admin@gmail.com', '+639358554398', NULL, '$2y$10$UoJcEc8/7n9AaShr04cdN.5ikgCQraEYVBYAwHbmokjyBRBs5ncAq', 1, 0, 'egHDLihvr3aLgDrOBSNRJBG3doqjWuczmggnUjYzxhUmSYKSFkp2h5jFJjpZ', '2023-06-17 07:59:07', '2023-09-28 16:41:12'),
-(2, 'Alpha Food', NULL, 'alpha@gmail.com', '+639358554398', NULL, '$2y$10$kxC9D6uF66uq8n1px2aAiuSH7pwxJBY9m6zgeDarK1cz7XLCJDtke', 0, 0, 'sxhtLoTmOvL5VyXLzC3WmxkSrXugxhzQUhsGW0BJlwowus7uBHPAcsxTiJOm', '2023-06-17 08:02:57', '2023-11-10 14:15:35'),
+(1, 'admin', 'admin', 'admin@gmail.com', '+639358554398', NULL, '$2y$10$UoJcEc8/7n9AaShr04cdN.5ikgCQraEYVBYAwHbmokjyBRBs5ncAq', 1, 0, 'fUmEn8RwBkNgjbA429MOBymdUtoRxo4WIY0OG31eVC5YHCg6FzbfIVn9IxWX', '2023-06-17 07:59:07', '2023-11-25 18:49:52'),
+(2, 'Alpha Food', NULL, 'alpha@gmail.com', '+639358554398', NULL, '$2y$10$kxC9D6uF66uq8n1px2aAiuSH7pwxJBY9m6zgeDarK1cz7XLCJDtke', 0, 0, 'p1kaFIBa9haQME0K0d2vUk9cqMXoCWcNHeVsxKmDiwVByaqMPyUovGhNi3Q8', '2023-06-17 08:02:57', '2023-11-10 14:15:35'),
 (3, 'Judphiland', NULL, 'judphiland@gmail.com', '+639358554398', NULL, '$2y$10$fhn5BLqQ5JHGjXlZslfTV.NWhjzqVxXC0ygRontORHsHxiJO5Tere', 0, 0, NULL, '2023-06-17 08:03:42', '2023-08-04 14:25:02'),
-(4, 'Ryan Jay', 'Reyes', 'ryanjaytagolimotreyes@gmail.com', '+639358554398', NULL, '$2y$10$S4IOfV7qzxYq0WSHFkbmWuObNuLruVO7qeu2TTgqBQMDgBqV3qCAy', 2, 0, 'voQw6lN4UhyhvaqiPwNBwUnhoJYUN70W123myaMhNxaPUqRoRMRD4WHvEYwK', '2023-06-17 08:09:01', '2023-11-01 02:55:32'),
-(5, 'Nicholas', 'Manay', 'nicolas@gmail.com', '+639358554398', NULL, '$2y$10$uQQcxHkGR8V2mXb9ZsPz0.leHbtRwzWFhatHeru6odUHFJjbzmioC', 2, 0, '0dHy3rkFAwjAOZpeLVHW3JWD44vQGvT8uFtyWwju0vXw2A07VqkLsPXKNtq9', '2023-06-17 19:44:26', '2023-09-27 15:10:42'),
+(4, 'Ryan Jay', 'Reyes', 'ryanjaytagolimotreyes@gmail.com', '+639358554398', NULL, '$2y$10$S4IOfV7qzxYq0WSHFkbmWuObNuLruVO7qeu2TTgqBQMDgBqV3qCAy', 2, 0, 'YyGVflwg8tGe6mUHCmrEG9hhZyhJEwQilbWptetQP4eMqiWvc01Nv04VIzYh', '2023-06-17 08:09:01', '2023-11-30 01:12:35'),
+(5, 'Nicholas', 'Manay', 'nicolas@gmail.com', '+639358554398', NULL, '$2y$10$uQQcxHkGR8V2mXb9ZsPz0.leHbtRwzWFhatHeru6odUHFJjbzmioC', 2, 0, 'EljAQJkMa48UEg7t4wibPYokYXsyvzxFCZ6s6TmgkmKBUZ6LuYogZW6dmGDo', '2023-06-17 19:44:26', '2023-09-27 15:10:42'),
 (18, 'Renzo', 'Banquerigo', 'renzo@gmail.com', '+639358554398', NULL, '$2y$10$VADS5pCu0/tfBU78iy9FkeS74MPa/ibdcMlg55nsGZ2TeKquw7IZ2', 2, 0, 'XPtr220RH9rSQeJ3FSmP3m6GXQkv3rrles5g5nA66rGiXBsGqQwJ9YiEth2V', '2023-06-22 08:41:24', '2023-08-09 13:38:34'),
-(19, 'Felix', 'Quieta', 'felix@gmail.com', '+639358554398', NULL, '$2y$10$r0DvbxOMo2jKV2IzCEOfPeNEBMYcSY9lfwq1Wntb/foJbbtRSEQz.', 2, 0, NULL, '2023-06-28 02:59:38', '2023-09-27 11:13:47'),
+(19, 'Felix', 'Quieta', 'felix@gmail.com', '+639358554398', NULL, '$2y$10$eli7h28wUxby7r9ovI.cD.fu95yWb7rHIKsqIMdWutXPNqTNIm2f.', 2, 0, 'XIihDDNOcBphQlehriLCVUlknRuk2enwou2foefxlwOPgOonLFaWNIkVB5oH', '2023-06-28 02:59:38', '2023-11-27 09:16:53'),
 (22, 'Mark Dave', 'Sacayan', 'mark@gmail.com', '+639358554398', NULL, '$2y$10$GLMspeJM872nmfp2uPQ4neCNpKGJQGrozMo2qPapSZbYaGD6rn4Eq', 2, 0, NULL, '2023-07-12 15:24:53', '2023-07-12 15:24:53'),
 (28, 'khate Compound', NULL, 'khateanastacio@gmail.com', '+639358554398', NULL, '$2y$10$p0cHz1UgJvXVzGXUbONp9.zG6MAwKoQF.Tl8.3mz2JvMvN.VKwW/K', 0, 0, 'FEpESK9IsHkqGG8w1fhjrDZNcjgO7TwxD6ygy2ttokFjSCbz4QLul9SFsACD', '2023-07-20 14:35:28', '2023-08-18 06:39:40'),
-(29, 'Aeron', 'Alajenio', 'aeron@gmail.com', '+639358554398', NULL, '$2y$10$eY.fAWU5ncoAfX1/A4dnIOaTRIK.PUzksiwopM2N0UjE/bMekcsZi', 2, 0, 'as2SAmFCUy6h8DsJSfZ3GzO4ZeROqA9Gkw0dq7Xk49SvA2nbeagGI2kGlE39', '2023-07-20 15:17:38', '2023-09-27 16:06:53'),
+(29, 'Aeron', 'Alajenio', 'aeron@gmail.com', '+639358554398', NULL, '$2y$10$eY.fAWU5ncoAfX1/A4dnIOaTRIK.PUzksiwopM2N0UjE/bMekcsZi', 2, 0, 'XDEmtVhXwPQEucOyuqfojvQfeptbxdv260HnHxvvMK1GAdqmxI0vQjWdYIYB', '2023-07-20 15:17:38', '2023-09-27 16:06:53'),
 (30, 'Reyes Compound', NULL, 'jay@gmail.com', '+639358554398', NULL, '$2y$10$Xz7gQie8vMIp3/E144aAle7DUQWbGTq/yjznxZLZayJL2YwA8kuV6', 0, 1, NULL, '2023-07-22 04:16:38', '2023-10-03 12:49:03'),
 (33, 'Joemar', 'Questadio', 'joemar@gmail.com', '+639358554398', NULL, NULL, 2, 0, NULL, '2023-08-01 05:56:42', '2023-08-01 05:56:42'),
-(34, 'Richard', 'Rafal', 'richard@gmail.com', '+639358554398', NULL, '$2y$10$qCvr5Lhho35eAHAzfrba6OZ7zSSijjsf17dcX/mt75wJ06PxCr5sm', 2, 0, '5GKwn2IV1H7FtE505adS7mlTQP4PKVNyMyyM6kXYwXDCVEo9OW6GEGIW5hJq', '2023-08-01 05:58:32', '2023-10-20 14:17:17'),
+(34, 'Richard', 'Rafal', 'richard@gmail.com', '+639358554398', NULL, '$2y$10$qCvr5Lhho35eAHAzfrba6OZ7zSSijjsf17dcX/mt75wJ06PxCr5sm', 2, 0, 'tet2ROQT66pp8CzXAlH6BkE9Q2e1VMYyLjfJeyKlcGG2ybk1nwSxTyV61n7s', '2023-08-01 05:58:32', '2023-10-20 14:17:17'),
 (35, 'Sunny', 'Magsalos', 'sunny@gmailcom', '+639358554398', NULL, NULL, 2, 0, NULL, '2023-08-01 05:59:22', '2023-08-01 05:59:22'),
 (37, 'Jiro', 'Lobaton', 'jiro@gmail.com', '+639358554398', NULL, NULL, 2, 0, NULL, '2023-08-01 06:03:51', '2023-08-01 06:03:51'),
 (38, 'Loydi', 'Tagolimot', 'loyditagolimot@gmail.com', '+639358554398', NULL, '$2y$10$B82ow4E2lq5kvaqSB3Cb9Oe8Ibd5SVkwlc2GfBE1KtgjYyICgsQD2', 2, 1, NULL, '2023-08-08 09:23:47', '2023-09-27 11:01:59'),
-(41, 'Ryan Jay Compund', NULL, 'jaytagolimotreyes@gmail.com', '+639358554398', NULL, '$2y$10$hp2p0463cGhp4NtE.uLYeOW1ukNjzyZHuddMPtetghNQzz8Pagmb.', 0, 0, '6NLh65x6rXOfkChS2E9tuqdgUgCpZpwyElmMAhKIcsYxczHKT2HukI3lvC4A', '2023-08-17 14:51:54', '2023-08-30 16:14:22'),
-(45, 'Southern Philippines College', NULL, 'spc@gmail.com', '+639358554398', NULL, '$2y$10$bTgtbNCPT9WIA24suGIkT.emgLSCaHgga19UlDV1JOdp7cE8zJ4Fm', 0, 0, NULL, '2023-09-18 05:43:14', '2023-09-22 02:50:57');
+(41, 'Ryan Jay Compund', NULL, 'jaytagolimotreyes@gmail.com', '+639358554398', NULL, '$2y$10$mrP1vueHwYCftao3xw.KieuNIajj6sqT./8kvlSChJBjo8Q4.lU8C', 1, 0, 'ETfWMqNGBPJvJvSyNJOnc43HSZVT1eYwQrZ9yQbvIGtiiutIAwsuy6DmTYRw', '2023-08-17 14:51:54', '2023-08-30 16:14:22'),
+(45, 'Southern Philippines College', NULL, 'spc@gmail.com', '+639358554398', NULL, '$2y$10$mrP1vueHwYCftao3xw.KieuNIajj6sqT./8kvlSChJBjo8Q4.lU8C', 0, 0, NULL, '2023-09-18 05:43:14', '2023-09-22 02:50:57'),
+(46, 'Reyes Family', NULL, 'reyesfamily@gmail.com', '+639358554398', NULL, '$2y$10$r33jHA4BJC4NAs.V6/lXuOYiTsd2c8YeTfShz0JjomqdeRswWeUyi', 0, 0, NULL, '2023-11-27 08:10:16', '2023-11-27 08:10:16');
 
 --
 -- Indexes for dumped tables
@@ -939,19 +1027,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `billings`
 --
 ALTER TABLE `billings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `billing_details`
 --
 ALTER TABLE `billing_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `cash_advances`
@@ -963,7 +1051,7 @@ ALTER TABLE `cash_advances`
 -- AUTO_INCREMENT for table `ca_details`
 --
 ALTER TABLE `ca_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `damages`
@@ -975,7 +1063,7 @@ ALTER TABLE `damages`
 -- AUTO_INCREMENT for table `damage_details`
 --
 ALTER TABLE `damage_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `employee`
@@ -993,49 +1081,49 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `payrolls`
 --
 ALTER TABLE `payrolls`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `payroll_details`
 --
 ALTER TABLE `payroll_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `transportation_details`
 --
 ALTER TABLE `transportation_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `trucks`
 --
 ALTER TABLE `trucks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `truck_information`
 --
 ALTER TABLE `truck_information`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT for table `updated_times`
 --
 ALTER TABLE `updated_times`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- Constraints for dumped tables

@@ -100,7 +100,7 @@
                                                                                         <option value="3" @if ($t->status == '3' || $t->status == '1' || $t->status == '4' || $t->status == '5') disabled @endif @if ($t->status == '3') selected @endif>Departed</option>
                                                                                         <option value="4" @if ($t->status == '4' || $t->status == '1' || $t->status == '2' || $t->status == '5') disabled @endif @if ($t->status == '4') selected @endif>In Transit</option>
                                                                                         <option value="5" @if ($t->status == '5' || $t->status == '1' || $t->status == '2' || $t->status == '3') disabled @endif @if ($t->status == '5') selected @endif>Delivered</option>
-                                                                                        <option disabled value="6" @if ($t->status == '6' || $t->booking->tons !== 0) style="display: none;" @endif @if ($t->status == '6') selected @endif>Arrived at the station</option>
+                                                                                        <option disabled value="6" @if ($t->status == '6' || $t->status == '5' || $t->status == '4' || $t->status == '3' || $t->status == '2' || $t->status == '1' || $t->booking->tons !== 0) style="display: none;" @endif @if ($t->status == '6') selected @endif>Arrived at the station</option>
                                                                                     </select>
                                                                                 </div>
                                                                             </div>

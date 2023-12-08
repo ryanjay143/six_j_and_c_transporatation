@@ -34,7 +34,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="pickUpDate" readonly>
+                                <input class="form-control" id="pickUpDate" readonly oninput="updateTransportationDate()">
                                 <label for="floatingInput">Pick-up date</label>
                             </div>
 
@@ -45,7 +45,7 @@
                             </div>
                             <div class="form-floating mb-3">
                                 <select class="form-select" name="origin" id="origin" 
-                                    aria-label="Floating label select example" required onchange="updateOriginReadOnly()">
+                                    aria-label="Floating label select example" required onchange="updateDestinationReadOnly()">
                                     <option selected disabled>Select Origin</option>
                                     <option value="Cagayan de Oro">Cagayan de Oro</option>
                                     <option value="Iligan City">Iligan City</option>
@@ -61,7 +61,7 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="destination" name="destination" aria-label="Floating label select example" required readonly>
+                                <select class="form-select" id="destination" name="destination" aria-label="Floating label select example" disabled>
                                     <option selected disabled>Select Destination</option>
                                     <option value="Cagayan de Oro">Cagayan de Oro</option>
                                     <option value="Iligan City">Iligan City</option>
@@ -76,7 +76,7 @@
                                 <label for="floatingSelect">Destination</label>
                             </div>
                             <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="transportationDate" readonly>
+                                <input type="date" class="form-control" id="transportationDate" readonly>
                                 <span id="transportationDateError" class="text-danger mb-3"></span>
                                 <label for="transportationDate">Transportation date</label>
                             </div>
@@ -96,23 +96,24 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Booking Details</h5>
+                            <h5 class="modal-title">Booking details</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="container">
-                                <div class="row row-cols-2">
-                                    <div class="col mb-3">
+                                <div class="row">
+                                    <div class="col-sm-10">
                                         <p id="modal_booking_date"></p>
                                     </div>
-                                    <div class="col mb-3">
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-10">
                                         <p id="booking_origin"></p>
                                     </div>
-                                    <div class="col mb-3">
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-10">
                                         <p id="booking_destination"></p>
-                                    </div>
-                                    <div class="col mb-3">
-                                        <p id="transportation_date"></p>
                                     </div>
                                 </div>
                             </div>

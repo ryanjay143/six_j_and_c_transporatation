@@ -737,31 +737,63 @@ class AdminController extends Controller
 
     public function admin_payroll()
     {
-        $employees = Employee::with('user', 'cashAdvances')->get(); // Load the 'cashAdvance' relationship
-        $employeeIds = $employees->pluck('id'); // Pluck the 'id' values of employees
+        // Fetch drivers and helpers separately
+        $drivers = Employee::with('user', 'cashAdvances')->where('position', '0')->get();
+        $driversCount = Employee::with('user', 'cashAdvances')->where('position', '0')->count();
+        $helpers = Employee::with('user', 'cashAdvances')->where('position', '1')->get();
+        $helpersCount = Employee::with('user', 'cashAdvances')->where('position', '1')->count();
 
-        $cashAdvances = CashAdvance::whereIn('employee_id', $employeeIds)->get();
-        $cashAdvanceIds = $cashAdvances->pluck('id'); // Pluck the 'id' values of cash advances
+        // Get IDs of drivers and helpers
+        $driverIds = $drivers->pluck('id');
+        $helperIds = $helpers->pluck('id');
 
-        $caDetails = CaDetails::whereIn('ca_id', $cashAdvanceIds)->get();
-        $damage = Damage::with('damageDetails')
-            ->whereIn('employee_id', $employeeIds)->get();
+        // Fetch cash advances for drivers and helpers
+        $cashAdvancesDriver = CashAdvance::whereIn('employee_id', $driverIds)->get();
+        $cashAdvancesHelper = CashAdvance::whereIn('employee_id', $helperIds)->get();
 
-        // Calculate total cash advance for each employee
-        $totalCashAdvances = [];
-        foreach ($employees as $employee) {
-            $totalCashAdvance = $cashAdvances->where('employee_id', $employee->id)->sum('amount');
-            $totalCashAdvances[$employee->id] = $totalCashAdvance;
+        // Get IDs of cash advances for drivers and helpers
+        $cashAdvanceDriverIds = $cashAdvancesDriver->pluck('id');
+        $cashAdvanceHelperIds = $cashAdvancesHelper->pluck('id');
+
+        // Fetch CA details for drivers and helpers
+        $caDetailsDriver = CaDetails::whereIn('ca_id', $cashAdvanceDriverIds)->get();
+        $caDetailsHelper = CaDetails::whereIn('ca_id', $cashAdvanceHelperIds)->get();
+
+        // Fetch damages for drivers and helpers
+        $damagesDriver = Damage::with('damageDetails')->whereIn('employee_id', $driverIds)->get();
+        $damagesHelper = Damage::with('damageDetails')->whereIn('employee_id', $helperIds)->get();
+
+        // Calculate total cash advance for drivers
+        $totalCashAdvancesDriver = [];
+        foreach ($drivers as $driver) {
+            $totalCashAdvance = $cashAdvancesDriver->where('employee_id', $driver->id)->sum('amount');
+            $totalCashAdvancesDriver[$driver->id] = $totalCashAdvance;
         }
 
-        $totalDamages = [];
-        foreach ($employees as $employee) {
-            $totalDamage =  $damage->where('employee_id', $employee->id)->sum('deduction');
-            $totalDamages[$employee->id] = $totalDamage;
+        // Calculate total cash advance for helpers
+        $totalCashAdvancesHelper = [];
+        foreach ($helpers as $helper) {
+            $totalCashAdvance = $cashAdvancesHelper->where('employee_id', $helper->id)->sum('amount');
+            $totalCashAdvancesHelper[$helper->id] = $totalCashAdvance;
         }
-       
-        return view('admin.payroll', compact('employees', 'caDetails','damage','totalCashAdvances','totalDamages'));
-    }  
+
+        // Calculate total damages for drivers
+        $totalDamagesDriver = [];
+        foreach ($drivers as $driver) {
+            $totalDamage = $damagesDriver->where('employee_id', $driver->id)->sum('deduction');
+            $totalDamagesDriver[$driver->id] = $totalDamage;
+        }
+
+        // Calculate total damages for helpers
+        $totalDamagesHelper = [];
+        foreach ($helpers as $helper) {
+            $totalDamage = $damagesHelper->where('employee_id', $helper->id)->sum('deduction');
+            $totalDamagesHelper[$helper->id] = $totalDamage;
+        }
+
+        return view('admin.payroll', compact('drivers', 'helpers', 'caDetailsDriver', 'caDetailsHelper', 'damagesDriver', 'damagesHelper', 'totalCashAdvancesDriver', 'totalCashAdvancesHelper', 'totalDamagesDriver', 'totalDamagesHelper','driversCount','helpersCount'));
+    }
+
  
     public function cash_advance(Request $request, $id)
     {
@@ -783,7 +815,7 @@ class AdminController extends Controller
         Alert::success('Add Cash Advance Success');
 
         // Redirect back to the admin_payroll page with the updated cash advances
-        return redirect()->route('admin.payroll');
+        return redirect()->back();
     }
 
     public function billing_payment(Request $request)
@@ -883,7 +915,7 @@ class AdminController extends Controller
         $damage->save();
 
         // Redirect back to the original page or wherever you want
-        return redirect()->route('admin.payroll');
+        return redirect()->back();
     }
     
     public function booking_pending()
@@ -909,6 +941,28 @@ class AdminController extends Controller
             ->where('driver_id', $employee->id)
             ->get();
 
+       
+        $employeePayroll = Payroll::with('employee','payrollDetails')->where('employee_id',$employee->id)->where('status',0)->get();
+        $employeePayrollCount = Payroll::with('employee')->where('employee_id',$employee->id)->where('status',0)->count();
+
+        $damages = Damage::where('employee_id', $employee->id)->where('status', 0)->first();
+        $cashAdvance = CashAdvance::where('employee_id', $employee->id)->where('status', 0)->first();
+
+        
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+
+        return view('admin.viewPayroll', compact('employee','driver','cashAdvance','damages','start_date','end_date','employeePayroll','employeePayrollCount'));
+    }
+
+    public function view_payroll_for_helper(Request $request, $id)
+    {
+        $employee = Employee::find($id);
+
+        if (!$employee) {
+            abort(404); 
+        }
+
         // Get helper data for the employee
         $helper = TransportationDetails::with('booking.user')
             ->whereIn('h_status', [0])
@@ -918,9 +972,6 @@ class AdminController extends Controller
         $employeePayroll = Payroll::with('employee','payrollDetails')->where('employee_id',$employee->id)->where('status',0)->get();
         $employeePayrollCount = Payroll::with('employee')->where('employee_id',$employee->id)->where('status',0)->count();
 
-        $damages = Damage::where('employee_id', $employee->id)->where('status', 0)->first();
-        $cashAdvance = CashAdvance::where('employee_id', $employee->id)->where('status', 0)->first();
-
         // Separate the helper cash advance and damages data
         $cashAdvanceHelper = CashAdvance::where('employee_id', $employee->id)->where('status', 0)->first();
         $damagesHelper = Damage::where('employee_id', $employee->id)->where('status', 0)->first();
@@ -928,7 +979,7 @@ class AdminController extends Controller
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
 
-        return view('admin.viewPayroll', compact('helper','employee','driver','cashAdvance','damages','start_date','end_date','cashAdvanceHelper','damagesHelper','employeePayroll','employeePayrollCount'));
+        return view('admin.payrollInfo', compact('helper','employee','start_date','end_date','cashAdvanceHelper','damagesHelper','employeePayroll','employeePayrollCount'));
     }
 
     public function updateStatusforpayroll($id)
@@ -945,54 +996,55 @@ class AdminController extends Controller
         return response()->json(['message' => 'Status updated successfully']);
     }
 
-    public function save_payroll(Request $request)
+    public function save_payroll_for_helper(Request $request)
     {
-     // Save the main payroll information
-$payroll = new Payroll();
-$payroll->employee_id = $request->employee_id;
-$payroll->total_rate = $request->total_rate;
-$payroll->total_deduction = $request->totalDeduction;
-$payroll->ca_deduction = $request->ca_deduction;
-$payroll->df_deduction = $request->df_deduction;
-$payroll->total_net_salary = $request->total_net_salary;
-$payroll->payroll_start_date = $request->start_date;
-$payroll->payroll_end_date = $request->end_date;
-$payroll->save();
+        // Validate the request data
+    $request->validate([
+        'transpo_id' => [
+            'required',
+        ],
+    ]);
 
-// Save rates for each driver
-if (is_array($request->transportation_id) && is_array($request->rate)) {
-    // Set pStatusHelper to 1 outside the loop
-    $pStatusHelper = $request->input('pStatusHelper');
+    // Save the main payroll information
+    $payroll = new Payroll();
+    $payroll->employee_id = $request->employee_id;
+    $payroll->total_rate = $request->total_rate;
+    $payroll->total_deduction = $request->totalDeduction;
+    $payroll->ca_deduction = $request->ca_deduction;
+    $payroll->df_deduction = $request->df_deduction;
+    $payroll->total_net_salary = $request->total_net_salary;
+    $payroll->payroll_start_date = $request->start_date;
+    $payroll->payroll_end_date = $request->end_date;
+    $payroll->save();
 
-    foreach ($request->transportation_id as $index => $transportationId) {
-        $rate = (int)$request->rate[$index];
+    // Initialize an array to store transportationIds that need to be updated
+    $transportationIdsToUpdate = [];
 
-        if (!empty($rate)) {
-            $payrollDetails = new PayrollDetails();
-            $payrollDetails->payroll_id = $payroll->id;
-            $payrollDetails->transportation_id = $transportationId;
-            $payrollDetails->rate = $rate;
-            $payrollDetails->save();
+    foreach ($request->transpo_id as $index => $transportationId) {
+        // Validate that $request->rate[$index] exists
+        if (isset($request->rate[$index])) {
+            $rate = (int)$request->rate[$index];
 
-            // Update p_status in transportation_details table
-            $pStatus = $request->input('pStatus');
-            $transportationDetail = TransportationDetails::where('id', $transportationId)->first(); 
-            if ($transportationDetail) {
-                $transportationDetail->p_status = $pStatus;
-                $transportationDetail->save();
-            }
+            // Check if $rate is greater than 0 before saving
+            if ($rate > 0) {
+                // Save payroll details
+                $payrollDetail = new PayrollDetails();
+                $payrollDetail->payroll_id = $payroll->id;
+                $payrollDetail->transportation_id = $transportationId;
+                $payrollDetail->rate = $rate;
+                $payrollDetail->save();
 
-            // Check if the current transportation is a helper and update h_status
-            $helperDetail = TransportationDetails::where('id', $transportationId)->first();
-
-            if ($helperDetail) {
-                $helperDetail->h_status = $pStatusHelper;
-                $helperDetail->save();
+                // Collect transportationIds to be updated
+                $transportationIdsToUpdate[] = $transportationId;
             }
         }
     }
-}
 
+    // Update h_status in transportation_details table after the loop
+    if (!empty($transportationIdsToUpdate)) {
+        TransportationDetails::whereIn('id', $transportationIdsToUpdate)
+            ->update(['h_status' => 1]);
+    }
 
 
 
@@ -1087,7 +1139,155 @@ if (is_array($request->transportation_id) && is_array($request->rate)) {
 
         Alert::success('Payroll saved successfully');
         // Redirect the user with a success message
-        return redirect()->route('admin.payroll');
+        return redirect()->back();
+    }
+
+    public function save_payroll(Request $request)
+    {
+        // Validate the request data
+    $request->validate([
+        'transportation_id' => [
+            'required',
+            'exists:transportation_details,id',
+        ],
+    ]);
+
+     // Save the main payroll information
+        $payroll = new Payroll();
+        $payroll->employee_id = $request->employee_id;
+        $payroll->total_rate = $request->total_rate;
+        $payroll->total_deduction = $request->totalDeduction;
+        $payroll->ca_deduction = $request->ca_deduction;
+        $payroll->df_deduction = $request->df_deduction;
+        $payroll->total_net_salary = $request->total_net_salary;
+        $payroll->payroll_start_date = $request->start_date;
+        $payroll->payroll_end_date = $request->end_date;
+        $payroll->save();
+
+        // Save rates for each driver
+        if (is_array($request->transportation_id) && is_array($request->rate)) {
+
+            foreach ($request->transportation_id as $index => $transportationId) {
+                // Validate that $request->rate[$index] exists
+                if (isset($request->rate[$index])) {
+                    $rate = (int) $request->rate[$index];
+
+                    // Check if $rate is greater than 0 before saving
+                    if ($rate > 0) {
+                        // Save payroll details
+                        $payrollDetails = new PayrollDetails();
+                        $payrollDetails->payroll_id = $payroll->id;
+                        $payrollDetails->transportation_id = $transportationId;
+                        $payrollDetails->rate = $rate;
+                        $payrollDetails->save();
+
+                        // Update p_status in transportation_details table
+                        $transportationDetail = TransportationDetails::find($transportationId);
+
+                        // Use a constant or a variable instead of a magic number
+                        $pStatusValue = 1;
+
+                        if ($transportationDetail) {
+                            $transportationDetail->p_status = $pStatusValue;
+                            $transportationDetail->save();
+                        }
+                    }
+                }
+            }
+        }
+
+        $caDetails = new CaDetails();
+
+        $caDetails->ca_id = $request->caId;
+        $caDetails->paid_amount = $request->ca_deduction;
+        $caDetails->balance = $request->balance;
+        $caDetails->save();
+
+        $damageDetails = new DamageDetails();
+
+        $damageDetails->d_id = $request->damage_id;
+        $damageDetails->paid_amount = $request->damage_amount;
+        $damageDetails->balance = $request->balance_deduction;
+        $damageDetails->save();
+
+        // Get the employee ID from the request
+        $employeeId = $request->input('employee_id');
+
+        // Retrieve the first damage for the given employee with status = 0 and damage_sequence > 0
+        $damage = Damage::where('employee_id', $employeeId)
+            ->where('status', 0)
+            ->orderBy('created_at', 'asc')
+            ->first();
+
+         // Retrieve the first cash advance for the given employee with status = 0 and advance_sequence > 0
+        $cashAdvance = CashAdvance::where('employee_id', $employeeId)
+        ->where('status', 0)
+        ->orderBy('created_at', 'asc')
+        ->first();
+
+        // Update the damage for the employee
+        if ($damage) {
+            // Calculate the new deduction based on the existing deduction and damage_sequence
+            $newDeduction = $damage->deduction - ($damage->deduction / $damage->damage_sequence);
+
+            // Decrease the damage_sequence by 1
+            $newDamageSequence = $damage->damage_sequence - 1;
+
+            // Update the damage_sequence and deduction in the damages table
+            $damage->damage_sequence = $newDamageSequence;
+            $damage->deduction = $newDeduction;
+
+            // Check if both damage_sequence and deduction are 0, then update the status
+            if ($newDamageSequence === 0 && $newDeduction === 0) {
+                // Set the status to the desired value (e.g., 1)
+                $damage->status = 1;
+            }
+
+            // Save the changes to the database
+            $damage->save();
+        }
+
+        // Update the cash advance for the employee
+        if ($cashAdvance) {
+            // Calculate the new deduction based on the existing deduction and pay_seq
+            $newDeduction = $cashAdvance->amount - ($cashAdvance->amount / $cashAdvance->pay_seq);
+
+            // Decrease the pay_seq by 1
+            $newPaySequence = $cashAdvance->pay_seq - 1;
+
+            // Update the pay_seq and amount in the cash_advances table
+            $cashAdvance->pay_seq = $newPaySequence;
+            $cashAdvance->amount = $newDeduction;
+
+            // Check if both pay_seq and amount are 0, then update the status
+            if ($newPaySequence == 0 && $newDeduction == 0) {
+                $cashAdvance->status = 1;
+            }
+
+            // Save the changes to the database
+            $cashAdvance->save();
+        }
+
+        // Calculate the new total deduction for the employee
+        $newTotalDeduction = $request->total_deduction;
+
+        // Retrieve all damages for the given employee with damage_sequence > 0 and status = 0
+        $damagesPerEmployee = Damage::where('employee_id', $employeeId)
+            ->where('status', 0)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+       // Retrieve all cash advances for the given employee with pay_seq > 0 and status = 0
+        $cashAdvancesPerEmployee = CashAdvance::where('employee_id', $employeeId)
+            ->where('status', 0)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        $payroll->save();
+
+        Alert::success('Payroll saved successfully');
+        // Redirect the user with a success message
+        return redirect()->back();
     }
 
     public function payroll_info()
@@ -1202,14 +1402,14 @@ if (is_array($request->transportation_id) && is_array($request->rate)) {
         $driver = TransportationDetails::where('driver_id', $employeeId)
             ->whereIn('p_status', [0])
             ->whereHas('booking', function ($query) use ($start_date, $end_date) {
-                $query->whereBetween('date', [$start_date, $end_date]);
+                $query->whereBetween('transportation_date', [$start_date, $end_date]);
             })
             ->get();
 
         $helper = TransportationDetails::where('helper_id', $employeeId)
-        ->whereIn('p_status', [0])
+        ->whereIn('h_status', [0])
         ->whereHas('booking', function ($query) use ($start_date, $end_date) {
-            $query->whereBetween('date', [$start_date, $end_date]);
+            $query->whereBetween('transportation_date', [$start_date, $end_date]);
         })
         ->get();
     
@@ -1663,8 +1863,7 @@ if (is_array($request->transportation_id) && is_array($request->rate)) {
 
         // Get the user associated with the booking
         $user = $booking->user;
-
-        // Determine the event color based on the user's name (company name in this case).
+        
         // You can modify this logic based on your requirements to set different colors for different companies.
         $color = null;
         if ($user->name == 'Alpha Food') {

@@ -46,22 +46,23 @@
                                                         <thead class="table-primary">
                                                             <tr>
                                                                 <th scope="col">#</th>
+                                                                <th scope="col">Transportation Date</th>
                                                                 <th scope="col">Driver</th>
                                                                 <th scope="col">Route</th> 
                                                                 <th scope="col">Truck Type</th> 
                                                                 <th scope="col">Booking date</th>                                                                   
-                                                                <th scope="col">Transportation Date</th>
+                                                                
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach ($approvedDate as $t)
                                                                 <tr>
                                                                     <th scope="row">{{ $loop->iteration }}</th>
+                                                                    <td>{{ date('F j, Y', strtotime($t->booking->transportation_date)) }}</td>
                                                                     <td>{{ $t->employee->user->name }} {{ $t->employee->user->lname }}</td>
                                                                     <td>{{ $t->booking->origin }} - {{ $t->booking->destination }}</td>  
                                                                     <td class="text-uppercase">{{ $t->truck->truck_type }} {{ $t->truck->plate_number }}</td>
-                                                                    <td>{{ date('F j, Y', strtotime($t->booking->created_at)) }}</td>                                                                    
-                                                                    <td>{{ date('F j, Y', strtotime($t->booking->date)) }}</td>
+                                                                    <td>{{ date('F j, Y', strtotime($t->booking->created_at)) }}</td>
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>
@@ -91,7 +92,7 @@
                                                                         <td>{{ $t->booking->origin }} - {{ $t->booking->destination }}</td>  
                                                                         <td class="text-uppercase">{{ $t->truck->truck_type }} {{ $t->truck->plate_number }}</td>
                                                                         <td>{{ date('F j, Y', strtotime($t->booking->created_at)) }}</td>                                                                    
-                                                                        <td>{{ date('F j, Y', strtotime($t->booking->date)) }}</td>
+                                                                        <td>{{ date('F j, Y', strtotime($t->booking->transportation_date)) }}</td>
                                                                         <td>
                                                                             @if (in_array($t->status, ['5', '6', '7']))
                                                                                 <span class="badge bg-success">Delivered</span>

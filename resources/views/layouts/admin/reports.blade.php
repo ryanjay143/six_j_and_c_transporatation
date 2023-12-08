@@ -51,6 +51,11 @@
         select.action-column {
             display: none;
         }
+
+        input.action-column,
+        input.action-column {
+            display: none;
+        }
     }
 </style>
 

@@ -307,10 +307,17 @@ class HomeController extends Controller
     public function getBillingsForClient()
     {
         $user = auth()->user();
-        $billing = Billing::where('client_id',$user->id)
+        $unpaidBilling = Billing::where('client_id',$user->id)
         ->where('status', 0)
         ->get();
-        return view('user.billings', compact('billing'));
+
+        $countUnpaidBilling = Billing::where('client_id',$user->id)
+        ->where('status', 0)
+        ->count();
+
+        $paidBilling = Billing::where('client_id', $user->id)
+        ->where('status', 1)->get();
+        return view('user.billings', compact('unpaidBilling','paidBilling','countUnpaidBilling'));
     }
 
     public function getTodayBookings(Request $request)

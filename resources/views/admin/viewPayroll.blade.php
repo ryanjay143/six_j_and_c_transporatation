@@ -22,7 +22,7 @@
                                         <div class="col">
                                             <div class="mb-0 row align-items-center">
                                                 <div class="col-sm-12 col-md-4 d-flex align-items-center">
-                                                    <img id="profile-preview" class="me-3" width="120px" height="100vh" src="{{ $employee->photo ? asset('storage/' . $employee->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}">
+                                                    <img id="profile-preview" class="me-3" width="120px" height="100vh" src="{{ $employee->photo ? asset( $employee->photo) : 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg' }}">
                                                 </div>
                                                 <div class="col-sm-12 col-md-8">
                                                     <div class="row text-start align-items-center"> <!-- Adjusted alignment class -->
@@ -80,12 +80,12 @@
                                                 <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                                                     <div class="card-body">
                                                         <div class="table-responsive">
-                                                        <div id="start_date_input" class="col-sm-3">
-                                                            <input hidden="" type="date" class="form-control" name="start_date" placeholder="Start Date" aria-label="Start Date">
-                                                        </div>
-                                                        <div id="end_date_input" class="col-sm-3">
-                                                            <input hidden="" type="date" class="form-control" name="end_date" placeholder="End Date" aria-label="End Date">
-                                                        </div>
+                                                            <div id="start_date_input" class="col-sm-3">
+                                                                <input type="date" hidden="" class="form-control" name="start_date" placeholder="Start Date" aria-label="Start Date">
+                                                            </div>
+                                                            <div id="end_date_input" hidden="" class="col-sm-3">
+                                                                <input type="date" class="form-control" name="end_date" placeholder="End Date" aria-label="End Date">
+                                                            </div>
                                                             <table id="payroll" class="table table-bordered table-hover">
                                                                 <thead class="table-primary">
                                                                     <tr>
@@ -99,33 +99,19 @@
                                                                 <tbody>
                                                                     @php
                                                                         $sortedDriver = $driver->sortBy('booking.transportation_date');
-                                                                        $sortedHelper = $helper->sortBy('booking.transportation_date');
+                                                                        $count = 1;
                                                                     @endphp
 
                                                                     @foreach ($sortedDriver as $t)
                                                                         @if ($t->status >= 5 && $t->status <= 7)
                                                                             <tr>
                                                                                 <input type="hidden" name="transpoId[]" value="{{ $t->id }}">
-                                                                                <td class="border border-start" scope="row">{{ $loop->iteration }}</td>
+                                                                                <td class="border border-start" scope="row">{{ $count++ }}</td>
                                                                                 <td>{{ $t->booking->user->name }}</td>
                                                                                 <td>{{ \Carbon\Carbon::parse($t->booking->transportation_date)->format('F j, Y') }}</td>
                                                                                 <td>{{ $t->booking->origin }} - {{ $t->booking->destination }}</td>
                                                                                 <td>
                                                                                     <input type="text" style="width: 100px;" value="0" class="form-control form-control-sm rateInput" id="rateInput_{{ $loop->iteration }}" oninput="updateTotal(); this.value = this.value.replace(/\D/g, '')">
-                                                                                </td>
-                                                                            </tr>
-                                                                        @endif
-                                                                    @endforeach
-                                                                    @foreach ($sortedHelper as $h)
-                                                                        @if ($h->status >= 5 && $h->status <= 7)
-                                                                            <tr>
-                                                                                <input type="hidden" name="transpoId[]" value="{{ $h->id }}">
-                                                                                <td class="border border-start" scope="row">{{ $loop->iteration }}</td>
-                                                                                <td>{{ $h->booking->user->name }}</td>
-                                                                                <td>{{ \Carbon\Carbon::parse($h->booking->pickUp_date)->format('F j, Y') }}</td>
-                                                                                <td>{{ $h->booking->origin }} - {{ $h->booking->destination }}</td>
-                                                                                <td>
-                                                                                    <input type="text" style="width: 100px;" value="0" class="form-control form-control-sm rateInput" oninput="updateTotal(); this.value = this.value.replace(/\D/g, '')">
                                                                                 </td>
                                                                             </tr>
                                                                         @endif
@@ -268,26 +254,17 @@
                                                                                     <label for="inputCopyEndDate" class="visually-hidden">Copy End Date</label>
                                                                                     <input hidden="" type="date" name="end_date" class="form-control form-control-sm" value="">
                                                                                 </div>
-                                                                                
+                                                                                @php
+                                                                                    $sortedDriver = $driver->sortBy('booking.transportation_date');
+                                                                                @endphp
 
-                                                                                @foreach ($driver as $t)
+                                                                                @foreach ($sortedDriver as $t)
                                                                                     @if ($t->status >= 5 && $t->status <= 7)
                                                                                         <input type="text" hidden="" name="transportation_id[]" value="{{ $t->id }}">
                                                                                         <input name="rate[]" hidden="" type="text" style="width: 100px;" value="0" 
                                                                                         class="form-control form-control-sm rateArrayInput" id="rateArrayInput_{{ $loop->iteration }}">
-                                                                                        <input type="text" hidden="" value="1" name="pStatus">
                                                                                     @endif
                                                                                 @endforeach
-
-                                                                                @foreach ($helper as $h)
-                                                                                    @if ($h->status >= 5 && $h->status <= 7)
-                                                                                        <input type="text" hidden="" name="transportation_id[]" value="{{ $h->id }}">
-                                                                                        <input name="rate[]" hidden="" type="text" style="width: 100px;" value="0" 
-                                                                                            class="form-control form-control-sm" id="numericInputCopy{{ $loop->iteration }}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); checkRateValueCopy({{ $loop->iteration }});">
-                                                                                        <input type="text" hidden="" value="1" name="pStatusHelper">
-                                                                                    @endif
-                                                                                @endforeach
-
                                                                                 <button type="submit" class="btn btn-primary btn-sm w-100" id="savePayrollButton" disabled>
                                                                                     <i class="bi bi-file-earmark-check-fill"></i> Save Payroll
                                                                                 </button>
@@ -666,15 +643,12 @@
                                                 <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">
                                                     <div class="card-body">
                                                         <div class="table-responsive">
-                                                            <table id="payroll_{{ $employee->id }}" class="table table-bordered size table-hover">
+                                                            <table id="payroll_{{ $employee->id }}" class="table table-bordered table-hover">
                                                                 <thead class="table-primary">
                                                                     <tr>
                                                                         <th class="fw-bold" scope="col">#</th>
                                                                         <th class="fw-bold" scope="col">Payroll period</th>
-                                                                        <th class="fw-bold" scope="col">CA deduction</th>
-                                                                        <th class="fw-bold" scope="col">Damage deduction</th>
-                                                                        <th class="fw-bold" scope="col">Total deduction</th>
-                                                                        <th class="fw-bold" scope="col">Total rate</th>
+                                                                        <th class="fw-bold" scope="col">Toatl net salary</th>
                                                                         <th class="fw-bold" scope="col">Action</th>
                                                                     </tr>
                                                                 </thead>
@@ -683,28 +657,7 @@
                                                                         <tr>
                                                                             <th scope="row">{{ $loop->iteration }}</th>
                                                                             <td>{{ \Carbon\Carbon::parse($e->payroll_start_date)->format('M. j') }}-{{ \Carbon\Carbon::parse($e->payroll_end_date)->format('j, Y') }}</td>
-                                                                            <td>
-                                                                                @if($e->ca_deduction == 0)
-                                                                                    <p class="fw-bold">No CA Deduction</p>
-                                                                                @else
-                                                                                    &#8369; {{ number_format($e->ca_deduction, 2) }}
-                                                                                @endif
-                                                                            </td>
-                                                                            <td>
-                                                                                @if($e->df_deduction == 0)
-                                                                                    <p class="fw-bold">No DF Deduction</p>
-                                                                                @else
-                                                                                    &#8369; {{ number_format($e->df_deduction, 2) }}
-                                                                                @endif
-                                                                            </td>
-                                                                            <td>
-                                                                                @if($e->total_deduction == 0)
-                                                                                    <p class="fw-bold">No DF Deduction</p>
-                                                                                @else
-                                                                                    &#8369; {{ number_format($e->total_deduction, 2) }}
-                                                                                @endif
-                                                                            </td>
-                                                                            <td>&#8369; {{ $e->total_rate }}</td>
+                                                                            <td>&#8369; {{ number_format($e->total_net_salary, 2)  }}</td>
                                                                             <td>
                                                                                 <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#payrollModal1{{ $e->id}}">
                                                                                     <i class="fas fa-eye"></i>
@@ -758,17 +711,33 @@
                                                                                                             <tbody>
                                                                                                                 @foreach ($e->payrollDetails as $p)
                                                                                                                     <tr>
-                                                                                                                        <td>{{ $p->transportation->booking->transportation_date }}</td>
+                                                                                                                        <td>{{ \Carbon\Carbon::parse($p->transportation->booking->transportation_date)->format('F j, Y') }}</td>
                                                                                                                         <td>{{ $p->transportation->booking->user->name }}</td>
                                                                                                                         <td>{{ $p->transportation->booking->origin }}-{{ $p->transportation->booking->destination }}</td>
-                                                                                                                        <td>{{ $p->rate }}</td>
+                                                                                                                        <td>&#8369; {{ number_format($p->rate, 2) }}</td>
                                                                                                                     </tr>
                                                                                                                 @endforeach
                                                                                                             </tbody>
                                                                                                             <tfoot>
                                                                                                                 <tr>
-                                                                                                                    <td class="fw-bold" colspan="3">Total Rate:</td>
-                                                                                                                    <td class="fw-bold">{{ $e->total_rate }}</td>
+                                                                                                                    <td class="fw-bold" colspan="3">Total rate:</td>
+                                                                                                                    <td class="fw-bold">&#8369; {{ number_format($e->total_rate, 2) }}</td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td class="fw-bold" colspan="3">Cash advanve deduction:</td>
+                                                                                                                    <td class="fw-bold">&#8369; {{ number_format($e->ca_deduction, 2) }}</td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td class="fw-bold" colspan="3">Damage Deduction:</td>
+                                                                                                                    <td class="fw-bold">&#8369; {{ number_format($e->df_deduction, 2) }}</td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td class="fw-bold" colspan="3">Total deduction:</td>
+                                                                                                                    <td class="fw-bold">&#8369; {{ number_format($e->total_deduction, 2) }}</td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td class="fw-bold" colspan="3">Total net salary:</td>
+                                                                                                                    <td class="fw-bold">&#8369; {{ number_format($e->total_net_salary,2 )  }} </td>
                                                                                                                 </tr>
                                                                                                             </tfoot>
                                                                                                         </table>

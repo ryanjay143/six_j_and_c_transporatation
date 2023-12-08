@@ -156,7 +156,20 @@
 
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
-        @foreach ($sortedEmployees as $e)
+        @foreach ($drivers as $e)
+            <script>
+                $(document).ready(function () {
+                    $('#cashAdvance_{{ $e->id }}').DataTable();
+                });
+            </script>
+            <script>
+                $(document).ready(function () {
+                    $('#damage_{{ $e->id }}').DataTable();
+                });
+            </script>
+        @endforeach
+
+        @foreach ($helpers as $e)
             <script>
                 $(document).ready(function () {
                     $('#cashAdvance_{{ $e->id }}').DataTable();

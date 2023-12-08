@@ -30,6 +30,25 @@
      <!-- Scripts -->
      @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+
+<style>
+    @media print {
+        /* Hide the "Action" column header and the "Action" column content */
+        th.action-column,
+        td.action-column {
+            display: none;
+        }
+
+        select.action-column,
+        select.action-column {
+            display: none;
+        }
+
+        button.action-column {
+            display: none;
+        }
+    }
+</style>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-light bg-primary">
             <!-- Navbar Brand-->
@@ -150,6 +169,8 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="{{ asset('js/deduction.js') }}"></script>
         <script src="{{ asset('js/addRate.js') }}"></script>
+        <script src="{{ asset('js/print.js') }}"></script>
+        <script src="{{ asset('js/reports.js') }}"></script>
        
         <script>
             let cashAdvanceAmount = @json($cashAdvanceAmount ?? 0);

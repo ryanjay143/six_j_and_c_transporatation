@@ -70,10 +70,10 @@ class EmployeeController extends Controller
                 ->with('booking.user', 'helper.user')
                 ->count();
 
-        //           foreach ($transpo as $transportation) {
-        //         $booking = $transportation->booking;
-        //          $user = $booking->user;
-        //          $clientPhoneNumber = $user->phone_num;
+        //         foreach ($transpo as $transportation) {
+        //             $booking = $transportation->booking;
+        //             $user = $booking->user;
+        //             $clientPhoneNumber = $user->phone_num;
                
 
         //         try {
@@ -84,29 +84,51 @@ class EmployeeController extends Controller
         //                  case 2:
         //                      $message = $twilio->messages->create($clientPhoneNumber, [
         //                          'from' => env('TWILIO_PHONE_NUMBER'),
-        //                          'body' => 'From Six J and C transportation, Your Transportation has been Picked-up. Thank you!'
+        //                          'body' => 'From Six J and C transportation, 
+        //                                     Driver: ' . Auth::user()->name . ' ' . Auth::user()->lname . '
+        //                                     Helper: ' . $transportation->helper->user->name . ' ' . $transportation->helper->user->lname . '
+        //                                     Plate number: ' . $transportation->truck->plate_number . '
+        //                                     Your Transportation has already Picked Up. Thanks and be safe!'
+
         //                      ]);
         //                      break;
 
         //                  case 3:
         //                      $message = $twilio->messages->create($clientPhoneNumber, [
         //                          'from' => env('TWILIO_PHONE_NUMBER'),
-        //                          'body' => 'From Six J and C transportation Your Transportation is Departed. Thank you!'
+        //                          'body' => 'From Six J and C transportation
+        //                                     Driver: ' . Auth::user()->name . ' ' . Auth::user()->lname . '
+        //                                     Helper: ' . $transportation->helper->user->name . ' ' . $transportation->helper->user->lname . '
+        //                                     Plate number: ' . $transportation->truck->plate_number . '
+
+
+        //                                     Your Transportation is Departed. Thank you!'
         //                      ]);
         //                      break;
 
         //                  case 4:
         //                      $message = $twilio->messages->create($clientPhoneNumber, [
         //                          'from' => env('TWILIO_PHONE_NUMBER'),
-        //                         'body' => 'From Six J and C transportation Your Transportation is in Transit.. Thank you!'
+        //                         'body' => 'From Six J and C transportation
+        //                                    Driver: ' . Auth::user()->name . ' ' . Auth::user()->lname . '
+        //                                    Helper: ' . $transportation->helper->user->name . ' ' . $transportation->helper->user->lname . '
+        //                                    Plate number: ' . $transportation->truck->plate_number . '
+
+
+        //                                    Your Transportation is in Transit.. Thank you!'
         //                      ]);
         //                      break;
 
         //                  case 5:
-        //                      $message = $twilio->messages->create($clientPhoneNumber, [
-        //                          'from' => env('TWILIO_PHONE_NUMBER'),
-        //                          'body' => 'From Six J and C transportation Your Transportation is Delivered. Thank you!'
-        //                      ]);
+        //                     $message = $twilio->messages->create($clientPhoneNumber, [
+        //                         'from' => env('TWILIO_PHONE_NUMBER'),
+        //                         'body' => "From Six J and C transportation\n"
+        //                                    . "Driver: " . Auth::user()->name . ' ' . Auth::user()->lname . "\n"
+        //                                    . "Helper: " . $transportation->helper->user->name . ' ' . $transportation->helper->user->lname . "\n"
+        //                                    . "Plate number: " . $transportation->truck->plate_number . "\n\n"
+        //                                    . "Your Transportation is Delivered. Thank you!"
+        //                     ]);
+                            
         //                      break;
         //                  default:
         //                      break;
